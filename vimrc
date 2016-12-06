@@ -14,8 +14,8 @@ execute pathogen#infect()
 set t_Co=256
 syntax on
 colorscheme minimalist
+map <C-n> :NERDTreeToggle<CR>
 set number
-autocmd vimenter * NERDTree
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
