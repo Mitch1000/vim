@@ -13,8 +13,12 @@ au BufWrite /private/etc/pw.* set nowritebackup
 execute pathogen#infect()
 set t_Co=256
 syntax on
+filetype plugin on
 colorscheme minimalist
 map <C-n> :NERDTreeToggle<CR>
+ca tt tabnew
+ca tr tabp
+ca ty tabn
 set number
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
