@@ -14,11 +14,12 @@ execute pathogen#infect()
 set t_Co=256
 syntax on
 filetype plugin on
+filetype indent plugin on
 colorscheme minimalist
-map <C-n> :NERDTreeToggle<CR>
-ca tt tabnew
-ca tr tabp
-ca ty tabn
+" map <C-n> :NERDTreeToggle<CR>
+nnoremap tt :tabnew<CR>
+nnoremap tr :tabp<CR>
+nnoremap ty :tabn<CR>
 set number
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -31,7 +32,6 @@ let g:syntastic_check_on_wq = 0
 
 so ~/.vim/bundle/delimitMate/test/_setup.vim
 let delimitMate_expand_cr = 1
-filetype indent plugin on
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
