@@ -1,35 +1,35 @@
-[submodule "base16-vim"]
+[submodule "bundle/base16-vim"]
   path = bundle/base16-vim
   url = https://github.com/chriskempson/base16-vim.git 
 
-[submodule "ctrlp.vim"]
+[submodule "bundle/ctrlp.vim"]
   path = bundle/ctrlp.vim
   url = https://github.com/kien/ctrlp.vim.git
 
-[submodule "delimitMate"]
+[submodule "bundle/delimitMate"]
   path = bundle/delimitMate
   url = https://github.com/Raimondi/delimitMate.git 
 
-[submodule "minimalist"]
+[submodule "bundle/minimalist"]
   path = bundle/minimalist
   url = https://github.com/dikiaap/minimalist.git 
 
-[submodule "nerdcommenter"]
+[submodule "bundle/nerdcommenter"]
   path = bundle/nerdcommenter
   url = https://github.com/scrooloose/nerdcommenter.git
 
-[submodule "nerdtree"]
+[submodule "bundle/nerdtree"]
   path = bundle/nerdtree
   url = https://github.com/scrooloose/nerdtree.git 
 
-[submodule "tern_for_vim"]
+[submodule "bundle/tern_for_vim"]
   path = bundle/tern_for_vim
   url = https://github.com/ternjs/tern_for_vim.git 
 
-[submodule "vim-javascript"]
+[submodule "bundle/vim-javascript"]
   path = bundle/vim-javascript
   url = https://github.com/pangloss/vim-javascript.git 
 
-[submodule "YouCompleteMe"]
+[submodule "bundle/YouCompleteMe"]
   path = bundle/YouCompleteMe
   url = https://github.com/Valloric/YouCompleteMe.git 
