@@ -3,7 +3,7 @@ A vim configuration for fun viming.
 
 ## Installation
 
-- Clone the git repository and move to ~/.vim
+- Clone the git repository and move it to ~/.vim
 
         git clone https://github.com/Mitch1000/vim.git
 
