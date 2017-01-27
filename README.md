@@ -1,18 +1,22 @@
-# vim Configuration
+# VIM Configuration
 A vim confiration for fun viming.
+
 ## Installation
+
 - Clone the git repository and move to ~/.vim
 
     git clone https://github.com/Mitch1000/vim.git
-    mv -r vim ~/.vim
+
+        mv -r vim ~/.vim
 
 - Move vimrc to /etc/vim/
 
-    git clone https://github.com/Mitch1000/vim.git
-    mv -r vim ~/.vim
+    cd ~/.vim  
 
-- To pull submodules use
+    mv vimrc /etc/vim/vimrc 
+
+- To pull submodules use:
 
     git submodule update --init --recursive --remote
 
-- To use YouCompleteMe follow instructions at https://github.com/Valloric/YouCompleteMe
+- To use YouCompleteMe follow instructions [here](https://github.com/Valloric/YouCompleteMe).
