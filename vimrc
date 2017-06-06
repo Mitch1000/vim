@@ -24,6 +24,8 @@ set number
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+nmap <Up> :.w !pbcopy<CR><CR>
+vmap <Up> :w !pbcopy<CR><CR>
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
