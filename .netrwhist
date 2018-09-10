@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/mitchelldrohan/fms/app/assets/javascripts/components/fms_admin'
+let g:netrw_dirhist_2='/Users/mitchelldrohan/fms/app/assets/javascripts/store/portrait-manager/portraitCollections'
+let g:netrw_dirhist_3='/Users/mitchelldrohan/fms/app/assets/javascripts'
+let g:netrw_dirhist_4='/Users/mitchelldrohan/fms/app/assets/javascripts/store/portrait-manager'
+let g:netrw_dirhist_5='/Users/mitchelldrohan/fms/app/assets/javascripts/store/media-uploads-manager/memories'
+let g:netrw_dirhist_6='/Users/mitchelldrohan/fms/app/assets/javascripts/components/MediaBadgeCollection/PostMediaPopupModal'

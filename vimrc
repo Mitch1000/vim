@@ -13,29 +13,30 @@ call pathogen#helptags()
 set t_Co=256
 syntax on
 filetype plugin on
-runtime macros/matchit.vim
-colorscheme minimalist
 map <C-n> :NERDTreeToggle<CR>
 ca tt tabnew
 ca tc tabclose 
 nnoremap tr :tabp<CR>
 nnoremap ty :tabn<CR>
-set number
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+command! RF syntax sync fromstart 
 nmap <Up> :.w !pbcopy<CR><CR>
 vmap <Up> :w !pbcopy<CR><CR>
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-so ~/.vim/bundle/delimitMate/test/_setup.vim
-let delimitMate_expand_cr = 1
 
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_ngdoc = 1
-let g:javascript_plugin_flow = 1
+set number
+
+au BufNewFile,BufRead *.jst set filetype=html
+au BufRead,BufNewFile *.rabl setf ruby
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd FileType vue syntax sync fromstart
 
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
