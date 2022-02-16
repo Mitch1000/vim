@@ -8,11 +8,15 @@ set backspace=2         " more powerful backspacing
 au BufWrite /private/tmp/crontab.* set nowritebackup
 " Don't write backup file if vim is being called by "chpass"
 au BufWrite /private/etc/pw.* set nowritebackup
+
 execute pathogen#infect()
-call pathogen#helptags()
-set t_Co=256
 syntax on
-filetype plugin on
+filetype plugin indent on
+
+
+set t_Co=256
+call pathogen#helptags()
+
 map <C-n> :NERDTreeToggle<CR>
 ca tt tabnew
 ca tc tabclose 
