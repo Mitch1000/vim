@@ -2,7 +2,7 @@
 " Description: Fixing files with tslint.
 
 function! ale#fixers#tslint#Fix(buffer) abort
-    let l:executable = ale_linters#typescript#tslint#GetExecutable(a:buffer)
+    let l:executable = ale#handlers#tslint#GetExecutable(a:buffer)
 
     let l:tslint_config_path = ale#path#ResolveLocalPath(
     \   a:buffer,
@@ -16,7 +16,7 @@ function! ale#fixers#tslint#Fix(buffer) abort
     return {
     \   'command': ale#node#Executable(a:buffer, l:executable)
     \       . l:tslint_config_option
-    \       . ' --fix %t',
+    \       . ' --outputAbsolutePaths --fix %t',
     \   'read_temporary_file': 1,
     \}
 endfunction

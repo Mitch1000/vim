@@ -26,21 +26,21 @@
 " And this is always output at the end and should just be ignored:
 "   0 packages and 1 specfiles checked; 4 errors, 0 warnings.
 
-let g:ale_spec_rpmlint_executable =
-\   get(g:, 'ale_spec_rpmlint_executable', 'rpmlint')
+call ale#Set('spec_rpmlint_executable', 'rpmlint')
+call ale#Set('spec_rpmlint_options', '')
 
-let g:ale_spec_rpmlint_options =
-\   get(g:, 'ale_spec_rpmlint_options', '')
+function! ale_linters#spec#rpmlint#GetCommand(buffer, version) abort
+    if ale#semver#GTE(a:version, [2, 0, 0])
+        " The -o/--option flag was removed in version 2.0.0
+        let l:version_dependent_args = ''
+    else
+        let l:version_dependent_args = ' -o "NetworkEnabled False"'
+    endif
 
-function! ale_linters#spec#rpmlint#GetExecutable(buffer) abort
-    return ale#Var(a:buffer, 'spec_rpmlint_executable')
-endfunction
-
-function! ale_linters#spec#rpmlint#GetCommand(buffer) abort
-    return ale_linters#spec#rpmlint#GetExecutable(a:buffer)
-    \   . ' ' . ale#Var(a:buffer, 'spec_rpmlint_options')
-    \   . ' -o "NetworkEnabled False"'
+    return '%e'
+    \   . ale#Pad(ale#Var(a:buffer, 'spec_rpmlint_options'))
     \   . ' -v'
+    \   . l:version_dependent_args
     \   . ' %t'
 endfunction
 
@@ -79,7 +79,12 @@ endfunction
 
 call ale#linter#Define('spec', {
 \   'name': 'rpmlint',
-\   'executable_callback': 'ale_linters#spec#rpmlint#GetExecutable',
-\   'command_callback': 'ale_linters#spec#rpmlint#GetCommand',
+\   'executable': {b -> ale#Var(b, 'spec_rpmlint_executable')},
+\   'command': {buffer -> ale#semver#RunWithVersionCheck(
+\       buffer,
+\       ale#Var(buffer, 'spec_rpmlint_executable'),
+\       '%e --version',
+\       function('ale_linters#spec#rpmlint#GetCommand'),
+\   )},
 \   'callback': 'ale_linters#spec#rpmlint#Handle',
 \})

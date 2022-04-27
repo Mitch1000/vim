@@ -1,17 +1,7 @@
 " Author: Prashanth Chandra <https://github.com/prashcr>, Jonathan Clem <https://jclem.net>
 " Description: tslint for TypeScript files
 
-call ale#Set('typescript_tslint_executable', 'tslint')
-call ale#Set('typescript_tslint_config_path', '')
-call ale#Set('typescript_tslint_rules_dir', '')
-call ale#Set('typescript_tslint_use_global', get(g:, 'ale_use_global_executables', 0))
-call ale#Set('typescript_tslint_ignore_empty_files', 0)
-
-function! ale_linters#typescript#tslint#GetExecutable(buffer) abort
-    return ale#node#FindExecutable(a:buffer, 'typescript_tslint', [
-    \   'node_modules/.bin/tslint',
-    \])
-endfunction
+call ale#handlers#tslint#InitVariables()
 
 function! ale_linters#typescript#tslint#Handle(buffer, lines) abort
     " Do not output any errors for empty files if the option is on.
@@ -69,8 +59,7 @@ function! ale_linters#typescript#tslint#GetCommand(buffer) abort
     \  ? ' -r ' . ale#Escape(l:tslint_rules_dir)
     \  : ''
 
-    return ale#path#BufferCdString(a:buffer)
-    \   . ale#Escape(ale_linters#typescript#tslint#GetExecutable(a:buffer))
+    return ale#Escape(ale#handlers#tslint#GetExecutable(a:buffer))
     \   . ' --format json'
     \   . l:tslint_config_option
     \   . l:tslint_rules_option
@@ -79,7 +68,8 @@ endfunction
 
 call ale#linter#Define('typescript', {
 \   'name': 'tslint',
-\   'executable_callback': 'ale_linters#typescript#tslint#GetExecutable',
-\   'command_callback': 'ale_linters#typescript#tslint#GetCommand',
+\   'executable': function('ale#handlers#tslint#GetExecutable'),
+\   'cwd': '%s:h',
+\   'command': function('ale_linters#typescript#tslint#GetCommand'),
 \   'callback': 'ale_linters#typescript#tslint#Handle',
 \})
