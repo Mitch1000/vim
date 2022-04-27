@@ -1,5 +1,3 @@
-" Configuration file for vim
-set modelines=0         " CVE-2007-2438 "
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
 set nocompatible        " Use Vim defaults instead of 100% vi compatibility
@@ -10,37 +8,69 @@ au BufWrite /private/tmp/crontab.* set nowritebackup
 au BufWrite /private/etc/pw.* set nowritebackup
 
 execute pathogen#infect()
-syntax on
+
 filetype plugin indent on
 
+" For dark version.
+set background=dark
+let g:italicize_comments=1
+let g:backpack_italic=1
+
+colorscheme backpack 
+
+syntax on
+
+set cursorline
+
+hi clear CursorLine
+augroup CLClear
+    autocmd! ColorScheme * hi clear CursorLine
+augroup END
+
+let g:ctrlp_buffer_func = { 'enter': 'BrightHighlightOn', 'exit':  'BrightHighlightOff', }
 
 set t_Co=256
+
 call pathogen#helptags()
 
+set hidden
 map <C-n> :NERDTreeToggle<CR>
-ca tt tabnew
-ca tc tabclose 
-nnoremap tr :tabp<CR>
-nnoremap ty :tabn<CR>
-command! RF syntax sync fromstart 
+"command! RF syntax sync fromstart 
 nmap <Up> :.w !pbcopy<CR><CR>
 vmap <Up> :w !pbcopy<CR><CR>
+vmap oo <plug>NERDCommenterToggle
+nmap oo <plug>NERDCommenterToggle
 
+ca qq :bw! <CR>
+nmap tr :bp <CR>
+nmap ty :bn <CR>
+nmap tt :ls <CR>
 
 set number
+set laststatus=2
+
+let g:lightline = {
+      \ 'colorscheme': 'backpack',
+      \ }
 
 au BufNewFile,BufRead *.jst set filetype=html
 au BufRead,BufNewFile *.rabl setf ruby
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-autocmd FileType vue syntax sync fromstart
-
-set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
+" Linter configuration
+let g:ale_linters = {
+  \   'javascript': ['eslint'],
+  \}
 
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
+
+let b:ale_linters = ['eslint']
+
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+"autocmd FileType vue syntax sync fromstart
+
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
