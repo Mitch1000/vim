@@ -16,30 +16,28 @@ set background=dark
 let g:italicize_comments=1
 let g:backpack_italic=1
 
-autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-autocmd FileType vue syntax sync fromstart
-
 colorscheme backpack 
 let g:lightline = {
       \ 'colorscheme': 'backpack',
       \ }
 
+
 syntax on
 
-set cursorline
+set hidden
 
+" Give me number hilighting
+set cursorline
+"Hide the cursor line only hightlight the number
 hi clear CursorLine
 augroup CLClear
     autocmd! ColorScheme * hi clear CursorLine
 augroup END
 
-let g:ctrlp_buffer_func = { 'enter': 'BrightHighlightOn', 'exit':  'BrightHighlightOff', }
-
 set t_Co=256
 
 call pathogen#helptags()
 
-set hidden
 map <C-n> :NERDTreeToggle<CR>
 command! RF syntax sync fromstart
 nmap <Up> :.w !pbcopy<CR><CR>
@@ -72,5 +70,7 @@ let g:ale_fixers = {
 
 let b:ale_linters = ['eslint']
 
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd FileType vue syntax sync fromstart
 
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
