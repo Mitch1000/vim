@@ -16,7 +16,13 @@ set background=dark
 let g:italicize_comments=1
 let g:backpack_italic=1
 
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd FileType vue syntax sync fromstart
+
 colorscheme backpack 
+let g:lightline = {
+      \ 'colorscheme': 'backpack',
+      \ }
 
 syntax on
 
@@ -35,7 +41,7 @@ call pathogen#helptags()
 
 set hidden
 map <C-n> :NERDTreeToggle<CR>
-"command! RF syntax sync fromstart 
+command! RF syntax sync fromstart
 nmap <Up> :.w !pbcopy<CR><CR>
 vmap <Up> :w !pbcopy<CR><CR>
 vmap oo <plug>NERDCommenterToggle
@@ -48,10 +54,6 @@ nmap tt :ls <CR>
 
 set number
 set laststatus=2
-
-let g:lightline = {
-      \ 'colorscheme': 'backpack',
-      \ }
 
 au BufNewFile,BufRead *.jst set filetype=html
 au BufRead,BufNewFile *.rabl setf ruby
@@ -70,7 +72,5 @@ let g:ale_fixers = {
 
 let b:ale_linters = ['eslint']
 
-autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-"autocmd FileType vue syntax sync fromstart
 
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
