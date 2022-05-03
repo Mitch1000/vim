@@ -33,3 +33,6 @@
 [submodule "bundle/YouCompleteMe"]
   path = bundle/YouCompleteMe
   url = https://github.com/Valloric/YouCompleteMe.git 
+[submodule "bundle/backpack"]
+	path = bundle/backpack
+	url = https://github.com/Mitch1000/backpack.git
