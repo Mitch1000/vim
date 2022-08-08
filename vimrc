@@ -12,29 +12,34 @@ execute pathogen#infect()
 filetype plugin indent on
 
 " For dark version.
-set background=dark
 let g:italicize_comments=1
 let g:backpack_italic=1
 
-colorscheme backpack 
-let g:lightline = {
-      \ 'colorscheme': 'backpack',
-      \ }
+let g:current_color_scheme = 'backpack'
+
+
+"if has('termguicolors')
+  "set termguicolors
+"endif
+
+colorscheme backpack
+let g:lightline = {'colorscheme' : 'backpack'}
 
 
 syntax on
+" set t_Co=256
+
 
 set hidden
 
 " Give me number hilighting
 set cursorline
 "Hide the cursor line only hightlight the number
-hi clear CursorLine
-augroup CLClear
-    autocmd! ColorScheme * hi clear CursorLine
-augroup END
+"hi clear CursorLine
+"augroup CLClear
+    "autocmd! ColorScheme * hi clear CursorLine
+"augroup END
 
-set t_Co=256
 
 call pathogen#helptags()
 
@@ -44,11 +49,12 @@ nmap <Up> :.w !pbcopy<CR><CR>
 vmap <Up> :w !pbcopy<CR><CR>
 vmap oo <plug>NERDCommenterToggle
 nmap oo <plug>NERDCommenterToggle
-
+map Y y$
 ca qq :bw! <CR>
 nmap tr :bp <CR>
 nmap ty :bn <CR>
 nmap tt :ls <CR>
+command! Clean :%s/\s\+$//e
 
 set number
 set laststatus=2
@@ -71,6 +77,7 @@ let g:ale_fixers = {
 let b:ale_linters = ['eslint']
 
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd BufRead,BufNewFile *.vue syntax sync fromstart
 autocmd FileType vue syntax sync fromstart
 
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
