@@ -40,3 +40,6 @@
 [submodule "bundle/gruvbox"]
 	path = bundle/gruvbox
 	url = https://github.com/morhetz/gruvbox.git
+[submodule "bundle/lightline-bufferline"]
+	path = bundle/lightline-bufferline
+	url = https://github.com/mengelbrecht/lightline-bufferline.git
