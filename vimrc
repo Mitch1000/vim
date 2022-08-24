@@ -17,18 +17,36 @@ let g:backpack_italic=1
 
 let g:current_color_scheme = 'backpack'
 
-
-"if has('termguicolors')
-  "set termguicolors
-"endif
-
-colorscheme backpack
-let g:lightline = {'colorscheme' : 'backpack'}
-
-
-syntax on
 " set t_Co=256
 
+"if has('termguicolors')
+"  set termguicolors
+"endif
+set showtabline=2
+colorscheme backpack
+let g:lightline = {
+      \ 'colorscheme': 'backpack',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close'] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+\ }
+
+
+let g:lightline#bufferline#show_number = 1
+autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+
+syntax on
 
 set hidden
 
@@ -67,11 +85,11 @@ set statusline+=%*
 
 " Linter configuration
 let g:ale_linters = {
-  \   'javascript': ['eslint'],
-  \}
+  \'javascript': ['eslint'],
+\}
 
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+  \'javascript': ['eslint'],
 \}
 
 let b:ale_linters = ['eslint']
