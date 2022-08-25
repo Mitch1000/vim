@@ -58,7 +58,6 @@ set cursorline
     "autocmd! ColorScheme * hi clear CursorLine
 "augroup END
 
-
 call pathogen#helptags()
 
 map <C-n> :NERDTreeToggle<CR>
@@ -69,9 +68,12 @@ vmap oo <plug>NERDCommenterToggle
 nmap oo <plug>NERDCommenterToggle
 map Y y$
 ca qq :bw! <CR>
+nmap tc :bw <CR>
+nmap tcc :bw! <CR>
 nmap tr :bp <CR>
 nmap ty :bn <CR>
 nmap tt :ls <CR>
+"Remove extra spaces at end of the lines
 command! Clean :%s/\s\+$//e
 
 set number
