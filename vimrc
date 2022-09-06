@@ -11,19 +11,24 @@ execute pathogen#infect()
 
 filetype plugin indent on
 
-" For dark version.
 let g:italicize_comments=1
+let g:backpack_contrast_dark = "medium" " soft hard medium
+let g:backpack_contrast_light = "medium" " soft hard medium
 let g:backpack_italic=1
-
-let g:current_color_scheme = 'backpack'
+set background=dark
 
 " set t_Co=256
 
-"if has('termguicolors')
-"  set termguicolors
-"endif
-set showtabline=2
+if has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 colorscheme backpack
+
+set showtabline=2
+
 let g:lightline = {
       \ 'colorscheme': 'backpack',
       \ 'active': {
@@ -60,8 +65,18 @@ set cursorline
 
 call pathogen#helptags()
 
+function! ReloadLightLine()
+  source ~/.vim/bundle/backpack/autoload/lightline/colorscheme/backpack.vim
+  call lightline#init()
+  call lightline#colorscheme()
+  call lightline#update()
+  call lightline#disable()
+  call lightline#enable()
+endfunction
+
 map <C-n> :NERDTreeToggle<CR>
 command! RF syntax sync fromstart
+command! RL source $MYVIMRC | call ReloadLightLine()
 nmap <Up> :.w !pbcopy<CR><CR>
 vmap <Up> :w !pbcopy<CR><CR>
 vmap oo <plug>NERDCommenterToggle
