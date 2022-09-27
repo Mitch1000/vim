@@ -15,20 +15,6 @@ let g:italicize_comments=1
 let g:backpack_contrast_dark = "medium" " soft hard medium
 let g:backpack_contrast_light = "medium" " soft hard medium
 let g:backpack_italic=1
-set background=dark
-
-" set t_Co=256
-
-if has('termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-
-colorscheme backpack
-
-set showtabline=2
-
 let g:lightline = {
       \ 'colorscheme': 'backpack',
       \ 'active': {
@@ -47,13 +33,17 @@ let g:lightline = {
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
 \ }
 
-
 let g:lightline#bufferline#show_number = 1
+
+set background=dark
+
+" Use more basic set of 256 colors giving less color options for text
+set t_Co=256
+
+" Create two spaces with tab is pressed
+set showtabline=2
+
 autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
-
-syntax on
-
-set hidden
 
 " Give me number hilighting
 set cursorline
@@ -62,6 +52,18 @@ set cursorline
 "augroup CLClear
     "autocmd! ColorScheme * hi clear CursorLine
 "augroup END
+
+syntax on
+
+set hidden
+
+if has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+colorscheme backpack
 
 call pathogen#helptags()
 
