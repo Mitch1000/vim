@@ -15,6 +15,7 @@ let g:italicize_comments=1
 let g:backpack_contrast_dark = "medium" " soft hard medium
 let g:backpack_contrast_light = "medium" " soft hard medium
 let g:backpack_italic=1
+let g:NERDTreeQuitOnOpen = 1
 let g:lightline = {
       \ 'colorscheme': 'backpack',
       \ 'active': {
