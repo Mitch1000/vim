@@ -93,13 +93,20 @@ command! RL source $MYVIMRC | call ReloadLightLine()
 " Convert from snake_case to camelCase
 command -range CC <line1>,<line2>s/\(_\)\(.\)/\u\2/g
 command -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g
-
-" Copy to the system clipboard when the up arrow is pressed
-nmap <Up> :.w !pbcopy<CR><CR>
-vmap <Up> :w !pbcopy<CR><CR>
-" Copy to the system clipboard when the up arrow is pressed
+" Comment
 vmap oo <plug>NERDCommenterToggle
 nmap oo <plug>NERDCommenterToggle
+" Drop a console.log()
+function PrintJavascriptConsoleLogs()
+
+  execute "normal! ayiwOconsole.log('<C-r>g:', <C-r>g);"
+
+  execute "normal! <Esc>"
+endfunction
+
+nnoremap K ":"
+nnoremap <silent> KK :call setreg("g", "") <CR>
+xnoremap <expr> <C-m> "\"dy :call setreg('g',  getreg('d') . ' ,, ' . getreg('g'))<CR>"
 
 " Copy to any register
 nmap Y "*yy
@@ -140,5 +147,4 @@ let g:ale_fixers = {
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue syntax sync fromstart
 autocmd FileType vue syntax sync fromstart
-
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
