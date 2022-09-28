@@ -137,9 +137,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
   \'javascript': ['eslint'],
 \}
-
-let b:ale_linters = ['eslint']
-
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue syntax sync fromstart
 autocmd FileType vue syntax sync fromstart
