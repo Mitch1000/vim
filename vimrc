@@ -77,23 +77,49 @@ function! ReloadLightLine()
   call lightline#enable()
 endfunction
 
+" Open the Nerd Tree file browser
 map <C-n> :NERDTreeToggle<CR>
+" Find and replace key mapping
+xnoremap <expr> R ":s/".getreg("/")."/"
+xnoremap * *N <Esc> b
+" Go to next linter error
+command! AN ALENext<CR>
+" Go to previous linter error
+command! AP ALEPrevious<CR>
+" Redraw the vim screen
 command! RF syntax sync fromstart
+" Reload vimrc and lightline theme
 command! RL source $MYVIMRC | call ReloadLightLine()
+" Convert from snake_case to camelCase
+command -range CC <line1>,<line2>s/\(_\)\(.\)/\u\2/g
+command -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g
+
+" Copy to the system clipboard when the up arrow is pressed
 nmap <Up> :.w !pbcopy<CR><CR>
 vmap <Up> :w !pbcopy<CR><CR>
+" Copy to the system clipboard when the up arrow is pressed
 vmap oo <plug>NERDCommenterToggle
 nmap oo <plug>NERDCommenterToggle
-map Y y$
+
+" Copy to any register
+nmap Y "*yy
+vmap Y "*y <Esc>
+" Force quit the buffer (tab)
 ca qq :bw! <CR>
+" Quit the buffer (tab)
 nmap tc :bw <CR>
+" Force quit the buffer (tab)
 nmap tcc :bw! <CR>
+" Previous buffer (tab)
 nmap tr :bp <CR>
+" Next buffer (tab)
 nmap ty :bn <CR>
+" List buffers (tab)
 nmap tt :ls <CR>
 "Remove extra spaces at end of the lines
 command! Clean :%s/\s\+$//e
 
+"Remove extra spaces at end of the lines
 set number
 set laststatus=2
 
