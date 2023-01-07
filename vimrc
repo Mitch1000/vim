@@ -11,13 +11,18 @@ execute pathogen#infect()
 
 filetype plugin indent on
 
+" Setting Your Color Scheme 
+let g:my_color_scheme='backpack'
+set background=dark
+
+
 let g:italicize_comments=1
 let g:backpack_contrast_dark = "medium" " soft hard medium
 let g:backpack_contrast_light = "medium" " soft hard medium
 let g:backpack_italic=1
 let g:NERDTreeQuitOnOpen = 1
 let g:lightline = {
-      \ 'colorscheme': 'backpack',
+      \ 'colorscheme': g:my_color_scheme,
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
       \ },
@@ -35,8 +40,6 @@ let g:lightline = {
 \ }
 
 let g:lightline#bufferline#show_number = 1
-
-set background=dark
 
 " Use more basic set of 256 colors giving less color options for text
 set t_Co=256
@@ -64,12 +67,13 @@ if has('termguicolors')
   set termguicolors
 endif
 
-colorscheme backpack
+execute 'colorscheme ' .. g:my_color_scheme 
 
 call pathogen#helptags()
 
 function! ReloadLightLine()
-  source ~/.vim/bundle/backpack/autoload/lightline/colorscheme/backpack.vim
+  " let source_file = "~/.vim/bundle/" . g:my_color_scheme . "/autoload/lightline/colorscheme/" . g:my_color_scheme . ".vim"
+  " execute 'source ' .. source_file
   call lightline#init()
   call lightline#colorscheme()
   call lightline#update()
@@ -81,7 +85,8 @@ endfunction
 map <C-n> :NERDTreeToggle<CR>
 " Find and replace key mapping
 xnoremap <expr> R ":s/".getreg("/")."/"
-xnoremap * *N <Esc> b
+xnoremap <silent> <expr> * "\"wy:call setreg('/', getreg('w'))<CR>" 
+
 " Go to next linter error
 command! AN ALENext<CR>
 " Go to previous linter error
@@ -96,17 +101,20 @@ command -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g
 " Comment
 vmap oo <plug>NERDCommenterToggle
 nmap oo <plug>NERDCommenterToggle
-" Drop a console.log()
+" Print a console.log() for each variable stored in g register
 function PrintJavascriptConsoleLogs()
-
-  execute "normal! ayiwOconsole.log('<C-r>g:', <C-r>g);"
-
-  execute "normal! <Esc>"
+  let variables_for_logging = split(getreg('g'), " ,, ")
+  for variable in variables_for_logging
+    execute "normal! ccconsole.log('" . variable . ":', " . variable . ");\n"
+  endfor
+  return setreg("g", "")
 endfunction
 
-nnoremap K ":"
-nnoremap <silent> KK :call setreg("g", "") <CR>
-xnoremap <expr> <C-m> "\"dy :call setreg('g',  getreg('d') . ' ,, ' . getreg('g'))<CR>"
+imap CONS <Esc>:call PrintJavascriptConsoleLogs()<CR>
+command! CONS :call PrintJavascriptConsoleLogs()
+command! CL :call setreg("g", "")
+xnoremap <silent> <expr> <C-m> "\"dy :call setreg('g',  getreg('d') . ' ,, ' . getreg('g'))<CR>"
+nnoremap <silent> <expr> <C-m> "\"dyiw :call setreg('g',  getreg('d') . ' ,, ' . getreg('g'))<CR>"
 
 " Copy to any register
 nmap Y "*yy
@@ -128,6 +136,8 @@ command! Clean :%s/\s\+$//e
 
 "Remove extra spaces at end of the lines
 set number
+set cindent
+set autoindent
 set laststatus=2
 
 au BufNewFile,BufRead *.jst set filetype=html
