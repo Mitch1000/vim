@@ -211,9 +211,6 @@ let g:ale_linters = {
   \'javascript': ['eslint'],
 \}
 
-let g:ale_fixers = {
-  \'javascript': ['eslint'],
-\}
 " TODO: Add linting function that does : '<,'>s/( /(/g : '<,'>s/ )/)/g :
 " '<,'>s/\t/  /g : s/this\./view./g : s/"/'/g : etc  
 "
