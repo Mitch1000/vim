@@ -43,3 +43,6 @@
 [submodule "bundle/lightline-bufferline"]
 	path = bundle/lightline-bufferline
 	url = https://github.com/mengelbrecht/lightline-bufferline.git
+[submodule "bundle/coc.nvim"]
+	path = bundle/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
