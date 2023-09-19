@@ -90,8 +90,8 @@ end
 -- Open the Nerd Tree file browser
 vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true })
 -- Find and replace key mapping
-vim.api.nvim_set_keymap('x', 'R', ':"<C-U>s/" . getreg("/")."/"<CR>', { expr = true })
-vim.api.nvim_set_keymap('x', '*', '"<Plug>(scapegoat_star_register)y:', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', 'R', [[":s/" .. getreg('/') .."/"]], { expr = true, noremap = true })
+vim.api.nvim_set_keymap('x', '*', [["wy :lua vim.fn.setreg('/', vim.fn.getreg('w'))<CR>]], { noremap = true, silent = true })
 -- Git terminal stuff
 vim.api.nvim_set_keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-c>', '<Cmd>Git commit <CR>', { noremap = true })
