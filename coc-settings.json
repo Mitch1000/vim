@@ -3,5 +3,7 @@
   "typescript.showUnused": false,
   "typescript.showDeprecated": false,
   "javascript.showDeprecated": false,
-  "javascript.suggestionActions.enabled": false
+  "javascript.suggestionActions.enabled": false,
+  "vetur.validation.style": false,
+  "vetur.format.defaultFormatter.scss": "none"
 }
