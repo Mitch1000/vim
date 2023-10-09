@@ -1,3 +1,4 @@
+local vim = vim
 -- Normally we use vim-extensions. If you want true vi-compatibilitylen*( )
 --
 vim.o.backspace = '2'      -- more powerful backspacing
@@ -5,16 +6,12 @@ vim.o.backspace = '2'      -- more powerful backspacing
 vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
 -- Don't write backup file if vim is being called by "chpass"
 vim.cmd([[au BufWrite /private/etc/pw.* set nowritebackup]])
-
 -- Execute pathogen#infect()
 vim.fn['pathogen#infect']()
-
 -- Enable filetype plugin and indent
 vim.cmd([[filetype plugin indent on]])
-
 -- Set background to dark
 vim.o.background = 'dark'
-
 -- Setting Your Color Scheme
 vim.g.my_color_scheme = 'backpack'
 vim.g.italicize_comments = 1
@@ -38,6 +35,7 @@ vim.g.lightline = {
   separator = { left = "", right = "" },
 }
 
+
 vim.g.lightline_bufferline_show_number = 1
 vim.g.indentLine_char = '|'
 
@@ -46,8 +44,8 @@ if vim.fn.has('termguicolors') == 1 then
   vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
   vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
 end
--- Define custom functions
 
+-- Define custom functions
 -- Print a console.log() for each variable stored in g register
 function PrintJavascriptConsoleLogs()
   local variables_for_logging = vim.split(vim.fn.getreg('a'), " ,, ")
@@ -62,8 +60,13 @@ end
 -- Open the Tig Git terminal
 function GitLoad()
   vim.cmd("terminal tig")
-  vim.fn.startinsert()
+  vim.cmd('starti')
   vim.fn.feedkeys('s')
+end
+
+-- Open the Tig Git terminal
+function GitBlame()
+  vim.cmd("Git blame")
 end
 
 -- Reload LightLine
@@ -73,10 +76,23 @@ function ReloadLightLine()
   vim.cmd("execute 'source ' .. '~/.config/nvim/bundle/' .. g:my_color_scheme .. '/autoload/lightline/colorscheme/' .. g:my_color_scheme .. '.vim' | call lightline#colorscheme() | call lightline#update()")
 end
 
--- Wait 15 minutes and then open a file
-function WaitThenOpenFile()
-  vim.fn.sleep(900000)  -- 15 minutes in milliseconds
-  vim.cmd("edit " .. vim.fn.getreg('+'))
+function WaitThenOpenFile(open_clipboard)
+  local file_to_open = ""
+  if open_clipboard then
+    vim.cmd('sleep 30m')  -- 15 milliseconds
+    file_to_open = vim.fn.system("pbpaste")
+  else 
+    file_to_open = vim.api.nvim_get_current_line() 
+  end
+
+  local i,j = string.find(file_to_open, "M ")
+
+  if i == 1 then
+    file_to_open = string.sub(file_to_open, j, string.len(file_to_open))
+  end
+  vim.cmd('sleep 15m')  -- 15 milliseconds
+
+  vim.cmd("edit " .. file_to_open)
 end
 
 -- Reset Git with Tig
@@ -84,8 +100,6 @@ function TigReset()
   vim.cmd("Git reset")
   vim.cmd("call feedkeys('R')")
 end
-
-
 
 -- Open the Nerd Tree file browser
 vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true })
@@ -96,9 +110,13 @@ vim.api.nvim_set_keymap('x', '*', [["wy :lua vim.fn.setreg('/', vim.fn.getreg('w
 vim.api.nvim_set_keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-c>', '<Cmd>Git commit <CR>', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-a>', '<Cmd>Git commit --amend <CR>', { noremap = true })
-vim.api.nvim_set_keymap('t', '<C-r>', '<Cmd> call TigReset() <CR>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = true })
+-- vim.api.nvim_set_keymap('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpenFile() <CR>', { noremap = true })
+-- vim.api.nvim_set_keymap('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
 
-vim.api.nvim_set_keymap('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
 
 vim.api.nvim_set_keymap('n', '<Esc>', ':noh<CR>:echon ""<CR>', { noremap = true })
 
@@ -124,7 +142,7 @@ vim.api.nvim_set_keymap('n', 'tr', ':bp<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', 'ty', ':bn<CR>', { noremap = true })
 -- List buffers (tab)
 vim.api.nvim_set_keymap('n', 'tt', ':ls<CR>', { noremap = true })
-
+vim.api.nvim_open_win="rounded"
 -- Comment
 vim.api.nvim_set_keymap('v', 'oo', '<plug>NERDCommenterToggle', { noremap = true })
 vim.api.nvim_set_keymap('n', 'oo', '<plug>NERDCommenterToggle', { noremap = true })
@@ -134,6 +152,7 @@ vim.api.nvim_set_keymap('n', 'oo', '<plug>NERDCommenterToggle', { noremap = true
 vim.api.nvim_set_keymap('i', 'CONS', '<Esc>:lua PrintJavascriptConsoleLogs()<CR>', { noremap = true, silent = true })
 vim.cmd([[command! Clean :%s/\s\+$//e]])
 vim.cmd([[command! GL :lua GitLoad()]])
+vim.cmd([[command! GB :lua GitBlame()]])
 vim.cmd([[command! CONS :lua PrintJavascriptConsoleLogs()]])
 vim.cmd([[command! CL :lua vim.fn.setreg("a", '')]])
 vim.cmd([[command! BD :set background=dark]])
@@ -173,24 +192,31 @@ vim.cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 vim.cmd([[autocmd OptionSet background
        \ execute 'source' '~/.config/nvim/bundle/backpack/autoload/lightline/colorscheme/backpack.vim'
        \ | call lightline#colorscheme() | call lightline#update()]])
-vim.cmd([[autocmd TermEnter * execute "set background=dark | call ReloadLightLine()"]])
-vim.cmd([[autocmd TermOpen * execute "set background=dark | call ReloadLightLine()"]])
-vim.cmd([[autocmd TermEnter * execute "highlight LineNr guifg=" .. g:background_color[0]"]])
-vim.cmd([[autocmd TermEnter * execute "highlight LineNr guibg=" .. g:background_color[0]"]])
-vim.cmd([[autocmd TermEnter * execute "highlight CursorLineNr guifg=" .. g:background_color[0]"]])
-vim.cmd([[autocmd TermLeave * execute "highlight LineNr guifg=" .. g:line_nr[0]"]])
-vim.cmd([[autocmd TermLeave * execute "highlight CursorLineNr guifg=" .. g:line_nr[0]"]])
-vim.cmd([[autocmd TermLeave * execute "set background=" .. g:initial_background .. " | call ReloadLightLine()"]])
+-- vim.cmd([[autocmd TermEnter * execute "set background=dark | lua ReloadLightLine()"]])
+-- vim.cmd([[autocmd TermOpen * execute "set background=dark | lua ReloadLightLine()"]])
+vim.cmd([[autocmd TermEnter * execute "highlight LineNr guifg=" .. g:background_color[0] ]])
+vim.cmd([[autocmd TermEnter * execute "highlight LineNr guibg=" .. g:background_color[0] ]])
+vim.cmd([[autocmd TermEnter * execute "highlight CursorLineNr guifg=" .. g:background_color[0] ]])
+vim.cmd([[autocmd TermLeave * execute "highlight LineNr guifg=" .. g:line_nr[0] ]])
+vim.cmd([[autocmd TermLeave * execute "highlight CursorLineNr guifg=" .. g:line_nr[0] ]])
+-- vim.cmd([[autocmd TermLeave * execute "set background=" .. g:initial_background .. " | lua ReloadLightLine()"]])
 vim.cmd([[autocmd BufNewFile,BufRead *.jst set filetype=html]])
 vim.cmd([[autocmd BufRead,BufNewFile *.rabl setf ruby]])
 vim.cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css]])
 vim.cmd([[autocmd BufRead,BufNewFile *.vue syntax sync fromstart]])
+
+-- For solargraph. Solargraph doesn work with our old version of ruby
+os.execute("rbenv local 2.7.7")
+vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
 
 -- ------ SETTERS ------
 vim.o.number = true
 vim.o.cindent = true
 vim.o.autoindent = true
 vim.o.laststatus = 2
+-- Popup menu at the bottom of the page.
+vim.o.pumblend = 4
+vim.o.pumheight = 15
 
 vim.o.tabstop = 2
 vim.o.softtabstop = 0
@@ -214,6 +240,15 @@ vim.o.cursorline = true
 vim.g.ale_linters = {
   javascript = {"eslint"},
 }
+
+local lspconfig = require('lspconfig')
+lspconfig.pyright.setup{}
+lspconfig.tsserver.setup{}
+lspconfig.solargraph.setup{}
+lspconfig.java_language_server.setup{}
+lspconfig.vuels.setup{}
+lspconfig.clangd.setup{}
+
 
 -- -------------------------------------------------------------------
 -- --------------------COC VIM ---------------------------------------
@@ -315,7 +350,7 @@ vim.api.nvim_create_autocmd("User", {
 
 -- Apply codeAction to the selected region
 -- Example: `<leader>aap` for current paragraph
-local opts = {silent = true, nowait = true}
+opts = { silent = true, nowait = true }
 keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
 keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
 
@@ -400,3 +435,48 @@ keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
 keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list
 keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
+
+keyset("n", "<space><space>", ":tag ", opts)
+
+-- For window borders 
+
+vim.lsp.handlers["textDocument/hover"] =
+  vim.lsp.with(
+  vim.lsp.handlers.hover,
+  {
+    border = "single"
+  }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {
+    border = "single"
+  }
+)
+
+vim.cmd [[nnoremap <buffer><silent> <C-space> :lua vim.lsp.diagnostic.show_line_diagnostics({ border = "single" })<CR>]]
+vim.cmd [[nnoremap <buffer><silent> ]g :lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = "single" }})<CR>]]
+vim.cmd [[nnoremap <buffer><silent> [g :lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single" }})<CR>]]
+
+
+
+vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
+vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+
+-- Do not forget to use the on_attach function
+-- To instead override globally
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
+
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
