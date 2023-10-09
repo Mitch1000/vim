@@ -4,6 +4,55 @@
   "typescript.showDeprecated": false,
   "javascript.showDeprecated": false,
   "javascript.suggestionActions.enabled": false,
+  "border": true,
+  "rounded": true,
+  "diagnostic.floatConfig.border": true,
+  "hover.floatConfig.border": true,
+  "signature.floatConfig.border": true,
+  "tsserver.log": "normal",
   "vetur.validation.style": false,
-  "vetur.format.defaultFormatter.scss": "none"
+  "diagnostic.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "signature.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "hover.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "suggest.floatConfig.border": true,
+  "suggest.floatConfig.rounded": true,
+  "suggest.floatConfig.borderhighlight": "CocFloating",
+  "suggest.floatConfig.highlight": "CocFloatingBackground",
+  "suggest.floatConfig.winblend": 5,
+  "suggest.completionItemKindLabels": {
+    "method": "  ",
+    "function": "  ",
+    "variable": "[]",
+    "field": "  ",
+    "typeParameter": "<>",
+    "constant": "  ",
+    "class": " פּ ",
+    "interface": " 蘒",
+    "struct": "  ",
+    "event": "  ",
+    "operator": "  ",
+    "module": "  ",
+    "property": "  ",
+    "enum": " 練",
+    "reference": "  ",
+    "keyword": "  ",
+    "file": "  ",
+    "folder": " ﱮ ",
+    "color": "  ",
+    "unit": " 塞 ",
+    "snippet": "  ",
+    "text": "  ",
+    "constructor": "  ",
+    "value": "  ",
+    "enumMember": "  "
+  }
 }
