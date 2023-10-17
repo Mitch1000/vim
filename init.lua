@@ -117,9 +117,14 @@ vim.api.nvim_set_keymap('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = tr
 vim.api.nvim_set_keymap('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 -- vim.api.nvim_set_keymap('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
+function CloseWindow()
+  vim.cmd([[silent! close]])
+end
 
+vim.api.nvim_set_keymap('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>lua CloseWindow()<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<Esc>', ':noh<CR>:echon ""<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fuzzy-search".FuzzySearch()<CR>]], { noremap = true, silent = true })
 
 -- For Console logs
 --
