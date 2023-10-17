@@ -13,14 +13,18 @@ vim.fn['pathogen#infect']()
 vim.cmd([[filetype plugin indent on]])
 -- Set background to dark
 vim.o.background = 'dark'
+
 -- Setting Your Color Scheme
+vim.g.everforest_background = "hard" -- soft hard medium
+-- Possible Color Schemes
+-- dracula - everforest - backpack - ayu - gruvbox
 vim.g.my_color_scheme = 'backpack'
 vim.g.italicize_comments = 1
 vim.g.backpack_contrast_dark = "medium" -- soft hard medium
 vim.g.backpack_contrast_light = "medium" -- soft hard medium
 vim.g.backpack_italic = 1
 vim.g.initial_background = vim.o.background
-vim.cmd [[colorscheme backpack]]
+vim.cmd('colorscheme ' .. vim.g.my_color_scheme)
 
 vim.g.lightline = {
   colorscheme = vim.g.my_color_scheme,

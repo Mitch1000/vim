@@ -52,3 +52,9 @@
 [submodule "bundle/vim-gutentags"]
 	path = bundle/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "bundle/dracula"]
+	path = bundle/dracula
+	url = https://github.com/dracula/vim.git
+[submodule "bundle/ayu"]
+	path = bundle/ayu
+	url = https://github.com/ayu-theme/ayu-vim.git
