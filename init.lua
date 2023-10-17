@@ -1,6 +1,7 @@
 local vim = vim
 -- Normally we use vim-extensions. If you want true vi-compatibilitylen*( )
 --
+--
 vim.o.backspace = '2'      -- more powerful backspacing
 -- Don't write backup file if vim is being called by "crontab -e"
 vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
@@ -107,7 +108,7 @@ vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true })
 vim.api.nvim_set_keymap('x', 'R', [[":s/" .. getreg('/') .."/"]], { expr = true, noremap = true })
 vim.api.nvim_set_keymap('x', '*', [["wy :lua vim.fn.setreg('/', vim.fn.getreg('w'))<CR>]], { noremap = true, silent = true })
 -- Git terminal stuff
-vim.api.nvim_set_keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<Esc><Esc>', '<C-\\><C-n> <Cmd> close <CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<C-c>', '<Cmd>Git commit <CR>', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-a>', '<Cmd>Git commit --amend <CR>', { noremap = true })
 vim.api.nvim_set_keymap('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = true })
