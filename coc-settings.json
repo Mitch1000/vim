@@ -11,6 +11,7 @@
   "signature.floatConfig.border": true,
   "tsserver.log": "normal",
   "vetur.validation.style": false,
+  "diagnostic.errorSign": "✘",
   "diagnostic.floatConfig": {
     "border": true,
     "rounded": true
