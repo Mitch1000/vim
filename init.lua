@@ -148,7 +148,6 @@ vim.api.nvim_set_keymap('n', 'tr', ':bp<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', 'ty', ':bn<CR>', { noremap = true })
 -- List buffers (tab)
 vim.api.nvim_set_keymap('n', 'tt', ':ls<CR>', { noremap = true })
-vim.api.nvim_open_win="rounded"
 -- Comment
 vim.api.nvim_set_keymap('v', 'oo', '<plug>NERDCommenterToggle', { noremap = true })
 vim.api.nvim_set_keymap('n', 'oo', '<plug>NERDCommenterToggle', { noremap = true })
