@@ -128,9 +128,9 @@ vim.api.nvim_set_keymap('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() 
 -- vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>lua CloseWindow()<CR>', { noremap = true, silent = true })
 --- https://github.com/jhawthorn/fzy/pull/116#issuecomment-538708329
 vim.keymap.set('n', '<C-h>', function () require'fzy'.History() end)
-vim.keymap.set('n', '<C-e>', function () require'fzy'.Oldfiles() end)
+vim.keymap.set('n', '<C-t>', function () require'fzy'.Oldfiles() end)
 vim.keymap.set('n', '<C-w>', function () require'fzy'.Buffers() end)
-vim.keymap.set('n', '<C-t>', function () require'fzy'.FindFile() end)
+vim.keymap.set('n', '<C-e>', function () require'fzy'.FindFile() end)
 vim.cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
 
 vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
