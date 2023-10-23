@@ -127,8 +127,14 @@ end
 
 vim.api.nvim_set_keymap('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
 -- vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>lua CloseWindow()<CR>', { noremap = true, silent = true })
+--- https://github.com/jhawthorn/fzy/pull/116#issuecomment-538708329
+vim.keymap.set('n', '<C-h>', function () require'fzy'.History() end)
+vim.keymap.set('n', '<C-e>', function () require'fzy'.Oldfiles() end)
+vim.keymap.set('n', '<C-w>', function () require'fzy'.Buffers() end)
+vim.keymap.set('n', '<C-t>', function () require'fzy'.FindFile() end)
+vim.cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
 
-vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fuzzy-search".FuzzySearch()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
 
 -- For Console logs
 --
@@ -468,8 +474,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 vim.cmd [[nnoremap <buffer><silent> <C-space> :lua vim.lsp.diagnostic.show_line_diagnostics({ border = "single" })<CR>]]
 vim.cmd [[nnoremap <buffer><silent> ]g :lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = "single" }})<CR>]]
 vim.cmd [[nnoremap <buffer><silent> [g :lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single" }})<CR>]]
-
-
 
 -- Do not forget to use the on_attach function
 -- To instead override globally
