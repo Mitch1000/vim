@@ -457,8 +457,6 @@ keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list
 keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
 
-keyset("n", "<space><space>", ":tag ", opts)
-
 -- For window borders 
 
 vim.lsp.handlers["textDocument/hover"] =
