@@ -43,6 +43,7 @@ vim.g.lightline = {
 
 vim.g.lightline_bufferline_show_number = 1
 vim.g.indentLine_char = '|'
+vim.g.markdown_folding = 1
 
 if vim.fn.has('termguicolors') == 1 then
   vim.o.termguicolors = true
@@ -226,6 +227,7 @@ vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
 
 -- ------ SETTERS ------
 vim.o.number = true
+vim.o.signcolumn = 'auto'
 vim.o.cindent = true
 vim.o.autoindent = true
 vim.o.laststatus = 2
@@ -259,10 +261,16 @@ vim.g.ale_linters = {
 local lspconfig = require('lspconfig')
 lspconfig.pyright.setup{}
 lspconfig.tsserver.setup{}
-lspconfig.solargraph.setup{}
+--lspconfig.solargraph.setup{}
 lspconfig.java_language_server.setup{}
-lspconfig.vuels.setup{}
+-- lspconfig.vuels.setup{}
 lspconfig.clangd.setup{}
+lspconfig.ltex.setup({
+  on_attach = on_attach,
+  cmd = { "ltex-ls" },
+  filetypes = { "markdown", "text" },
+  flags = { debounce_text_changes = 300 },
+})
 
 
 -- -------------------------------------------------------------------
@@ -489,3 +497,27 @@ vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSi
 vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+
+function OpenWin(file_name)
+  local width = vim.o.columns - 4
+  local height = 32
+  if (vim.o.columns >= 85) then
+      width = 110
+  end
+  vim.api.nvim_open_win(
+      vim.api.nvim_create_buf(false, true),
+      true,
+      {
+          relative = 'editor',
+          style = 'minimal',
+          border = "none",
+          noautocmd = true,
+          width = width,
+          height = height,
+          col = math.min((vim.o.columns - width) / 2),
+          row = math.min((vim.o.lines - height) / 2 - 1),
+      }
+  )
+  vim.cmd("edit " .. file_name)
+end
+-- vim.cmd([[autocmd FileType markdown set foldexpr=NestedMarkdownFolds()]])
