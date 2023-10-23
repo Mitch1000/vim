@@ -1,7 +1,4 @@
 local vim = vim
--- Normally we use vim-extensions. If you want true vi-compatibilitylen*( )
---
---
 vim.o.backspace = '2'      -- more powerful backspacing
 -- Don't write backup file if vim is being called by "crontab -e"
 vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
