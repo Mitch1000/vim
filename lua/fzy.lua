@@ -31,7 +31,7 @@ local function fzy(a)
         end
 
         if (a.action) then
-          a.action(stdout)
+          a.action(stdout, file)
           os.remove(file)
           return
         end
@@ -56,8 +56,8 @@ local function Search(searchTerm, folder)
 
   fzy {
     input = input,
-    action = function (stdout)
-      vim.api.nvim_command('bdelete!')
+    action = function (stdout, file)
+      os.remove(file)
       vim.api.nvim_command('edit ' .. stdout)
       vim.fn.search(searchTerm)
       vim.fn.histadd('cmd', 'e ' .. stdout)
