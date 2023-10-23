@@ -47,17 +47,15 @@ local function FindFile()
 end
 
 local function Search(searchTerm, folder)
-  local input = 'ag --silent -l --ignore-dir="log" --ignore-dir=".node_modules" --ignore="tags" ' .. searchTerm
+  local input = 'ag --silent -l --ignore-dir="log" --ignore-dir=".node_modules" --ignore="tags" '.. searchTerm
 
   folder = folder or ''
   if (#folder > 0) then
    input = input .. ' ' .. folder
   end
-  print(folder)
-  print(searchTerm)
-  vim.g.test = folder
+
   fzy {
-    input,
+    input = input,
     action = function (stdout)
       vim.api.nvim_command('bdelete!')
       vim.api.nvim_command('edit ' .. stdout)
