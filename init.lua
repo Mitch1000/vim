@@ -13,9 +13,9 @@ vim.fn['pathogen#infect']()
 vim.cmd([[filetype plugin indent on]])
 -- Set background to dark
 vim.o.background = 'dark'
+vim.g.background_color = '#10141c'
 
 -- Setting Your Color Scheme
-vim.g.everforest_background = "hard" -- soft hard medium
 -- Possible Color Schemes
 -- dracula - everforest - backpack - ayu - gruvbox
 vim.g.my_color_scheme = 'backpack'
@@ -26,6 +26,7 @@ vim.g.backpack_italic = 1
 vim.g.initial_background = vim.o.background
 vim.cmd('colorscheme ' .. vim.g.my_color_scheme)
 
+vim.cmd([[hi NonText guifg=bg]])
 vim.g.lightline = {
   colorscheme = vim.g.my_color_scheme,
   active = {
@@ -77,8 +78,8 @@ end
 
 -- Reload LightLine
 function ReloadLightLine()
-  local source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/autoload/lightline/colorscheme/" .. vim.g.my_color_scheme .. ".vim"
-  local colors_source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/colors/" .. vim.g.my_color_scheme .. ".vim"
+  -- local source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/autoload/lightline/colorscheme/" .. vim.g.my_color_scheme .. ".vim"
+  -- local colors_source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/colors/" .. vim.g.my_color_scheme .. ".vim"
   vim.cmd("execute 'source ' .. '~/.config/nvim/bundle/' .. g:my_color_scheme .. '/autoload/lightline/colorscheme/' .. g:my_color_scheme .. '.vim' | call lightline#colorscheme() | call lightline#update()")
 end
 
@@ -87,8 +88,8 @@ function WaitThenOpenFile(open_clipboard)
   if open_clipboard then
     vim.cmd('sleep 30m')  -- 15 milliseconds
     file_to_open = vim.fn.system("pbpaste")
-  else 
-    file_to_open = vim.api.nvim_get_current_line() 
+  else
+    file_to_open = vim.api.nvim_get_current_line()
   end
 
   local i,j = string.find(file_to_open, "M ")
@@ -420,7 +421,7 @@ keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', o
 
 -- Use CTRL-S for selections ranges
 -- Requires 'textDocument/selectionRange' support of language server
-keyset("n", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
+-- keyset("n", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
 keyset("x", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
 
 
