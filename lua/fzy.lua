@@ -43,7 +43,7 @@ local function fzy(a)
 end
 
 local function FindFile()
-  fzy { input = 'find . -type f '}
+  fzy { input = 'find . -type f -not -path "./node_modules/*" -not -path "./tmp/*" -not -path "./.git/*" -or -type d -not -path "./node_modules/*" -not -path "./tmp/*" -not -path "./.git/*"'}
 end
 
 local function Search(searchTerm, folder)
