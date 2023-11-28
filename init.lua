@@ -6,6 +6,23 @@ vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
 vim.cmd([[au BufWrite /private/etc/pw.* set nowritebackup]])
 -- Execute pathogen#infect()
 vim.fn['pathogen#infect']()
+
+vim.cmd [[packadd packer.nvim]]
+require('packer').startup(function(use)
+	use 'neovim/nvim-lspconfig'
+	use 'simrat39/rust-tools.nvim'
+	use 'nvim-lua/plenary.nvim'
+	use 'mfussenegger/nvim-dap'
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        ts_update()
+    end,
+  }
+end)
+
+
 -- Enable filetype plugin and indent
 vim.cmd([[filetype plugin indent on]])
 -- Set background to dark
@@ -38,10 +55,6 @@ vim.g.lightline = {
   separator = { left = "", right = "" },
 }
 
-
-vim.g.lightline_bufferline_show_number = 1
-vim.g.indentLine_char = '|'
-vim.g.markdown_folding = 1
 
 if vim.fn.has('termguicolors') == 1 then
   vim.o.termguicolors = true
@@ -129,14 +142,15 @@ vim.api.nvim_set_keymap('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() 
 --- https://github.com/jhawthorn/fzy/pull/116#issuecomment-538708329
 vim.keymap.set('n', '<C-h>', function () require'fzy'.History() end)
 vim.keymap.set('n', '<C-t>', function () require'fzy'.Oldfiles() end)
-vim.keymap.set('n', '<C-w>', function () require'fzy'.Buffers() end)
+vim.keymap.set('n', '<C-s>', function () require'fzy'.Buffers() end)
 vim.keymap.set('n', '<C-e>', function () require'fzy'.FindFile() end)
 vim.cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
 
 vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
 
 -- For Console logs
---
+vim.fn.setreg("a", '')
+vim.fn.setreg("d", '')
 -- For Visual mode (xnoremap)
 vim.api.nvim_set_keymap('x', '<C-m>', [["dy :lua vim.fn.setreg('a', vim.fn.getreg('d') .. ' ,, ' .. vim.fn.getreg('a'))<CR>]], { noremap = true, silent = true })
 -- For Normal mode (nnoremap)
@@ -172,6 +186,12 @@ vim.cmd([[command! CL :lua vim.fn.setreg("a", '')]])
 vim.cmd([[command! BD :set background=dark]])
 vim.cmd([[command! BL :set background=light]])
 
+-- Get highlight group (color group) for
+-- item under the cursor to allow for setting syntax highlighting
+vim.cmd([[nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>]])
+
 -- Go to next linter error
 vim.cmd([[command! AN ALENext]])
 -- Go to previous linter error
@@ -181,6 +201,7 @@ vim.cmd([[command! RF syntax sync fromstart]])
 -- Reload vimrc and lightline theme
 vim.cmd([[command! RL source $MYVIMRC | lua ReloadLightLine()]])
 
+vim.g.lightline_bufferline_show_number = 1
 function ReloadConfig()
   local luacache = (_G.__luacache or {}).cache
   -- TODO unload commands, mappings + ?symbols?
@@ -224,6 +245,11 @@ os.execute("rbenv local 2.7.7")
 vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
 
 -- ------ SETTERS ------
+vim.g.indentLine_char = '|'
+vim.g.markdown_folding = 1
+vim.g.vim_jsx_pretty_colorful_config = 1
+vim.g.vim_jsx_pretty_highlight_close_tag = 1
+vim.g.vim_jsx_pretty_disable_js = 1
 vim.o.number = true
 vim.o.signcolumn = 'auto'
 vim.o.cindent = true
@@ -232,7 +258,7 @@ vim.o.laststatus = 2
 -- Popup menu at the bottom of the page.
 vim.o.pumblend = 4
 vim.o.pumheight = 15
-
+vim.o.signcolumn = 'number'
 vim.o.tabstop = 2
 vim.o.softtabstop = 0
 vim.o.expandtab = true
@@ -258,11 +284,13 @@ vim.g.ale_linters = {
 
 local lspconfig = require('lspconfig')
 lspconfig.pyright.setup{}
-lspconfig.tsserver.setup{}
+-- lspconfig.tsserver.setup{}
 --lspconfig.solargraph.setup{}
 lspconfig.java_language_server.setup{}
 -- lspconfig.vuels.setup{}
 lspconfig.clangd.setup{}
+lspconfig.html.setup{}
+
 lspconfig.ltex.setup({
   on_attach = on_attach,
   cmd = { "ltex-ls" },
@@ -457,7 +485,7 @@ keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list
 keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
 
--- For window borders 
+-- For window borders
 
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(
@@ -516,4 +544,7 @@ function OpenWin(file_name)
   )
   vim.cmd("edit " .. file_name)
 end
--- vim.cmd([[autocmd FileType markdown set foldexpr=NestedMarkdownFolds()]])
+
+function TrailerTrim()
+  vim.cmd([[%s/\s\+$//e]])
+end
