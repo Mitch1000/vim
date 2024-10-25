@@ -1,5 +1,6 @@
 local vim = vim
 vim.o.backspace = '2'      -- more powerful backspacing
+
 -- Don't write backup file if vim is being called by "crontab -e"
 vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
 -- Don't write backup file if vim is being called by "chpass"
@@ -58,8 +59,8 @@ vim.g.lightline = {
 
 if vim.fn.has('termguicolors') == 1 then
   vim.o.termguicolors = true
-  vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
-  vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+-- vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+-- vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
 end
 
 -- Define custom functions
@@ -85,6 +86,7 @@ end
 function GitBlame()
   vim.cmd("Git blame")
 end
+vim.cmd("let g:syntastic_java_checkers = []")
 
 -- Reload LightLine
 function ReloadLightLine()
@@ -130,13 +132,27 @@ vim.api.nvim_set_keymap('t', '<C-a>', '<Cmd>Git commit --amend <CR>', { noremap 
 vim.api.nvim_set_keymap('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = true })
 -- vim.api.nvim_set_keymap('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpenFile() <CR>', { noremap = true })
 -- vim.api.nvim_set_keymap('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
+--
 vim.api.nvim_set_keymap('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 -- vim.api.nvim_set_keymap('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
+
+function SetPaste()
+  vim.cmd([[set paste]])
+  -- Make sure press Ctrl-R
+  -- They it would without the remap to allow use paste from the register
+  vim.cmd([[call feedkeys("\<C-r>")]])
+  -- Return to no paste after the register has been pasted
+  vim.cmd([[autocmd TextChangedI * ++once set nopaste]])
+end
+
+vim.api.nvim_set_keymap('i', '<C-r>', "<Cmd> lua SetPaste() <CR>", { noremap = true, silent = true })
 function CloseWindow()
   vim.cmd([[silent! close]])
 end
 
+vim.api.nvim_set_keymap('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
 -- vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>lua CloseWindow()<CR>', { noremap = true, silent = true })
 --- https://github.com/jhawthorn/fzy/pull/116#issuecomment-538708329
@@ -145,7 +161,6 @@ vim.keymap.set('n', '<C-t>', function () require'fzy'.Oldfiles() end)
 vim.keymap.set('n', '<C-s>', function () require'fzy'.Buffers() end)
 vim.keymap.set('n', '<C-e>', function () require'fzy'.FindFile() end)
 vim.cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
-
 vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
 
 -- For Console logs
@@ -239,7 +254,6 @@ vim.cmd([[autocmd BufNewFile,BufRead *.jst set filetype=html]])
 vim.cmd([[autocmd BufRead,BufNewFile *.rabl setf ruby]])
 vim.cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css]])
 vim.cmd([[autocmd BufRead,BufNewFile *.vue syntax sync fromstart]])
-
 -- For solargraph. Solargraph doesn work with our old version of ruby
 os.execute("rbenv local 2.7.7")
 vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
@@ -264,14 +278,12 @@ vim.o.softtabstop = 0
 vim.o.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.smarttab = true
-vim.o.pastetoggle = "<F1"
 vim.o.statusline = "%#warningmsg# %*"
 vim.cmd("syntax on")
 vim.o.hidden = true
 vim.o.guicursor = "i:block"
-vim.o.t_Co = 256
+-- vim.o.t_Co = 256
 vim.o.showtabline = 2
-
 -- Define an autocmd to call lightline#update() on BufWritePost, TextChanged, and TextChangedI events
 -- vim.cmd("autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()")
 
@@ -297,7 +309,6 @@ lspconfig.ltex.setup({
   filetypes = { "markdown", "text" },
   flags = { debounce_text_changes = 300 },
 })
-
 
 -- -------------------------------------------------------------------
 -- --------------------COC VIM ---------------------------------------
