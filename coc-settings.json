@@ -55,5 +55,6 @@
     "constructor": "  ",
     "value": "  ",
     "enumMember": "  "
-  }
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }
