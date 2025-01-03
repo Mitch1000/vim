@@ -1,4 +1,4 @@
--- local vim = vim
+local vim = vim
 vim.o.backspace = '2'      -- more powerful backspacing
 
 
@@ -16,7 +16,9 @@ require('packer').startup(function(use)
   use {'Shatur/neovim-ayu'}
   use {'mitch1000/backpack'}
   use {'neovim/nvim-lspconfig'}
-
+  use {'pangloss/vim-javascript'}
+  use {'Raimondi/delimitMate'}
+  use {'romgrk/barbar.nvim'}
   use {
     "loctvl842/monokai-pro.nvim",
     config = function()
@@ -88,7 +90,25 @@ require'nvim-web-devicons'.setup {
   color_icons = true;
   default = true;
 }
-require('lualine').setup()
+require('lualine').setup {
+  refresh = {
+    statusline = 100,
+    tabline = 100,
+    winbar = 100,
+ },
+ options = {
+    tabline = {
+        lualine_z = {
+            {
+                "tabs",
+                cond = function()
+                    return #vim.fn.gettabinfo() > 1
+                end,
+            }
+        }
+    }
+  }
+}
 
  -- Enable filetype plugin and indent
  vim.cmd([[filetype plugin indent on]])
@@ -96,9 +116,6 @@ require('lualine').setup()
  vim.o.background = 'dark'
  vim.g.background_color = '#10141c'
 
- -- Setting Your Color Scheme
- -- Possible Color Schemes
- -- monokai-pro - backpack - ayu - gruvbox
  vim.g.my_color_scheme = 'backpack'
 
  vim.g.italicize_comments = 1
@@ -188,6 +205,7 @@ require('lualine').setup()
 
  -- Open the Neo Tree file browser
  vim.api.nvim_set_keymap('n', '~', '%', { noremap = true })
+ vim.api.nvim_set_keymap('x', '~', '%', { noremap = true })
  vim.api.nvim_set_keymap('n', '|', ':Neotree filesystem toggle left<CR><CR>', {
   noremap = true,
   silent = true
@@ -279,9 +297,9 @@ require('lualine').setup()
  \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>]])
 
  -- Go to next linter error
- vim.cmd([[command! AN ALENext]])
+ vim.cmd([[command! AN call CocAction('diagnosticNext')]])
  -- Go to previous linter error
- vim.cmd([[command! AP ALEPrevious]])
+ vim.cmd([[command! AP call CocAction('diagnosticPrevious')]])
  -- Redraw the vim screen
  vim.cmd([[command! RF syntax sync fromstart]])
  -- Reload vimrc and lightline theme
