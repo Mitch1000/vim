@@ -42,18 +42,29 @@ require('packer').startup(function(use)
 end)
 
 require("neo-tree").setup({
+  transparent = false,
   filesystem = {
+    window = {
+      mappings = {
+        ["/"] = "noop"
+      }
+    },
     filtered_items = {
       visible = true,
       hide_dotfiles = false,
       hide_gitignored = true,
    },
   },
-
   default_component_configs = {
      name = {
         use_git_status_colors = false
+     },
+     git_status = {
+       symbols = {
+       -- Status type
+       untracked = "-",
      }
+   },
   },
 
   window = {
@@ -87,18 +98,15 @@ require('lualine').setup()
 
  -- Setting Your Color Scheme
  -- Possible Color Schemes
- -- dracula - everforest - backpack - ayu - gruvbox
+ -- monokai-pro - backpack - ayu - gruvbox
  vim.g.my_color_scheme = 'backpack'
+
  vim.g.italicize_comments = 1
  vim.g.backpack_contrast_dark = "medium" -- soft hard medium
  vim.g.backpack_contrast_light = "medium" -- soft hard medium
  vim.g.backpack_italic = 1
  vim.g.initial_background = vim.o.background
  vim.cmd('colorscheme ' .. vim.g.my_color_scheme)
-
- -- vim.cmd([[hi! link NeoTreeDirectoryIcon BackpackNeonBlue]])
- -- vim.cmd([[hi! link NeoTreeDirectoryName BackpackFg1 ]])
- -- vim.cmd([[hi NonText guifg=bg]])
 
  vim.g.lightline = {
    colorscheme = vim.g.my_color_scheme,
@@ -179,7 +187,11 @@ require('lualine').setup()
  end
 
  -- Open the Neo Tree file browser
- vim.api.nvim_set_keymap('n', '|', ':Neotree filesystem toggle left<CR><CR>', { noremap = true })
+ vim.api.nvim_set_keymap('n', '~', '%', { noremap = true })
+ vim.api.nvim_set_keymap('n', '|', ':Neotree filesystem toggle left<CR><CR>', {
+  noremap = true,
+  silent = true
+})
  vim.api.nvim_set_keymap('n', '_', ':q! <CR>', { noremap = true })
  -- Find and replace key mapping
  vim.api.nvim_set_keymap('x', 'R', [[":s/" .. getreg('/') .."/"]], { expr = true, noremap = true })
