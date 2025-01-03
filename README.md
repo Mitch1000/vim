@@ -1,5 +1,5 @@
 # VIM Configuration
-A vim configuration for fun viming.
+A neo vim configuration for fun viming.
 
 ## Installation
 
@@ -7,16 +7,12 @@ A vim configuration for fun viming.
 
         git clone https://github.com/Mitch1000/vim.git
 
-        mv -r vim ~/.vim
+        mv vim ~/.config/nvim
 
-- Move vimrc to /etc/vim/
+- Install Plugins with packer using the the vim command:
 
-        cd ~/.vim  
+       :PackerInstall
 
-        mv vimrc /etc/vim/vimrc 
+- Instal COC Plugins with the vim command:
 
-- To pull submodules use:
-
-        git submodule update --init --recursive --remote
-
-- To use YouCompleteMe follow instructions [here](https://github.com/Valloric/YouCompleteMe).
+       :COCInstall
