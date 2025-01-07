@@ -48,7 +48,8 @@ require("neo-tree").setup({
   filesystem = {
     window = {
       mappings = {
-        ["/"] = "noop"
+        ["/"] = "noop",
+        ["u"] = "navigate_up",
       }
     },
     filtered_items = {
@@ -74,7 +75,7 @@ require("neo-tree").setup({
       ["P"] = function(state)
         local node = state.tree:get_node()
         require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
-      end
+      end,
     }
   }
 })
@@ -270,9 +271,9 @@ require('lualine').setup {
  -- Force quit the buffer (tab)
  vim.api.nvim_set_keymap('n', 'tcc', ':bw!<CR>', { noremap = true })
  -- Previous buffer (tab)
- vim.api.nvim_set_keymap('n', 'tr', ':bp<CR>', { noremap = true })
+ vim.api.nvim_set_keymap('n', 'tr', ':bn<CR>', { noremap = true })
  -- Next buffer (tab)
- vim.api.nvim_set_keymap('n', 'ty', ':bn<CR>', { noremap = true })
+ vim.api.nvim_set_keymap('n', 'ty', ':bp<CR>', { noremap = true })
  -- List buffers (tab)
  vim.api.nvim_set_keymap('n', 'tt', ':ls<CR>', { noremap = true })
  -- Comment
