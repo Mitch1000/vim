@@ -56,5 +56,16 @@
     "value": "  ",
     "enumMember": "  "
   },
-  "snippets.ultisnips.pythonPrompt": false
+  "snippets.ultisnips.pythonPrompt": false,
+  "diagnostic.checkCurrentLine": true,
+  "inlayHint.enable": false,
+  "languageserver": {
+    "swift": {
+      "command": "sourcekit-lsp",
+      "args": [],
+      "filetypes": ["swift"],
+      "initializationOptions": {},
+      "enable": false
+    }
+  }
 }
