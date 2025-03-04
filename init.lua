@@ -1,6 +1,7 @@
 local vim = vim
 vim.o.backspace = '2'      -- more powerful backspacing
 
+local map = vim.api.nvim_set_keymap
 
 -- Don't write backup file if vim is being called by "crontab -e"
 vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
@@ -9,28 +10,57 @@ vim.cmd([[au BufWrite /private/etc/pw.* set nowritebackup]])
 -- Execute pathogen#infect()
 vim.cmd [[packadd packer.nvim]]
 
+vim.g.signify_sign_add = '┃'
+vim.g.signify_sign_change = '┃'
+vim.g.signify_sign_delete = '•'
+vim.g.signify_sign_show_count = 0
+vim.g.context_highlight_tag = '<hide>'
+vim.g.context_max_height = 3
+
 require('packer').startup(function(use)
   use {'neoclide/coc.nvim', branch = 'release'}
   use {'tpope/vim-fugitive'}
-  use { 'nvim-treesitter/nvim-treesitter' }
+  use {'nvim-treesitter/nvim-treesitter'}
+  use {'wellle/context.vim'}
   use {'Shatur/neovim-ayu'}
   use {'mitch1000/backpack'}
   use {'neovim/nvim-lspconfig'}
+  use {'mhinz/vim-signify'}
   use {'pangloss/vim-javascript'}
+  use {'darfink/vim-plist'}
   use {'Raimondi/delimitMate'}
+  use {'arzg/vim-colors-xcode'}
   use {'romgrk/barbar.nvim'}
+  use {
+    'preservim/nerdcommenter',
+  }
   use {
     "loctvl842/monokai-pro.nvim",
     config = function()
       require("monokai-pro").setup()
     end
   }
+ use {
+   "nvimdev/guard.nvim",
+   event = "BufReadPre",
+   config = function()
+    local ft = require("guard.filetype")
+
+    ft("c,cpp,json"):fmt("clang-format")
+
+    require("guard").setup({
+     -- the only options for the setup function
+     fmt_on_save = true,
+     -- Use lsp if no formatter was defined for this filetype
+     lsp_as_default_formatter = false,
+    })
+   end,
+ }
 
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons' }
   }
-
   use {
     "nvim-neo-tree/neo-tree.nvim",
       branch = "v3.x",
@@ -42,6 +72,35 @@ require('packer').startup(function(use)
       }
     }
 end)
+
+ -- require("nvim-treesitter.configs").setup({
+ --     highlight = { enable = true },
+ --     indent = { enable = true },
+ --     ensure_installed = {
+ --         "swift",
+ --     },
+ --     incremental_selection = {
+ --         enable = true,
+ --         keymaps = {
+ --             init_selection = "<M-space>",
+ --             node_incremental = "<M-space>",
+ --             scope_incremental = false,
+ --             node_decremental = "<bs>",
+ --         },
+ --     },
+ --     textobjects = {
+ --         select = {
+ --             enable = true,
+ --             lookahead = true,
+ --             ...
+ --         },
+ --         move = {
+ --             enable = true,
+ --             set_jumps = true,
+ --             ...
+ --         },
+ --     },
+ -- })
 
 require("neo-tree").setup({
   transparent = false,
@@ -69,16 +128,8 @@ require("neo-tree").setup({
      }
    },
   },
-
-  window = {
-    mappings = {
-      ["P"] = function(state)
-        local node = state.tree:get_node()
-        require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
-      end,
-    }
-  }
 })
+
 require'nvim-web-devicons'.setup {
   override = {
    zsh = {
@@ -116,36 +167,38 @@ require('lualine').setup {
  -- Set background to dark
  vim.o.background = 'dark'
  vim.g.background_color = '#10141c'
-
- vim.g.my_color_scheme = 'backpack'
-
- vim.g.italicize_comments = 1
- vim.g.backpack_contrast_dark = "medium" -- soft hard medium
- vim.g.backpack_contrast_light = "medium" -- soft hard medium
- vim.g.backpack_italic = 1
- vim.g.initial_background = vim.o.background
- vim.cmd('colorscheme ' .. vim.g.my_color_scheme)
-
- vim.g.lightline = {
-   colorscheme = vim.g.my_color_scheme,
-   active = {
-     left = { { 'mode', 'paste' }, { 'readonly', 'filename', 'modified' } },
-   },
-   tabline = {
-     left = { { 'buffers' } },
-     right = { { 'close' } },
-   },
-   component_expand = { buffers = 'lightline#bufferline#buffers' },
-   component_type = { buffers = 'tabsel' },
-   separator = { left = "", right = "" },
- }
-
-
  if vim.fn.has('termguicolors') == 1 then
    vim.o.termguicolors = true
  -- vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
  -- vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
  end
+
+
+ vim.g.my_color_scheme = 'xcode'
+
+
+ vim.g.italicize_comments = 1
+ vim.g.backpack_contrast_dark = "medium" -- soft hard medium
+ vim.g.backpack_contrast_light = "medium" -- soft hard medium
+ vim.g.backpack_italic = 1
+ -- vim.g.initial_background = vim.o.background
+ vim.cmd('colorscheme ' .. vim.g.my_color_scheme)
+ vim.cmd([[highlight LineNr guifg=#84848a]])
+
+  vim.g.lightline = {
+    colorscheme = vim.g.my_color_scheme,
+    active = {
+      left = { { 'mode', 'paste' }, { 'readonly', 'filename', 'modified' } },
+    },
+    tabline = {
+      left = { { 'buffers' } },
+      right = { { 'close' } },
+    },
+    component_expand = { buffers = 'lightline#bufferline#buffers' },
+    component_type = { buffers = 'tabsel' },
+    separator = { left = "", right = "" },
+  }
+
 
  -- Define custom functions
  -- Print a console.log() for each variable stored in g register
@@ -174,6 +227,7 @@ require('lualine').setup {
 
  -- Reload LightLine
  function ReloadLightLine()
+
    -- local source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/autoload/lightline/colorscheme/" .. vim.g.my_color_scheme .. ".vim"
    -- local colors_source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/colors/" .. vim.g.my_color_scheme .. ".vim"
    vim.cmd("execute 'source ' .. '~/.config/nvim/bundle/' .. g:my_color_scheme .. '/autoload/lightline/colorscheme/' .. g:my_color_scheme .. '.vim' | call lightline#colorscheme() | call lightline#update()")
@@ -205,28 +259,28 @@ require('lualine').setup {
  end
 
  -- Open the Neo Tree file browser
- vim.api.nvim_set_keymap('n', '~', '%', { noremap = true })
- vim.api.nvim_set_keymap('x', '~', '%', { noremap = true })
- vim.api.nvim_set_keymap('n', '|', ':Neotree filesystem toggle left<CR><CR>', {
+ map('n', '~', '%', { noremap = true })
+ map('x', '~', '%', { noremap = true })
+ map('n', '|', ':Neotree filesystem toggle left<CR><CR>', {
   noremap = true,
   silent = true
 })
- vim.api.nvim_set_keymap('n', '_', ':q! <CR>', { noremap = true })
+ map('n', '_', ':q! <CR>', { noremap = true })
  -- Find and replace key mapping
- vim.api.nvim_set_keymap('x', 'R', [[":s/" .. getreg('/') .."/"]], { expr = true, noremap = true })
- vim.api.nvim_set_keymap('x', '*', [["wy :lua vim.fn.setreg('/', vim.fn.getreg('w'))<CR>]], { noremap = true, silent = true })
+ map('x', 'R', [[":s/" .. getreg('/') .."/"]], { expr = true, noremap = true })
+ map('x', '*', [["wy :lua vim.fn.setreg('/', vim.fn.getreg('w'))<CR>]], { noremap = true, silent = true })
  -- Git terminal stuff
- vim.api.nvim_set_keymap('t', '<Esc><Esc>', '<C-\\><C-n> <Cmd> close <CR>', { noremap = true, silent = true })
- vim.api.nvim_set_keymap('t', '<C-c>', '<Cmd>Git commit <CR>', { noremap = true })
- vim.api.nvim_set_keymap('t', '<C-a>', '<Cmd>Git commit --amend <CR>', { noremap = true })
- vim.api.nvim_set_keymap('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = true })
- -- vim.api.nvim_set_keymap('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpenFile() <CR>', { noremap = true })
- -- vim.api.nvim_set_keymap('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
+ map('t', '<Esc><Esc>', '<C-\\><C-n> <Cmd> close <CR>', { noremap = true, silent = true })
+ map('t', '<C-c>', '<Cmd>Git commit <CR>', { noremap = true })
+ map('t', '<C-a>', '<Cmd>Git commit --amend <CR>', { noremap = true })
+ map('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = true })
+ -- map('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpenFile() <CR>', { noremap = true })
+ -- map('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
  --
- vim.api.nvim_set_keymap('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
- -- vim.api.nvim_set_keymap('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
- vim.api.nvim_set_keymap('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
- vim.api.nvim_set_keymap('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
+ map('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
+ -- map('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
+ map('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
+ map('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 
  function SetPaste()
    vim.cmd([[set paste]])
@@ -237,52 +291,47 @@ require('lualine').setup {
    vim.cmd([[autocmd TextChangedI * ++once set nopaste]])
  end
 
- vim.api.nvim_set_keymap('i', '<C-r>', "<Cmd> lua SetPaste() <CR>", { noremap = true, silent = true })
+ map('i', '<C-r>', "<Cmd> lua SetPaste() <CR>", { noremap = true, silent = true })
  function CloseWindow()
    vim.cmd([[silent! close]])
  end
 
- vim.api.nvim_set_keymap('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
- vim.api.nvim_set_keymap('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
- -- vim.api.nvim_set_keymap('n', '<Esc><Esc>', '<Cmd>lua CloseWindow()<CR>', { noremap = true, silent = true })
+ map('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
+ map('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
+ -- map('n', '<Esc><Esc>', '<Cmd>lua CloseWindow()<CR>', { noremap = true, silent = true })
  --- https://github.com/jhawthorn/fzy/pull/116#issuecomment-538708329
  vim.keymap.set('n', '˙', function () require'fzy'.History() end)
  vim.keymap.set('n', '†', function () require'fzy'.Oldfiles() end)
  vim.keymap.set('n', 'ß', function () require'fzy'.Buffers() end)
  vim.keymap.set('n', '®', function () require'fzy'.FindFile() end)
  vim.cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
- vim.api.nvim_set_keymap('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
+ map('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
 
  -- For Console logs
  vim.fn.setreg("a", '')
  vim.fn.setreg("d", '')
  -- For Visual mode (xnoremap)
- vim.api.nvim_set_keymap('x', '<C-m>', [["dy :lua vim.fn.setreg('a', vim.fn.getreg('d') .. ' ,, ' .. vim.fn.getreg('a'))<CR>]], { noremap = true, silent = true })
+ map('x', '<C-m>', [["dy :lua vim.fn.setreg('a', vim.fn.getreg('d') .. ' ,, ' .. vim.fn.getreg('a'))<CR>]], { noremap = true, silent = true })
  -- For Normal mode (nnoremap)
- vim.api.nvim_set_keymap('n', '<C-m>', [["dyiw :lua vim.fn.setreg('a', vim.fn.getreg('d') .. ' ,, ' .. vim.fn.getreg('a'))<CR>]], { noremap = true, silent = true })
+ map('n', '<C-m>', [["dyiw :lua vim.fn.setreg('a', vim.fn.getreg('d') .. ' ,, ' .. vim.fn.getreg('a'))<CR>]], { noremap = true, silent = true })
 
  -- Copy to any register
- vim.api.nvim_set_keymap('n', 'Y', '"*yy', { noremap = true })
- vim.api.nvim_set_keymap('v', 'Y', '"*y<Esc>', { noremap = true })
+ map('n', 'Y', '"*yy', { noremap = true })
+ map('v', 'Y', '"*y<Esc>', { noremap = true })
  -- Force quit the buffer (tab)
- vim.api.nvim_set_keymap('c', 'qq', ':bw!<CR>', { noremap = true })
+ map('c', 'qq', ':bw!<CR>', { noremap = true })
  -- Quit the buffer (tab)
- vim.api.nvim_set_keymap('n', 'tc', ':bw<CR>', { noremap = true })
+ map('n', 'tc', ':bw<CR>', { noremap = true })
  -- Force quit the buffer (tab)
- vim.api.nvim_set_keymap('n', 'tcc', ':bw!<CR>', { noremap = true })
- -- Previous buffer (tab)
- vim.api.nvim_set_keymap('n', 'tr', ':bn<CR>', { noremap = true })
- -- Next buffer (tab)
- vim.api.nvim_set_keymap('n', 'ty', ':bp<CR>', { noremap = true })
- -- List buffers (tab)
- vim.api.nvim_set_keymap('n', 'tt', ':ls<CR>', { noremap = true })
+ map('n', 'tcc', ':bw!<CR>', { noremap = true })
+ --
  -- Comment
- vim.api.nvim_set_keymap('v', 'cc', '<plug>NERDCommenterToggle', { noremap = true })
- vim.api.nvim_set_keymap('n', 'cc', '<plug>NERDCommenterToggle', { noremap = true })
+ map('v', 'gc', '<plug>NERDCommenterToggle', { noremap = true })
+ map('n', 'gc', '<plug>NERDCommenterToggle', { noremap = true })
 
  -- Define custom commands
  -- Remove extra spaces at end of the lines
- vim.api.nvim_set_keymap('i', 'CONS', '<Esc>:lua PrintJavascriptConsoleLogs()<CR>', { noremap = true, silent = true })
+ map('i', 'CONS', '<Esc>:lua PrintJavascriptConsoleLogs()<CR>', { noremap = true, silent = true })
  vim.cmd([[command! Clean :%s/\s\+$//e]])
  vim.cmd([[command! GL :lua GitLoad()]])
  vim.cmd([[command! GB :lua GitBlame()]])
@@ -344,6 +393,7 @@ require('lualine').setup {
  vim.cmd([[autocmd BufRead,BufNewFile *.rabl setf ruby]])
  vim.cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css]])
  vim.cmd([[autocmd BufRead,BufNewFile *.vue syntax sync fromstart]])
+ vim.cmd([[autocmd BufRead,BufNewFile * execute "BufferOrderByBufferNumber"]])
  -- For solargraph. Solargraph doesn work with our old version of ruby
  os.execute("rbenv local 2.7.7")
  -- vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
@@ -355,14 +405,13 @@ require('lualine').setup {
  vim.g.vim_jsx_pretty_highlight_close_tag = 1
  vim.g.vim_jsx_pretty_disable_js = 1
  vim.o.number = true
- vim.o.signcolumn = 'auto'
  vim.o.cindent = true
  vim.o.autoindent = true
  vim.o.laststatus = 2
  -- Popup menu at the bottom of the page.
  vim.o.pumblend = 4
  vim.o.pumheight = 15
- vim.o.signcolumn = 'number'
+ vim.o.signcolumn = 'yes'
  vim.o.tabstop = 2
  vim.o.softtabstop = 0
  vim.o.expandtab = true
@@ -373,6 +422,7 @@ require('lualine').setup {
  vim.o.hidden = true
  vim.o.guicursor = "i:block"
  -- vim.o.t_Co = 256
+
  vim.o.showtabline = 2
  -- Define an autocmd to call lightline#update() on BufWritePost, TextChanged, and TextChangedI events
  -- vim.cmd("autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()")
@@ -392,6 +442,15 @@ require('lualine').setup {
  -- lspconfig.vuels.setup{}
  lspconfig.clangd.setup{}
  lspconfig.html.setup{}
+ lspconfig.sourcekit.setup {
+    capabilities = {
+        workspace = {
+            didChangeWatchedFiles = {
+                dynamicRegistration = true,
+            },
+        },
+    },
+ }
 
  lspconfig.ltex.setup({
    on_attach = on_attach,
@@ -399,6 +458,14 @@ require('lualine').setup {
    filetypes = { "markdown", "text" },
    flags = { debounce_text_changes = 300 },
  })
+
+ vim.api.nvim_create_autocmd('LspAttach', {
+      desc = 'LSP Actions',
+      callback = function(args)
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, {noremap = true, silent = true})
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {noremap = true, silent = true})
+      end,
+  })
 
  -- -------------------------------------------------------------------
  -- --------------------COC VIM ---------------------------------------
@@ -502,16 +569,21 @@ require('lualine').setup {
  -- Example: `<leader>aap` for current paragraph
  opts = { silent = true, nowait = true }
  keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
- keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
+ keyset("n", "<leader>ac", "<Plug>(coc-codeaction-selected)", opts)
 
  -- Remap keys for apply code actions at the cursor position.
- keyset("n", "<leader>ac", "<Plug>(coc-codeaction-cursor)", opts)
+ keyset("n", "<leader>a", "<Plug>(coc-codeaction-cursor)", opts)
  -- Remap keys for apply source code actions for current file.
  keyset("n", "<leader>as", "<Plug>(coc-codeaction-source)", opts)
  -- Apply the most preferred quickfix action on the current line.
  keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", opts)
 
+ -- keyset('n', '<D-h', ':bn<CR>', { noremap = true })
+ -- -- Previous buffer (tab)
+ -- keyset('n', '<D-l', ':bp<CR>', { noremap = true })
+
  -- Remap keys for apply refactor code actions.
+ keyset("n", "<leader>re", "<Plug>(coc-codeaction-refactor)", { silent = true })
  keyset("n", "<leader>re", "<Plug>(coc-codeaction-refactor)", { silent = true })
  keyset("x", "<leader>r", "<Plug>(coc-codeaction-refactor-selected)", { silent = true })
  keyset("n", "<leader>r", "<Plug>(coc-codeaction-refactor-selected)", { silent = true })
@@ -618,10 +690,11 @@ require('lualine').setup {
    severity_sort = false,
  })
 
- vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
- vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
- vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
- vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
+ local sign_define = vim.fn.sign_define
+ sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
+ sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
+ sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
+ sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
 
  function OpenWin(file_name)
    local width = vim.o.columns - 4
