@@ -1,3 +1,4 @@
+ 
 local vim = vim
 vim.o.backspace = '2'      -- more powerful backspacing
 
@@ -18,7 +19,7 @@ vim.g.context_highlight_tag = '<hide>'
 vim.g.context_max_height = 3
 
 require('packer').startup(function(use)
-  use {'neoclide/coc.nvim', branch = 'release'}
+  use {'neoclide/coc.nvim', branch = 'release' }
   use {'tpope/vim-fugitive'}
   use {'nvim-treesitter/nvim-treesitter'}
   use {'wellle/context.vim'}
@@ -40,6 +41,7 @@ require('packer').startup(function(use)
       require("monokai-pro").setup()
     end
   }
+ use { "nvimdev/guard-collection" }
  use {
    "nvimdev/guard.nvim",
    event = "BufReadPre",
@@ -73,34 +75,34 @@ require('packer').startup(function(use)
     }
 end)
 
- -- require("nvim-treesitter.configs").setup({
- --     highlight = { enable = true },
- --     indent = { enable = true },
- --     ensure_installed = {
- --         "swift",
- --     },
- --     incremental_selection = {
- --         enable = true,
- --         keymaps = {
- --             init_selection = "<M-space>",
- --             node_incremental = "<M-space>",
- --             scope_incremental = false,
- --             node_decremental = "<bs>",
- --         },
- --     },
- --     textobjects = {
- --         select = {
- --             enable = true,
- --             lookahead = true,
- --             ...
- --         },
- --         move = {
- --             enable = true,
- --             set_jumps = true,
- --             ...
- --         },
- --     },
- -- })
+  require("nvim-treesitter.configs").setup({
+      highlight = { enable = true },
+      indent = { enable = true },
+      ensure_installed = {
+          "swift",
+      },
+      incremental_selection = {
+          enable = true,
+          keymaps = {
+              init_selection = "<M-space>",
+              node_incremental = "<M-space>",
+              scope_incremental = false,
+              node_decremental = "<bs>",
+          },
+      },
+      textobjects = {
+          select = {
+              enable = true,
+              lookahead = true,
+              ...
+          },
+          move = {
+              enable = true,
+              set_jumps = true,
+              ...
+          },
+      },
+  })
 
 require("neo-tree").setup({
   transparent = false,
@@ -111,6 +113,8 @@ require("neo-tree").setup({
         ["u"] = "navigate_up",
       }
     },
+    bind_to_cwd = true,
+    hijack_netrw_behavior = "disabled",
     filtered_items = {
       visible = true,
       hide_dotfiles = false,
@@ -142,6 +146,7 @@ require'nvim-web-devicons'.setup {
   color_icons = true;
   default = true;
 }
+
 require('lualine').setup {
   refresh = {
     statusline = 100,
@@ -274,11 +279,11 @@ require('lualine').setup {
  map('t', '<C-c>', '<Cmd>Git commit <CR>', { noremap = true })
  map('t', '<C-a>', '<Cmd>Git commit --amend <CR>', { noremap = true })
  map('t', '<C-r>', '<Cmd>lua TigReset() <CR>', { noremap = true })
- -- map('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpenFile() <CR>', { noremap = true })
- -- map('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
+ map('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpenFile() <CR>', { noremap = true })
+ map('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
  --
  map('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
- -- map('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
+ map('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
  map('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
  map('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 
@@ -393,7 +398,14 @@ require('lualine').setup {
  vim.cmd([[autocmd BufRead,BufNewFile *.rabl setf ruby]])
  vim.cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css]])
  vim.cmd([[autocmd BufRead,BufNewFile *.vue syntax sync fromstart]])
- vim.cmd([[autocmd BufRead,BufNewFile * execute "BufferOrderByBufferNumber"]])
+
+ function BufferOrderByBufferNumberSafe()
+   if vim.fn.exists(":BufferOrderByBufferNumber") > 0 then
+      vim.cmd([[BufferOrderByBufferNumber]])
+   end
+ end
+
+ vim.cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
  -- For solargraph. Solargraph doesn work with our old version of ruby
  os.execute("rbenv local 2.7.7")
  -- vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
@@ -530,12 +542,17 @@ require('lualine').setup {
  end
  keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
+ function CocActionAsyncSafe(action)
+   if vim.fn.exists(":CocList") > 0 then
+     vim.fn.CocActionAsync(action)
+   end
+ end
 
  -- Highlight the symbol and its references on a CursorHold event(cursor is idle)
  vim.api.nvim_create_augroup("CocGroup", {})
  vim.api.nvim_create_autocmd("CursorHold", {
      group = "CocGroup",
-     command = "silent call CocActionAsync('highlight')",
+     command = "silent lua CocActionAsyncSafe('highlight')",
      desc = "Highlight symbol under cursor on CursorHold"
  })
 
@@ -561,7 +578,7 @@ require('lualine').setup {
  vim.api.nvim_create_autocmd("User", {
      group = "CocGroup",
      pattern = "CocJumpPlaceholder",
-     command = "call CocActionAsync('showSignatureHelp')",
+     command = "call CocActionAsyncSafe('showSignatureHelp')",
      desc = "Update signature help on jump placeholder"
  })
 
@@ -619,7 +636,7 @@ require('lualine').setup {
 
  -- Use CTRL-S for selections ranges
  -- Requires 'textDocument/selectionRange' support of language server
- -- keyset("n", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
+ keyset("n", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
  keyset("x", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
 
 
