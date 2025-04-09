@@ -219,21 +219,6 @@ require('lualine').setup {
  vim.cmd('colorscheme ' .. vim.g.my_color_scheme)
  vim.cmd([[highlight LineNr guifg=#84848a]])
 
-  vim.g.lightline = {
-    colorscheme = vim.g.my_color_scheme,
-    active = {
-      left = { { 'mode', 'paste' }, { 'readonly', 'filename', 'modified' } },
-    },
-    tabline = {
-      left = { { 'buffers' } },
-      right = { { 'close' } },
-    },
-    component_expand = { buffers = 'lightline#bufferline#buffers' },
-    component_type = { buffers = 'tabsel' },
-    separator = { left = "", right = "" },
-  }
-
-
  -- Define custom functions
  -- Print a console.log() for each variable stored in g register
  function PrintJavascriptConsoleLogs()
@@ -298,7 +283,8 @@ require('lualine').setup {
  map('n', '|', ':Neotree filesystem toggle left<CR><CR>', {
   noremap = true,
   silent = true
-})
+ })
+
  map('n', '_', ':q! <CR>', { noremap = true })
  -- Find and replace key mapping
  map('x', 'R', [[":s/" .. getreg('/') .."/"]], { expr = true, noremap = true })
