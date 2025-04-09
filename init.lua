@@ -428,17 +428,17 @@ require('lualine').setup {
  --lspconfig.solargraph.setup{}
  lspconfig.java_language_server.setup{}
  -- lspconfig.vuels.setup{}
- lspconfig.clangd.setup{}
+ -- lspconfig.clangd.setup{}
  lspconfig.html.setup{}
- lspconfig.sourcekit.setup {
-    capabilities = {
-        workspace = {
-            didChangeWatchedFiles = {
-                dynamicRegistration = true,
-            },
-        },
-    },
- }
+ -- lspconfig.sourcekit.setup {
+ --    capabilities = {
+ --        workspace = {
+ --            didChangeWatchedFiles = {
+ --                dynamicRegistration = true,
+ --            },
+ --        },
+ --    },
+ -- }
 
  lspconfig.ltex.setup({
    on_attach = on_attach,

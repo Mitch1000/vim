@@ -66,6 +66,22 @@
       "filetypes": ["swift"],
       "initializationOptions": {},
       "enable": false
+    },
+    "ccls": {
+      "command": "/opt/homebrew/Cellar/ccls/0.20241108_1/bin/ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
     }
   }
 }
