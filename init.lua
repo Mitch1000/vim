@@ -620,15 +620,6 @@ end)
  -- Remap <C-f> and <C-b> to scroll float windows/popups
  ---@diagnostic disable-next-line: redefined-local
  local opts = {silent = true, nowait = true, expr = true}
- keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
- keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
- keyset("i", "<C-f>",
-        'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
- keyset("i", "<C-b>",
-        'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
- keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
- keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
-
 
  -- Use CTRL-S for selections ranges
  -- Requires 'textDocument/selectionRange' support of language server
@@ -648,7 +639,7 @@ end)
  -- Add (Neo)Vim's native statusline support
  -- NOTE: Please see `:h coc-status` for integrations with external plugins that
  -- provide custom statusline: lightline.vim, vim-airline
- vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
+ -- vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
  -- Mappings for CoCList
  -- code actions and coc stuff
