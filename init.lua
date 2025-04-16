@@ -262,7 +262,7 @@ end)
  end
 
 
- vim.g.my_color_scheme = 'xcode'
+ vim.g.my_color_scheme = 'backpack'
 
 
  vim.g.italicize_comments = 1
