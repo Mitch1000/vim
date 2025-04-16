@@ -474,47 +474,6 @@ end)
  end
 
  vim.cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
- -- For solargraph. Solargraph doesn work with our old version of ruby
- os.execute("rbenv local 2.7.7")
- -- vim.cmd([[autocmd VimLeave * execute "lua os.execute('rbenv local 2.1.1')"]])
-
- --  Linter configuration
- -- vim.g.ale_linters = {
- --   javascript = {"eslint"},
- -- }
-
- local lspconfig = require('lspconfig')
- lspconfig.pyright.setup{}
- -- lspconfig.tsserver.setup{}
- --lspconfig.solargraph.setup{}
- lspconfig.java_language_server.setup{}
- -- lspconfig.vuels.setup{}
- -- lspconfig.clangd.setup{}
- lspconfig.html.setup{}
- -- lspconfig.sourcekit.setup {
- --    capabilities = {
- --        workspace = {
- --            didChangeWatchedFiles = {
- --                dynamicRegistration = true,
- --            },
- --        },
- --    },
- -- }
-
- lspconfig.ltex.setup({
-   on_attach = on_attach,
-   cmd = { "ltex-ls" },
-   filetypes = { "markdown", "text" },
-   flags = { debounce_text_changes = 300 },
- })
-
- vim.api.nvim_create_autocmd('LspAttach', {
-      desc = 'LSP Actions',
-      callback = function(args)
-          vim.keymap.set('n', 'K', vim.lsp.buf.hover, {noremap = true, silent = true})
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {noremap = true, silent = true})
-      end,
-  })
 
  -- -------------------------------------------------------------------
  -- --------------------COC VIM ---------------------------------------
