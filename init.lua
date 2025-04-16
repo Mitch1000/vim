@@ -38,155 +38,217 @@ vim.o.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.smarttab = true
 vim.o.statusline = "%#warningmsg# %*"
-vim.cmd("syntax on")
 vim.o.hidden = true
 vim.o.guicursor = "i:block"
 -- vim.o.t_Co = 256
 vim.o.showtabline = 2
+vim.cmd("syntax on")
+
 
 vim.o.cursorline = true
 
 
 require('packer').startup(function(use)
-  use {'neoclide/coc.nvim', branch = 'release' }
-  use {'tpope/vim-fugitive'}
-  use {'nvim-treesitter/nvim-treesitter'}
-  use {'wellle/context.vim'}
-  use {'Shatur/neovim-ayu'}
-  use {'mitch1000/backpack'}
-  use {'neovim/nvim-lspconfig'}
-  use {'mhinz/vim-signify'}
-  use {'pangloss/vim-javascript'}
-  use {'darfink/vim-plist'}
-  use {'Raimondi/delimitMate'}
-  use {'arzg/vim-colors-xcode'}
-  use {'romgrk/barbar.nvim'}
-  use {
-    'preservim/nerdcommenter',
-  }
-  use {
-    "loctvl842/monokai-pro.nvim",
-    config = function()
-      require("monokai-pro").setup()
-    end
-  }
-  use {
-    "nvimdev/guard.nvim",
-    event = "BufReadPre",
-    config = function()
-     local ft = require("guard.filetype")
+   use {'vim-ruby/vim-ruby'}
+   use {'tpope/vim-rails'}
+   use {'neoclide/coc.nvim', branch = 'release' }
+   use {'tpope/vim-fugitive'}
+   use {'nvim-treesitter/nvim-treesitter'}
+   use {'wellle/context.vim'}
+   use {'Shatur/neovim-ayu'}
+   use {'mitch1000/backpack'}
+   use {'neovim/nvim-lspconfig'}
+   use {'mhinz/vim-signify'}
+   use {'pangloss/vim-javascript'}
+   use {'darfink/vim-plist'}
+   use {'Raimondi/delimitMate'}
+   use {'joshdick/onedark.vim'}
+   use {'lunacookies/vim-colors-xcode'}
+   use {'romgrk/barbar.nvim'}
+   use {
+     'preservim/nerdcommenter',
+   }
+   use {
+       "autozimu/LanguageClient-neovim",
+       branch = "next",
+   }
+   use {
+     "loctvl842/monokai-pro.nvim",
+     config = function()
+       require("monokai-pro").setup()
+     end
+   }
+   use {
+     "nvimdev/guard.nvim",
+     requires = { 'nvimdev/guard-collection' },
+     event = "BufReadPre",
+     config = function()
+      local ft = require("guard.filetype")
 
-     ft("c,cpp,json"):fmt("clang-format")
-    end
-  }
+      ft("c,cpp,json"):fmt("clang-format")
+     end
+   }
+   use { 'nvim-tree/nvim-web-devicons' }
+   use {
+     'nvim-lualine/lualine.nvim',
+   }
 
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons' }
-  }
-  use {
-    "nvim-neo-tree/neo-tree.nvim",
-      branch = "v3.x",
-      requires = {
-        "mitch1000/backpack",
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons",
-        "MunifTanjim/nui.nvim",
-      }
-    }
+   use {
+     "nvim-neo-tree/neo-tree.nvim",
+       branch = "v3.x",
+       requires = {
+         "mitch1000/backpack",
+         "nvim-lua/plenary.nvim",
+         "MunifTanjim/nui.nvim",
+       }
+     }
 end)
 
-  require("nvim-treesitter.configs").setup({
-      highlight = { enable = true },
-      indent = { enable = true },
-      ensure_installed = {
-          "swift",
-      },
-      incremental_selection = {
-          enable = true,
-          keymaps = {
-              init_selection = "<M-space>",
-              node_incremental = "<M-space>",
-              scope_incremental = false,
-              node_decremental = "<bs>",
-          },
-      },
-      textobjects = {
-          select = {
-              enable = true,
-              lookahead = true,
-              ...
-          },
-          move = {
-              enable = true,
-              set_jumps = true,
-              ...
-          },
-      },
-  })
+ require("nvim-treesitter.configs").setup({
+     highlight = { enable = true },
+     indent = { enable = true },
+     ensure_installed = {
+         "swift",
+     },
+     incremental_selection = {
+         enable = true,
+         keymaps = {
+             init_selection = "<M-space>",
+             node_incremental = "<M-space>",
+             scope_incremental = false,
+             node_decremental = "<bs>",
+         },
+     },
+     textobjects = {
+         select = {
+             enable = true,
+             lookahead = true,
+             ...
+         },
+         move = {
+             enable = true,
+             set_jumps = true,
+             ...
+         },
+     },
+ })
 
-require("neo-tree").setup({
-  transparent = false,
-  filesystem = {
-    window = {
-      mappings = {
-        ["/"] = "noop",
-        ["u"] = "navigate_up",
+ require("neo-tree").setup {
+   transparent = false,
+   filesystem = {
+     window = {
+       mappings = {
+         ["/"] = "noop",
+         ["u"] = "navigate_up",
+       }
+     },
+     bind_to_cwd = true,
+     hijack_netrw_behavior = "disabled",
+     filtered_items = {
+       visible = true,
+       hide_dotfiles = false,
+       hide_gitignored = true,
+    },
+   },
+   default_component_configs = {
+      name = {
+         use_git_status_colors = false
+      },
+      git_status = {
+        symbols = {
+        -- Status type
+        untracked = "-",
       }
     },
-    bind_to_cwd = true,
-    hijack_netrw_behavior = "disabled",
-    filtered_items = {
-      visible = true,
-      hide_dotfiles = false,
-      hide_gitignored = true,
    },
-  },
-  default_component_configs = {
-     name = {
-        use_git_status_colors = false
-     },
-     git_status = {
-       symbols = {
-       -- Status type
-       untracked = "-",
-     }
+ }
+ local ruby_icon_object = {
+    icon = "",
+    color = "#db507e",
+    cterm_color = "168",
+    name = "Rb"
+ }
+ local git_icon_object = { icon = "", color = "#af5f5f", cterm_color = "160", name = "GitLogo" }
+
+ require'nvim-web-devicons'.setup {
+   override_by_extension = {
+     ["js"] = { icon = "", color = "#fbfb04", cterm_color = "58",  name = "Js" }
    },
-  },
-})
-
-require'nvim-web-devicons'.setup {
-  override = {
-   zsh = {
-     icon = "",
-     color = "#428850",
-     cterm_color = "65",
-     name = "Zsh"
-   }
-  };
-  color_icons = true;
-  default = true;
-}
-
-require('lualine').setup {
-  refresh = {
-    statusline = 100,
-    tabline = 100,
-    winbar = 100,
- },
- options = {
-    tabline = {
-        lualine_z = {
-            {
-                "tabs",
-                cond = function()
-                    return #vim.fn.gettabinfo() > 1
-                end,
-            }
-        }
+   override_by_filename = {
+    [".git-blame-ignore-revs"] = git_icon_object,
+    [".gitattributes"] = git_icon_object,
+    [".gitignore"] = git_icon_object,
+    [".mailmap"] = git_icon_object,
+    ["Gemfile"] = ruby_icon_object,
+    ["Rakefile"] = ruby_icon_object,
+    ["config.ru"] = ruby_icon_object
+   },
+   override = {
+    zsh = {
+      icon = "",
+      color = "#428850",
+      cterm_color = "65",
+      name = "Zsh"
+    },
+    md = {
+      icon = "",
+      color = "#428850",
+      cterm_color = "65",
+      name = "Zsh"
+    },
+    rb = ruby_icon_object,
+    git = {
+      icon = "",
+      color = "#87ffaf",
+      cterm_color = "121",
+      name = "GitLogo"
     }
-  }
-}
+   };
+   --color_icons = true;
+   -- default = true;
+ }
+
+ require('lualine').setup {
+   refresh = {
+     statusline = 100,
+     tabline = 100,
+     winbar = 100,
+  },
+  options = {
+     tabline = {
+         lualine_z = {
+             {
+                 "tabs",
+                 cond = function()
+                     return #vim.fn.gettabinfo() > 1
+                 end,
+             }
+         }
+     }
+   }
+ }
+
+ -- Language Server Config Setups
+ local lspconfig = require('lspconfig')
+ lspconfig.pyright.setup{}
+ lspconfig.java_language_server.setup{}
+ lspconfig.html.setup{}
+
+ lspconfig.ltex.setup({
+   -- on_attach = on_attach,
+   cmd = { "ltex-ls" },
+   filetypes = { "markdown", "text" },
+   flags = { debounce_text_changes = 300 },
+ })
+
+ vim.api.nvim_create_autocmd('LspAttach', {
+      desc = 'LSP Actions',
+      callback = function(args)
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, {noremap = true, silent = true})
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {noremap = true, silent = true})
+      end,
+  })
+
 
  -- Enable filetype plugin and indent
  vim.cmd([[filetype plugin indent on]])
