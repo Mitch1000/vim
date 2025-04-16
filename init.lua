@@ -331,6 +331,11 @@ end)
    vim.cmd("call feedkeys('R')")
  end
 
+
+ -- Get highlight group (color group) for
+ -- item under the cursor to allow for setting syntax highlighting
+ map('n', '<C-h>', [[:echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>]], { noremap = true })
+
  -- Open the Neo Tree file browser
  map('n', '~', '%', { noremap = true })
  map('x', '~', '%', { noremap = true })
@@ -413,12 +418,6 @@ end)
  vim.cmd([[command! CL :lua vim.fn.setreg("a", '')]])
  vim.cmd([[command! BD :set background=dark]])
  vim.cmd([[command! BL :set background=light]])
-
- -- Get highlight group (color group) for
- -- item under the cursor to allow for setting syntax highlighting
- vim.cmd([[nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
- \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
- \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>]])
 
  -- Go to next linter error
  vim.cmd([[command! AN call CocAction('diagnosticNext')]])
