@@ -229,6 +229,27 @@ end)
 
  -- Language Server Config Setups
  local lspconfig = require('lspconfig')
+ local capabilities = require("lspconfig.configs").capabilities
+
+ lspconfig.volar.setup({
+    init_options = {
+      --typescript = {
+      --  tsdk = "/Users/dirtplantman/.nvm/versions/node/v22.14.0/lib/node_modules/typescript/lib",
+      --}
+    },
+ })
+--
+-- lspconfig.ts_ls.setup({
+--    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+--    init_options = {
+--      plugins = {
+--        {
+--          languages = { 'vue' },
+--        },
+--      },
+--    },
+--  })
+
  lspconfig.pyright.setup{}
  lspconfig.java_language_server.setup{}
  lspconfig.html.setup{}
@@ -247,6 +268,7 @@ end)
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {noremap = true, silent = true})
       end,
   })
+
 
 
  -- Enable filetype plugin and indent
