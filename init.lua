@@ -47,7 +47,6 @@ vim.cmd("syntax on")
 
 vim.o.cursorline = true
 
-
 require('packer').startup(function(use)
    use {'vim-ruby/vim-ruby'}
    use {'tpope/vim-rails'}
@@ -464,7 +463,11 @@ end)
  -- vim.cmd([[autocmd TermLeave * execute "set background=" .. g:initial_background .. " | lua ReloadLightLine()"]])
  vim.cmd([[autocmd BufNewFile,BufRead *.jst set filetype=html]])
  vim.cmd([[autocmd BufRead,BufNewFile *.rabl setf ruby]])
- vim.cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css]])
+ vim.cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css || TSBufDisable highlight]])
+ vim.cmd([[autocmd BufRead,BufNewFile *.js TSBufDisable highlight]])
+ vim.cmd([[autocmd BufRead,BufNewFile *.html TSBufDisable highlight]])
+ vim.cmd([[autocmd BufRead,BufNewFile *.scss TSBufDisable highlight]])
+ vim.cmd([[autocmd BufRead,BufNewFile *.css TSBufDisable highlight]])
  vim.cmd([[autocmd BufRead,BufNewFile *.vue syntax sync fromstart]])
 
  function BufferOrderByBufferNumberSafe()
