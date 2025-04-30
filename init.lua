@@ -84,7 +84,7 @@ require('packer').startup(function(use)
      config = function()
       local ft = require("guard.filetype")
 
-      ft("c,cpp,json"):fmt("clang-format")
+      ft("c,cpp"):fmt("clang-format")
      end
    }
    use { 'nvim-tree/nvim-web-devicons' }
