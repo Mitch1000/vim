@@ -2,15 +2,19 @@
   "javascript.showUnused": false,
   "typescript.showUnused": false,
   "typescript.showDeprecated": false,
+  "prettier.eslintIntegration": true,  
   "javascript.showDeprecated": false,
   "javascript.suggestionActions.enabled": false,
+  "[vue]": {
+      "diagnostic.enable": true,
+      "coc.preferences.formatOnSave": false 
+    },
   "border": true,
   "rounded": true,
   "diagnostic.floatConfig.border": true,
   "hover.floatConfig.border": true,
   "signature.floatConfig.border": true,
   "tsserver.log": "normal",
-  "vetur.validation.style": false,
   "diagnostic.errorSign": "✘",
   "diagnostic.floatConfig": {
     "border": true,
