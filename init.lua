@@ -68,10 +68,6 @@ require('packer').startup(function(use)
      'preservim/nerdcommenter',
    }
    use {
-       "autozimu/LanguageClient-neovim",
-       branch = "next",
-   }
-   use {
      "loctvl842/monokai-pro.nvim",
      config = function()
        require("monokai-pro").setup()
