@@ -77,11 +77,6 @@ require('packer').startup(function(use)
      "nvimdev/guard.nvim",
      requires = { 'nvimdev/guard-collection' },
      event = "BufReadPre",
-     config = function()
-      local ft = require("guard.filetype")
-
-      ft("c,cpp"):fmt("clang-format")
-     end
    }
    use { 'nvim-tree/nvim-web-devicons' }
    use {
