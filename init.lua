@@ -1,4 +1,3 @@
- 
 local vim = vim
 vim.o.backspace = '2'      -- more powerful backspacing
 
@@ -8,8 +7,6 @@ local map = vim.api.nvim_set_keymap
 vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
 -- Don't write backup file if vim is being called by "chpass"
 vim.cmd([[au BufWrite /private/etc/pw.* set nowritebackup]])
--- Execute pathogen#infect()
-vim.cmd [[packadd packer.nvim]]
 
 vim.g.signify_sign_add = '┃'
 vim.g.signify_sign_change = '┃'
@@ -47,52 +44,7 @@ vim.cmd("syntax on")
 
 vim.o.cursorline = true
 
-require('packer').startup(function(use)
-   use {'vim-ruby/vim-ruby'}
-   use {'tpope/vim-rails'}
-   use {'neoclide/coc.nvim', branch = 'release' }
-   use {'tpope/vim-fugitive'}
-   use {'nvim-treesitter/nvim-treesitter'}
-   use {'wellle/context.vim'}
-   use {'Shatur/neovim-ayu'}
-   use {'mitch1000/backpack'}
-   use {'neovim/nvim-lspconfig'}
-   use {'mhinz/vim-signify'}
-   use {'pangloss/vim-javascript'}
-   use {'darfink/vim-plist'}
-   use {'Raimondi/delimitMate'}
-   use {'joshdick/onedark.vim'}
-   use {'lunacookies/vim-colors-xcode'}
-   use {'romgrk/barbar.nvim'}
-   use {
-     'preservim/nerdcommenter',
-   }
-   use {
-     "loctvl842/monokai-pro.nvim",
-     config = function()
-       require("monokai-pro").setup()
-     end
-   }
-   use {
-     "nvimdev/guard.nvim",
-     requires = { 'nvimdev/guard-collection' },
-     event = "BufReadPre",
-   }
-   use { 'nvim-tree/nvim-web-devicons' }
-   use {
-     'nvim-lualine/lualine.nvim',
-   }
-
-   use {
-     "nvim-neo-tree/neo-tree.nvim",
-       branch = "v3.x",
-       requires = {
-         "mitch1000/backpack",
-         "nvim-lua/plenary.nvim",
-         "MunifTanjim/nui.nvim",
-       }
-     }
-end)
+require("config.lazy")
 
  require("nvim-treesitter.configs").setup({
      highlight = { enable = true },

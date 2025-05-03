@@ -77,7 +77,7 @@
     },
     "ccls": {
       "command": "/opt/homebrew/Cellar/ccls/0.20241108_1/bin/ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "filetypes": ["c", "cpp", "cc", "c++", "objc", "objcpp"],
       "rootPatterns": [
         ".ccls",
         "compile_commands.json",
