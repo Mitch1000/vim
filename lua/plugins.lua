@@ -1,5 +1,6 @@
 return {
   'folke/neodev.nvim',
+  'neoclide/vim-jsx-improve',
   'folke/which-key.nvim',
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
   -- General plugins
