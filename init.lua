@@ -433,6 +433,7 @@ require("config.lazy")
  vim.cmd([[autocmd BufRead,BufNewFile *.html TSBufDisable highlight]])
  vim.cmd([[autocmd BufRead,BufNewFile *.scss TSBufDisable highlight]])
  vim.cmd([[autocmd BufRead,BufNewFile *.css TSBufDisable highlight]])
+ vim.cmd([[autocmd BufRead,BufNewFile *.vim TSBufDisable highlight]])
  vim.cmd([[autocmd BufRead,BufNewFile *.vue syntax sync fromstart]])
 
  function BufferOrderByBufferNumberSafe()
