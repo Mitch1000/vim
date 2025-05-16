@@ -2,6 +2,7 @@ return {
   'folke/neodev.nvim',
   'neoclide/vim-jsx-improve',
   'folke/which-key.nvim',
+  'andymass/vim-matchup',
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
   -- General plugins
   { 'vim-ruby/vim-ruby' },
