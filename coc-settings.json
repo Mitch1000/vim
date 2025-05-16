@@ -100,5 +100,6 @@
       }
 
     }
-  }
+  },
+  "javascript.autoClosingTags": false
 }
