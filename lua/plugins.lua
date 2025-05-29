@@ -1,3 +1,5 @@
+local vim = vim
+
 return {
   'folke/neodev.nvim',
   'neoclide/vim-jsx-improve',
@@ -11,7 +13,6 @@ return {
   { 'nvim-treesitter/nvim-treesitter' },
   { 'wellle/context.vim' },
   { 'Shatur/neovim-ayu' },
-  { 'mitch1000/backpack' },
   { 'neovim/nvim-lspconfig' },
   { 'mhinz/vim-signify' },
   { 'pangloss/vim-javascript' },
@@ -21,9 +22,57 @@ return {
   { 'lunacookies/vim-colors-xcode' },
   { 'romgrk/barbar.nvim' },
   { 'preservim/nerdcommenter' },
-  { 'nvim-tree/nvim-web-devicons' },
 
   -- Plugins with configuration
+  {
+    'nvim-tree/nvim-web-devicons',
+    config = function()
+      local ruby_icon_object = {
+         icon = "",
+         color = "#db507e",
+         cterm_color = "168",
+         name = "Rb"
+      }
+      
+      local git_icon_object = { icon = "", color = "#af5f5f", cterm_color = "160", name = "GitLogo" }
+      require('nvim-web-devicons').setup({
+        override_by_extension = {
+          ["js"] = { icon = "", color = "#fbfb04", cterm_color = "58",  name = "Js" }
+        },
+        override_by_filename = {
+         [".git-blame-ignore-revs"] = git_icon_object,
+         [".gitattributes"] = git_icon_object,
+         [".gitignore"] = git_icon_object,
+         [".mailmap"] = git_icon_object,
+         ["Gemfile"] = ruby_icon_object,
+         ["Rakefile"] = ruby_icon_object,
+         ["config.ru"] = ruby_icon_object
+        },
+        override = {
+          zsh = {
+            icon = "",
+            color = "#428850",
+            cterm_color = "65",
+            name = "Zsh"
+          },
+          md = {
+            icon = "",
+            color = "#428850",
+            cterm_color = "65",
+            name = "Zsh"
+          },
+          rb = ruby_icon_object,
+          git = {
+            icon = "",
+            color = "#87ffaf",
+            cterm_color = "121",
+            name = "GitLogo"
+          }
+        };
+      })
+    end
+  },
+
   {
     'jackguo380/vim-lsp-cxx-highlight',
       highlight = { lsRanges = true }
@@ -44,7 +93,27 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     config = function()
+      require('lualine').setup({
+        refresh = {
+           statusline = 100,
+           tabline = 100,
+           winbar = 100,
+        },
+        options = {
+           tabline = {
+               lualine_z = {
+                   {
+                       "tabs",
+                       cond = function()
+                           return #vim.fn.gettabinfo() > 1
+                       end,
+                   }
+               }
+           }
+        },
+      })
       -- Add your lualine config here if needed
+      --
     end
   },
 
@@ -55,6 +124,34 @@ return {
       "mitch1000/backpack",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
+    },
+
+    transparent = false,
+    filesystem = {
+      window = {
+        mappings = {
+          ["/"] = "noop",
+          ["u"] = "navigate_up",
+        }
+      },
+      bind_to_cwd = true,
+      hijack_netrw_behavior = "disabled",
+      filtered_items = {
+        visible = true,
+        hide_dotfiles = false,
+        hide_gitignored = true,
+     },
+    },
+    default_component_configs = {
+       name = {
+          use_git_status_colors = false
+       },
+       git_status = {
+         symbols = {
+         -- Status type
+         untracked = "-",
+       }
+     },
     },
     config = function()
       -- Add your neo-tree config here if needed
@@ -69,5 +166,25 @@ return {
     init = function()
       -- CoC specific initialization if needed
     end
-  }
+  },
+
+  {
+    'mitch1000/backpack',
+    config = function ()
+      vim.g.italicize_comments = 1
+      vim.g.backpack_italic = 1
+      vim.g.backpack_contrast_dark = "medium" -- soft hard medium
+    end
+  },
+
+  {
+    'sainnhe/sonokai',
+    lazy = false,
+    config = function()
+      vim.g.sonokai_style = 'default'
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.sonokai_enable_italic = true
+    end
+  },
 }

@@ -8,6 +8,7 @@ vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
 -- Don't write backup file if vim is being called by "chpass"
 vim.cmd([[au BufWrite /private/etc/pw.* set nowritebackup]])
 
+
 vim.g.signify_sign_add = '┃'
 vim.g.signify_sign_change = '┃'
 vim.g.signify_sign_delete = '•'
@@ -46,129 +47,38 @@ vim.o.cursorline = true
 
 require("config.lazy")
 
- require("nvim-treesitter.configs").setup({
-     highlight = { enable = true },
-     indent = { enable = true },
-     ensure_installed = {
-         "swift",
-     },
-     incremental_selection = {
-         enable = true,
-         keymaps = {
-             init_selection = "<M-space>",
-             node_incremental = "<M-space>",
-             scope_incremental = false,
-             node_decremental = "<bs>",
-         },
-     },
-     textobjects = {
-         select = {
-             enable = true,
-             lookahead = true,
-             ...
-         },
-         move = {
-             enable = true,
-             set_jumps = true,
-             ...
-         },
-     },
- })
+require("nvim-treesitter.configs").setup({
+    highlight = {
+      enable = false,
+      additional_vim_regex_highlighting = true,
+    },
+    indent = { enable = true },
+    ensure_installed = {
+        "swift",
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<M-space>",
+            node_incremental = "<M-space>",
+            scope_incremental = false,
+            node_decremental = "<bs>",
+        },
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            ...
+        },
+        move = {
+            enable = true,
+            set_jumps = true,
+            ...
+        },
+    },
+})
 
- require("neo-tree").setup {
-   transparent = false,
-   filesystem = {
-     window = {
-       mappings = {
-         ["/"] = "noop",
-         ["u"] = "navigate_up",
-       }
-     },
-     bind_to_cwd = true,
-     hijack_netrw_behavior = "disabled",
-     filtered_items = {
-       visible = true,
-       hide_dotfiles = false,
-       hide_gitignored = true,
-    },
-   },
-   default_component_configs = {
-      name = {
-         use_git_status_colors = false
-      },
-      git_status = {
-        symbols = {
-        -- Status type
-        untracked = "-",
-      }
-    },
-   },
- }
- local ruby_icon_object = {
-    icon = "",
-    color = "#db507e",
-    cterm_color = "168",
-    name = "Rb"
- }
- local git_icon_object = { icon = "", color = "#af5f5f", cterm_color = "160", name = "GitLogo" }
-
- require'nvim-web-devicons'.setup {
-   override_by_extension = {
-     ["js"] = { icon = "", color = "#fbfb04", cterm_color = "58",  name = "Js" }
-   },
-   override_by_filename = {
-    [".git-blame-ignore-revs"] = git_icon_object,
-    [".gitattributes"] = git_icon_object,
-    [".gitignore"] = git_icon_object,
-    [".mailmap"] = git_icon_object,
-    ["Gemfile"] = ruby_icon_object,
-    ["Rakefile"] = ruby_icon_object,
-    ["config.ru"] = ruby_icon_object
-   },
-   override = {
-    zsh = {
-      icon = "",
-      color = "#428850",
-      cterm_color = "65",
-      name = "Zsh"
-    },
-    md = {
-      icon = "",
-      color = "#428850",
-      cterm_color = "65",
-      name = "Zsh"
-    },
-    rb = ruby_icon_object,
-    git = {
-      icon = "",
-      color = "#87ffaf",
-      cterm_color = "121",
-      name = "GitLogo"
-    }
-   };
-   --color_icons = true;
-   -- default = true;
- }
-
- require('lualine').setup {
-   refresh = {
-     statusline = 100,
-     tabline = 100,
-     winbar = 100,
-  },
-  options = {
-     tabline = {
-         lualine_z = {
-             {
-                 "tabs",
-                 cond = function()
-                     return #vim.fn.gettabinfo() > 1
-                 end,
-             }
-         }
-     }
-   }
- }
 
  -- Language Server Config Setups
  local lspconfig = require('lspconfig')
@@ -181,17 +91,6 @@ require("config.lazy")
       --}
     },
  })
---
--- lspconfig.ts_ls.setup({
---    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
---    init_options = {
---      plugins = {
---        {
---          languages = { 'vue' },
---        },
---      },
---    },
---  })
 
  lspconfig.pyright.setup{}
  lspconfig.java_language_server.setup{}
