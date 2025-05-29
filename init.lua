@@ -1,5 +1,4 @@
 local vim = vim
-vim.o.backspace = '2'      -- more powerful backspacing
 
 local map = vim.api.nvim_set_keymap
 
@@ -8,7 +7,6 @@ vim.cmd([[au BufWrite /private/tmp/crontab.* set nowritebackup]])
 -- Don't write backup file if vim is being called by "chpass"
 vim.cmd([[au BufWrite /private/etc/pw.* set nowritebackup]])
 
-
 vim.g.signify_sign_add = '┃'
 vim.g.signify_sign_change = '┃'
 vim.g.signify_sign_delete = '•'
@@ -16,36 +14,11 @@ vim.g.signify_sign_show_count = 0
 vim.g.context_highlight_tag = '<hide>'
 vim.g.context_max_height = 3
 
--- ------ SETTERS ------
-vim.g.indentLine_char = '|'
-vim.g.markdown_folding = 1
-vim.g.vim_jsx_pretty_colorful_config = 1
-vim.g.vim_jsx_pretty_highlight_close_tag = 1
-vim.g.vim_jsx_pretty_disable_js = 1
-vim.o.number = true
-vim.o.cindent = true
-vim.o.autoindent = true
-vim.o.laststatus = 2
--- Popup menu at the bottom of the page.
-vim.o.pumblend = 4
-vim.o.pumheight = 15
-vim.o.signcolumn = 'yes'
-vim.o.tabstop = 2
-vim.o.softtabstop = 0
-vim.o.expandtab = true
-vim.o.shiftwidth = 2
-vim.o.smarttab = true
-vim.o.statusline = "%#warningmsg# %*"
-vim.o.hidden = true
-vim.o.guicursor = "i:block"
--- vim.o.t_Co = 256
-vim.o.showtabline = 2
+
 vim.cmd("syntax on")
 
-
-vim.o.cursorline = true
-
 require("config.lazy")
+require("options")
 
 require("nvim-treesitter.configs").setup({
     highlight = {
