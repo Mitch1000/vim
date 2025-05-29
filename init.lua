@@ -1,3 +1,5 @@
+vim.cmd([[ set number ]])
+
 require("globals")
 require("config.lazy")
 require("helpers")
