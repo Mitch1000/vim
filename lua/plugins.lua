@@ -196,6 +196,7 @@ return {
     branch = 'release',
     build = 'yarn install --frozen-lockfile',
     init = function()
+      require('config.cocconfig')
       -- CoC specific initialization if needed
     end
   },
