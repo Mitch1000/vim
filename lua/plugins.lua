@@ -5,6 +5,7 @@ return {
   'neoclide/vim-jsx-improve',
   'folke/which-key.nvim',
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
+
   -- General plugins
   { 'vim-ruby/vim-ruby' },
   { 'tpope/vim-rails' },
@@ -20,6 +21,36 @@ return {
   { 'lunacookies/vim-colors-xcode' },
   { 'romgrk/barbar.nvim' },
   { 'preservim/nerdcommenter' },
+
+  -- Color Schemes
+  { 'Abstract-IDE/Abstract-cs' },
+  { 'nanotech/jellybeans.vim' },
+  { 'sjl/badwolf' },
+  { 'jacoborus/tender.vim' },
+  { 'tomasiser/vim-code-dark' },
+  { 'everviolet/nvim' },
+  { 'rktjmp/lush.nvim' },
+  { 'ntk148v/habamax.nvim' },
+  { 'ayu-theme/ayu-vim' },
+  { 'w0ng/vim-hybrid' },
+  { 'shaunsingh/nord.nvim' },
+  { 'rose-pine/neovim' },
+  { 'ficcdaf/ashen.nvim' },
+  { 'sainnhe/everforest' },
+  {
+    "loctvl842/monokai-pro.nvim",
+    config = function()
+      require("monokai-pro").setup()
+    end
+  },
+  {
+    'mitch1000/backpack',
+    config = function ()
+      vim.g.italicize_comments = 1
+      vim.g.backpack_italic = 1
+      vim.g.backpack_contrast_dark = "medium" -- soft hard medium
+    end
+  },
 
   -- Plugins with configuration
   --
@@ -115,13 +146,6 @@ return {
       highlight = { lsRanges = true }
   },
   {
-    "loctvl842/monokai-pro.nvim",
-    config = function()
-      require("monokai-pro").setup()
-    end
-  },
-
-  {
     "nvimdev/guard.nvim",
     dependencies = { 'nvimdev/guard-collection' },
     event = "BufReadPre",
@@ -203,15 +227,6 @@ return {
     init = function()
       require('config.cocconfig')
       -- CoC specific initialization if needed
-    end
-  },
-
-  {
-    'mitch1000/backpack',
-    config = function ()
-      vim.g.italicize_comments = 1
-      vim.g.backpack_italic = 1
-      vim.g.backpack_contrast_dark = "medium" -- soft hard medium
     end
   },
 
