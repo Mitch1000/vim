@@ -6,10 +6,10 @@ local keyset = vim.keymap.set
 -- other plugins before putting this into your config
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
 
-keyset('n', '˙', function () require'fzy'.History() end)
-keyset('n', '†', function () require'fzy'.Oldfiles() end)
-keyset('n', 'ß', function () require'fzy'.Buffers() end)
-keyset('n', '®', function () require'fzy'.FindFile() end)
+keyset('n', '<C-t>', function () require'fzy'.History() end)
+keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
+-- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
+keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
 
 keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
 keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
@@ -136,13 +136,12 @@ map('t', '<C-e>', '<Esc><Esc><Cmd> echo nvim_get_current_line() lua WaitThenOpen
 map('t', '<C-e>', '<Cmd>call feedkeys("E") | lua WaitThenOpenFile(true) <CR>', { noremap = true })
 --
 map('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
-map('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
-map('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
-map('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
+--map('n', '<C-e>', ':<C-U>call append(".", getline("."))<CR>', { noremap = true })
+--map('n', '<C-e>', '<Cmd>lua WaitThenOpenFile(false) <CR>', { noremap = true })
+--map('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 
 map('i', '<C-r>', "<Cmd> lua SetPaste() <CR>", { noremap = true, silent = true })
 
-map('n', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 map('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
 
 map('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
