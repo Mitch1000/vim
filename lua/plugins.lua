@@ -10,7 +10,6 @@ return {
   { 'vim-ruby/vim-ruby' },
   { 'tpope/vim-rails' },
   { 'tpope/vim-fugitive' },
-  { 'nvim-treesitter/nvim-treesitter' },
   { 'wellle/context.vim' },
   { 'Shatur/neovim-ayu' },
   { 'neovim/nvim-lspconfig' },
@@ -24,6 +23,39 @@ return {
   { 'preservim/nerdcommenter' },
 
   -- Plugins with configuration
+  { 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require("nvim-treesitter.configs").setup({
+          highlight = {
+            enable = false,
+            additional_vim_regex_highlighting = true,
+          },
+          indent = { enable = true },
+          ensure_installed = {
+              "swift",
+          },
+          incremental_selection = {
+              enable = true,
+              keymaps = {
+                  init_selection = "<M-space>",
+                  node_incremental = "<M-space>",
+                  scope_incremental = false,
+                  node_decremental = "<bs>",
+              },
+          },
+          textobjects = {
+              select = {
+                  enable = true,
+                  lookahead = true,
+              },
+              move = {
+                  enable = true,
+                  set_jumps = true,
+              },
+          },
+      })
+    end
+  },
   {
     'nvim-tree/nvim-web-devicons',
     config = function()

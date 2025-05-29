@@ -21,42 +21,8 @@ require("config.lazy")
 require("helpers")
 require("options")
 
-require("nvim-treesitter.configs").setup({
-    highlight = {
-      enable = false,
-      additional_vim_regex_highlighting = true,
-    },
-    indent = { enable = true },
-    ensure_installed = {
-        "swift",
-    },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<M-space>",
-            node_incremental = "<M-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-        },
-    },
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true,
-            ...
-        },
-        move = {
-            enable = true,
-            set_jumps = true,
-            ...
-        },
-    },
-})
-
-
  -- Language Server Config Setups
 local lspconfig = require('lspconfig')
-local capabilities = require("lspconfig.configs").capabilities
 
 lspconfig.volar.setup({
    init_options = {
