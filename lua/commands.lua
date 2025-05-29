@@ -40,16 +40,15 @@ cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 
 -- Define auto commands
 
---cmd([[autocmd OptionSet background
+-- cmd([[autocmd OptionSet background
 --       \ execute 'source' '~/.config/nvim/bundle/backpack/autoload/lightline/colorscheme/backpack.vim'
 --       \ | call lightline#colorscheme() | call lightline#update()]])
--- cmd([[autocmd TermEnter * execute "set background=dark | lua ReloadLightLine()"]])
--- cmd([[autocmd TermOpen * execute "set background=dark | lua ReloadLightLine()"]])
-cmd([[autocmd TermEnter * execute "highlight LineNr guifg=" .. g:background_color[0] ]])
-cmd([[autocmd TermEnter * execute "highlight LineNr guibg=" .. g:background_color[0] ]])
-cmd([[autocmd TermEnter * execute "highlight CursorLineNr guifg=" .. g:background_color[0] ]])
-cmd([[autocmd TermLeave * execute "highlight LineNr guifg=" .. g:line_nr[0] ]])
-cmd([[autocmd TermLeave * execute "highlight CursorLineNr guifg=" .. g:line_nr[0] ]])
+-- cmd([[autocmd TermEnter * execute "highlight LineNr guifg=" .. g:background_color[0] ]])
+-- cmd([[autocmd TermEnter * execute "highlight LineNr guibg=" .. g:background_color[0] ]])
+-- cmd([[autocmd TermEnter * execute "highlight CursorLineNr guifg=" .. g:background_color[0] ]])
+-- cmd([[autocmd TermLeave * execute "highlight LineNr guifg=" .. g:line_nr[0] ]])
+-- cmd([[autocmd TermLeave * execute "highlight CursorLineNr guifg=" .. g:line_nr[0] ]])
+
 cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css || TSBufDisable highlight]])
 
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
