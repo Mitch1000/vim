@@ -4,7 +4,6 @@ return {
   'folke/neodev.nvim',
   'neoclide/vim-jsx-improve',
   'folke/which-key.nvim',
-  'andymass/vim-matchup',
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
   -- General plugins
   { 'vim-ruby/vim-ruby' },
@@ -23,6 +22,12 @@ return {
   { 'preservim/nerdcommenter' },
 
   -- Plugins with configuration
+  --
+  { 'andymass/vim-matchup',
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end
+  },
   { 'nvim-treesitter/nvim-treesitter',
     config = function()
       require("nvim-treesitter.configs").setup({
