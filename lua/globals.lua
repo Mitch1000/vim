@@ -1,3 +1,4 @@
+local vim = vim
 vim.g.my_color_scheme = 'backpack'
 vim.g.signify_sign_add = '┃'
 vim.g.signify_sign_change = '┃'
