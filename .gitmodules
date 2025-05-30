@@ -1,18 +1,18 @@
 [submodule "bundle/delimitMate"]
-        path = bundle/delimitMate
-        url = https://github.com/Raimondi/delimitMate.git 
+	path = bundle/delimitMate
+	url = https://github.com/Raimondi/delimitMate.git
 [submodule "bundle/nerdcommenter"]
 	path = bundle/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter.git
 [submodule "bundle/nerdtree"]
-        path = bundle/nerdtree
-        url = https://github.com/scrooloose/nerdtree.git 
+	path = bundle/nerdtree
+	url = https://github.com/preservim/nerdtree.git
 [submodule "bundle/backpack"]
 	path = bundle/backpack
 	url = https://github.com/Mitch1000/backpack.git
 [submodule "bundle/ale"]
 	path = bundle/ale
-	url = https://github.com/dense-analysis/ale.git
+	url = https://github.com/dmerejkowsky/vim-ale.git
 [submodule "bundle/lightline.vim"]
 	path = bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
@@ -58,3 +58,12 @@
 [submodule "bundle/ayu"]
 	path = bundle/ayu
 	url = https://github.com/ayu-theme/ayu-vim.git
+[submodule "lightline-bufferline"]
+	path = lightline-bufferline
+	url = https://github.com/mengelbrecht/lightline-bufferline.git
+[submodule "bundle/lightline"]
+	path = bundle/lightline
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule "vim-devicons"]
+	path = vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git

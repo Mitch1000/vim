@@ -1,15 +1,22 @@
-# Neovim Configuration
-A neo vim configuration for fun viming.
+# VIM Configuration
+A vim configuration for fun viming.
 
 ## Installation
 
-- Clone the git repository and move it into the Users/<your_username>/.config/nvim directory:
-
+- Clone the git repository and move it to ~/.vim
 
         git clone https://github.com/Mitch1000/vim.git
 
-        mv vim Users/<your_username>/.config/nvim
+        mv -r vim ~/.vim
 
-- Instal COC Plugins with the vim command:
+- Move vimrc to /etc/vim/
 
-       :COCInstall
+        cd ~/.vim  
+
+        mv vimrc /etc/vim/vimrc 
+
+- To pull submodules use:
+
+        git submodule update --init --recursive --remote
+
+- To use YouCompleteMe follow instructions [here](https://github.com/Valloric/YouCompleteMe).
