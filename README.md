@@ -1,4 +1,4 @@
-# VIM Configuration
+# Neovim Configuration
 A neo vim configuration for fun viming.
 
 ## Installation
