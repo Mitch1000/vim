@@ -4,18 +4,19 @@ end
 
 local colors = {
   black        = color("dark0"),
-  dark        = "#292929",
+  dark         = "#292929",
   white        = color("light2"),
   soft_white   = "#e6e6e6",
-  softer_white   = color("light3"),
+  softer_white = color("light3"),
   red          = color("dark_red"),
   green        = color("green"),
   blue         = color("forest_blue"),
-  purple         = color("bright_purple"),
+  blue_light   = "#34a9a7",
+  purple       = color("bright_purple"),
   yellow       = color("stain_yellow"),
   gray         = color("light5"),
   darkgray     = color("dark_gray"),
-  rose     = color("rose"),
+  rose         = color("rose"),
   lightgray    = color("light3"),
   inactivegray = color("light4"),
 }
@@ -25,7 +26,8 @@ local theme = {
     a = {bg = colors.blue, fg = colors.black, gui = 'bold'},
     b = {bg = colors.black, fg = colors.blue},
     c = {bg = colors.dark, fg = colors.soft_white},
-    y = {bg = colors.black, fg = colors.soft_white}
+    y = {bg = colors.black, fg = colors.soft_white},
+    z = {bg = colors.blue_light, fg = colors.black, gui = 'bold'},
   },
   insert = {
     a = {bg = colors.purple, fg = colors.black, gui = 'bold'},
