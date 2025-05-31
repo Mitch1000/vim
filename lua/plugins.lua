@@ -270,28 +270,12 @@ return {
 
   {
     'nvim-lualine/lualine.nvim',
+    dependencies = {
+      "mitch1000/backpack",
+    },
     config = function()
-      require('lualine').setup({
-        refresh = {
-           statusline = 100,
-           tabline = 100,
-           winbar = 100,
-        },
-        options = {
-           tabline = {
-               lualine_z = {
-                   {
-                       "tabs",
-                       cond = function()
-                           return #vim.fn.gettabinfo() > 1
-                       end,
-                   }
-               }
-           }
-        },
-      })
-      -- Add your lualine config here if needed
-      --
+    local configobject = require("config.lualine")
+    require('lualine').setup(configobject)
     end
   },
 
@@ -331,9 +315,6 @@ return {
        }
      },
     },
-    config = function()
-      -- Add your neo-tree config here if needed
-    end
   },
 
   -- CoC needs special handling in Lazy
