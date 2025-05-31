@@ -9,7 +9,7 @@ local opts = {silent = true, noremap = true, expr = true, replace_keycodes = fal
 keyset('n', '<C-t>', function () require'fzy'.History() end)
 keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
 -- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
-keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
+-- keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
 
 keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
 keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
