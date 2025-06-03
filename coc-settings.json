@@ -16,6 +16,8 @@
   "signature.floatConfig.border": true,
   "tsserver.log": "normal",
   "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "",
+  "diagnostic.hintSign": "󰺕",
   "diagnostic.floatConfig": {
     "border": true,
     "rounded": true
@@ -66,7 +68,7 @@
   "solargraph.formatting": true,
   "snippets.ultisnips.pythonPrompt": false,
   "diagnostic.checkCurrentLine": true,
-  "inlayHint.enable": false,
+  "inlayHint.enable": true,
   "languageserver": {
     "swift": {
       "command": "sourcekit-lsp",
