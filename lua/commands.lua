@@ -10,7 +10,8 @@ cmd("syntax on")
 -- Enable filetype plugin and indent
 cmd([[filetype plugin indent on]])
 
-cmd('colorscheme ' .. vim.g.my_color_scheme)
+local colorscheme = vim.g.my_color_scheme or ""
+cmd('colorscheme ' .. colorscheme)
 
 cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
 -- For Console logs
@@ -52,3 +53,38 @@ cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css || TSBufDisable highlight]])
 
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
+cmd([[autocmd BufRead,BufNewFile, * execute "lua MF()"]])
+cmd([[autocmd CursorMoved,CursorMovedI * execute "lua MF()"]])
+function OpenFold()
+  MF()
+  vim.cmd([[foldopen]])
+
+  -- os.execute("sleep " .. tonumber(1))
+  print("open")
+  MF()
+end
+
+function OpenFold()
+  MF()
+  vim.cmd([[foldopen]])
+
+  -- os.execute("sleep " .. tonumber(1))
+  print("open")
+  MF()
+end
+
+function CloseFold()
+  MF()
+  vim.cmd([[foldclose]])
+  MF()
+end
+
+function CloseFold()
+  MF()
+  vim.cmd([[foldclose]])
+  MF()
+end
+
+vim.cmd([[nnoremap zo <cmd>execute "lua OpenFold()"<CR>]])
+vim.cmd([[nnoremap zc <cmd>execute "lua CloseFold()"<CR>]])
+-- vim.keymap.set("n", "zo", [[za && execute "lua MF(' ')]], {silent = true, remap = true})

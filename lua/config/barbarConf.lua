@@ -52,17 +52,19 @@ return {
     -- Supports all the base icon options.
     modified = {button = '●'},
     -- Use a preconfigured buffer appearance— can be 'default', 'powerline', or 'slanted'
-    preset = 'default',
+    preset = 'slanted',
     -- Configure the icons on the bufferline based on the visibility of a buffer.
     -- Supports all the base icon options, plus `modified` and `pinned`.
     alternate = { filetype = { enabled = false } },
     current = { buffer_index = false },
 		inactive = {
-      separator = { left = '', right = ' ' },
+      separator = { left = '', right = '' },
+      -- separator = { left = '', right = '' },
       filetype = { enabled = false }
     },
 		pinned = {button = ''},
-		separator = {left = '', right = ' '},
+		separator = {left = '', right = ''},
+    -- separator = { left = '', right = '' },
 
     visible = {modified = {buffer_number = false}},
   },
@@ -104,6 +106,7 @@ return {
   -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
   -- where X is the buffer number. But only a static string is accepted here.
   no_name_title = nil,
+
   -- sorting options
   sort = {
     -- tells barbar to ignore case differences while sorting buffers

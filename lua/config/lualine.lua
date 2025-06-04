@@ -3,10 +3,12 @@ local function color(name)
 end
 
 local colors = {
-  black        = color("dark0"),
+  black        = "#262626",
   dark         = "#292929",
+  bright_white = color("light1"),
   white        = color("light2"),
-  soft_white   = "#e6e6e6",
+  soft_white   = color("light0_soft"),
+  softy_white   = "#e1e1e1",
   softer_white = color("light3"),
   red          = color("dark_red"),
   green        = color("green"),
@@ -45,7 +47,7 @@ local theme = {
     c = {bg = colors.dark, fg = colors.black}
   },
   command = {
-    a = {bg = colors.soft_white, fg = colors.black, gui = 'bold'},
+    a = {bg = colors.white, fg = colors.black, gui = 'bold'},
     b = {bg = colors.dark, fg = colors.white},
     c = {bg = colors.dark, fg = colors.white}
   },
@@ -62,7 +64,9 @@ return {
      icons_enabled = true,
      theme = theme,
      component_separators = { left = '', right = ''},
-     section_separators = { left = '', right = ''},
+     -- section_separators = { left = '', right = ''},
+     section_separators = { left = '', right = ''},
+     -- section_separators = { left = '', right = ''},
      disabled_filetypes = {
        statusline = {},
        winbar = {},
@@ -80,16 +84,19 @@ return {
    sections = {
      lualine_a = {'mode'},
      lualine_b = {
-       { 'branch' },
+       {
+        'branch',
+        icon="󰘬"
+       },
        {
           'diagnostics',
           colored = true,
           symbols = { error = " ", warn = " ", info = "󱜺 ", hint = "󰺕 " },
           diagnostics_color = {
-            error = { fg = color("error_red") },
-            warn = { fg = color("terminal_blue") },
-            info = { fg = color("terminal_blue") },
-            hint = { fg = color("stain_yellow") },
+            error = { fg = color("dark_red") },
+            warn = { fg = color("stain_yellow") },
+            info = { fg = color("light3") },
+            hint = { fg = color("terminal_blue") },
           },
        },
      },

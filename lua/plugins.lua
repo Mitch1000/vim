@@ -7,31 +7,23 @@ return {
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
 
   -- General plugins
+  { 'neovim/nvim-lspconfig' },
   { 'vim-ruby/vim-ruby' },
   { 'tpope/vim-rails' },
   { 'tpope/vim-fugitive' },
   { 'wellle/context.vim' },
-  { 'Shatur/neovim-ayu' },
-  { 'neovim/nvim-lspconfig' },
-  { 'mhinz/vim-signify' },
   { 'pangloss/vim-javascript' },
   { 'darfink/vim-plist' },
   { 'Raimondi/delimitMate' },
   { 'joshdick/onedark.vim' },
   { 'lunacookies/vim-colors-xcode' },
-  {
-    'romgrk/barbar.nvim',
-    config = function ()
-      local barbarConf = require("config.barbarConf")
-      
-
-      require('barbar').setup(barbarConf)
-    end
-  },
-
+  { 'kevinhwang91/promise-async' },
   { 'preservim/nerdcommenter' },
+  { 'Yggdroot/indentLine' },
 
   -- Color Schemes
+  { 'Shatur/neovim-ayu' },
+  { 'Everblush/nvim', name = 'everblush' },
   { 'Abstract-IDE/Abstract-cs' },
   { 'nanotech/jellybeans.vim' },
   { 'sjl/badwolf' },
@@ -46,10 +38,19 @@ return {
   { 'rose-pine/neovim' },
   { 'ficcdaf/ashen.nvim' },
   { 'sainnhe/everforest' },
+
   {
     "loctvl842/monokai-pro.nvim",
     config = function()
       require("monokai-pro").setup()
+    end
+  },
+  {
+    'romgrk/barbar.nvim',
+    config = function ()
+      local barbarConf = require("config.barbarConf")
+
+      require('barbar').setup(barbarConf)
     end
   },
   {
@@ -63,42 +64,15 @@ return {
 
   -- Plugins with configuration
   --
-  { 'andymass/vim-matchup',
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end
-  },
+  -- { 'andymass/vim-matchup',
+  --   config = function()
+  --     vim.g.matchup_matchparen_offscreen = { method = "popup" }
+  --   end
+  -- },
   { 'nvim-treesitter/nvim-treesitter',
     config = function()
-      require("nvim-treesitter.configs").setup({
-          highlight = {
-            enable = false,
-            additional_vim_regex_highlighting = true,
-          },
-          indent = { enable = true },
-          ensure_installed = {
-              "swift",
-          },
-          incremental_selection = {
-              enable = true,
-              keymaps = {
-                  init_selection = "<M-space>",
-                  node_incremental = "<M-space>",
-                  scope_incremental = false,
-                  node_decremental = "<bs>",
-              },
-          },
-          textobjects = {
-              select = {
-                  enable = true,
-                  lookahead = true,
-              },
-              move = {
-                  enable = true,
-                  set_jumps = true,
-              },
-          },
-      })
+      local configObj = require("config.treesitterConf")
+      require("nvim-treesitter.configs").setup(configObj)
     end
   },
   {
@@ -191,33 +165,90 @@ return {
   },
 
   {
-    'lukas-reineke/indent-blankline.nvim',
-    dependencies = {
-      "mitch1000/backpack",
-    },
-    main = "ibl",
-    ---@module "ibl"
-    ---@type ibl.config
-    opts = {},
+    'kevinhwang91/nvim-ufo',
+    dependencies = { 'kevinhwang91/promise-async' },
+    config = function ()
+        local function dump(o)
+           if type(o) == 'table' then
+              local s = '{ '
+              for k,v in pairs(o) do
+                 if type(k) ~= 'number' then k = '"'..k..'"' end
+                 s = s .. '['..k..'] = ' .. dump(v) .. ','
+              end
+              return s .. '} '
+           else
+              return tostring(o)
+           end
+        end
 
+      local handler = function(virtText, lnum, endLnum, width, truncate)
+          -- local InsertMarker = require("helpers.insert_marker")
+          -- local marker = " "
+          -- local lineNumber = vim.fn.line('.')
+          -- print(lineNumber)
+          -- local indent = vim.fn.indent(lineNumber)
+          -- local tabstop = vim.o.tabstop
 
-    config = function()
-      local highlight = {
-        "Indent",
-      }
+          -- InsertMarker(lineNumber - 1, marker, 0, 'inline')
+          -- InsertMarker(lineNumber - 1, "  ", 0, 'inline')
+          -- local folded_lines = vim.g.folded_lines
 
-      local hooks = require "ibl.hooks"
-      -- create the highlight groups in the highlight setup hook, so they are reset
-      -- every time the colorscheme changes
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-          vim.api.nvim_set_hl(0, "Indent", { fg = "#303030" })
-      end)
+          -- table.insert(folded_lines, vim.fn.line("."))
 
+            -- print("close", vim.g.folded_lines[0])
+            -- vim.g.folded_lines = folded_lines
 
-      require("ibl").setup({
-       -- scope = { highlight = { 'RainbowRed', } },
-       indent = { char = "▏", highlight = highlight },
+          -- MF()
+          local newVirtText = {}
+          local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+          local sufWidth = vim.fn.strdisplaywidth(suffix)
+          local targetWidth = width - sufWidth
+          local curWidth = 0
+          for _, chunk in ipairs(virtText) do
+              local chunkText = chunk[1]
+              local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+              if targetWidth > curWidth + chunkWidth then
+                  table.insert(newVirtText, chunk)
+              else
+                  chunkText = truncate(chunkText, targetWidth - curWidth)
+                  local hlGroup = chunk[2]
+                  table.insert(newVirtText, {chunkText, hlGroup})
+                  chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                  -- str width returned from truncate() may less than 2nd argument, need padding
+                  if curWidth + chunkWidth < targetWidth then
+                      suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+                  end
+                  break
+              end
+              curWidth = curWidth + chunkWidth
+          end
+
+            newVirtText[1][1] = "  " .. newVirtText[1][1]
+          table.insert(newVirtText, {suffix, 'MoreMsg'})
+          return newVirtText
+      end
+      vim.o.foldcolumn = '0' -- '0' is not bad
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+      -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+      require('ufo').setup({
+        fold_virt_text_handler = handler,
+        provider_selector = function()
+            return {'treesitter', 'indent'}
+        end,
+        -- fold_virt_text_handler = handler,
       })
     end
   },
+  -- {
+  --     "lukas-reineke/indent-blankline.nvim",
+  --     main = "ibl",
+  --     ---@module "ibl"
+  --     ---@type ibl.config
+  --     opts = {},
+  -- }
 }
