@@ -7,7 +7,7 @@ local colors = {
   dark         = "#292929",
   bright_white = color("light1"),
   white        = color("light2"),
-  soft_white   = color("light0_soft"),
+  soft_white   = "#f0f0f0",
   softy_white   = "#e1e1e1",
   softer_white = color("light3"),
   red          = color("dark_red"),
@@ -59,7 +59,6 @@ local theme = {
 }
 
 return {
-
   options = {
      icons_enabled = true,
      theme = theme,
