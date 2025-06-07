@@ -47,7 +47,7 @@ return {
       enabled = true,
     },
     -- If true, add an additional separator at the end of the buffer list
-    separator_at_end = false,
+    separator_at_end = true,
     -- Configure the icons on the bufferline when modified or pinned.
     -- Supports all the base icon options.
     modified = {button = '●'},
@@ -58,12 +58,12 @@ return {
     alternate = { filetype = { enabled = false } },
     current = { buffer_index = false },
 		inactive = {
-      separator = { left = '', right = '' },
+      separator = { left = '', right = '' },
       -- separator = { left = '', right = '' },
       filetype = { enabled = false }
     },
 		pinned = {button = ''},
-		separator = {left = '', right = ''},
+		separator = {left = '', right = '█'},
     -- separator = { left = '', right = '' },
 
     visible = {modified = {buffer_number = false}},
