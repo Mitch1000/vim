@@ -4,11 +4,11 @@ end
 
 local colors = {
   black        = "#262626",
-  dark         = "#292929",
+  dark         = "#222222",
   bright_white = color("light1"),
   white        = color("light2"),
   soft_white   = "#f0f0f0",
-  softy_white   = "#e1e1e1",
+  softy_white   = "#f1e5f0",
   softer_white = color("light3"),
   red          = color("dark_red"),
   green        = color("green"),
@@ -27,7 +27,8 @@ local theme = {
   normal = {
     a = {bg = colors.blue, fg = colors.black, gui = 'bold'},
     b = {bg = colors.black, fg = colors.blue},
-    c = {bg = colors.dark, fg = colors.soft_white},
+    c = {bg = colors.dark, fg = colors.softy_white},
+    x = {bg = colors.dark, fg = colors.soft_white},
     y = {bg = colors.black, fg = colors.soft_white},
     z = {bg = colors.blue_light, fg = colors.black, gui = 'bold'},
   },
@@ -100,6 +101,7 @@ return {
        },
      },
      lualine_c = {
+      'filename'
      },
      lualine_x = {
         'fileformat',
