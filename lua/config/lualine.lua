@@ -60,8 +60,8 @@ local theme = {
   }
 }
 
-local function GetTheme()
-  if (vim.g.colorscheme == 'backpack') then
+function GetTheme()
+  if (vim.g.my_color_scheme == 'backpack') then
     return theme
   end
   return 'auto'
