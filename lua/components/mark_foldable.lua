@@ -46,7 +46,7 @@ local function ClearVirtualText()
   vim.api.nvim_buf_clear_namespace(bnr, arrow_id, 0, vim.fn.line('$'))
 end
 
-function MF()
+local function MarkFoldable()
   ClearVirtualText()
   -- local open_marker = ""
   local open_marker = ""
@@ -84,4 +84,17 @@ function MF()
     SpaceLines(lnum, "inline")
     -- AlwaysSpaceLines(lnum, "inline")
   end
+end
+
+local hasErrored = false
+
+return function()
+  if (hasErrored == true) then return end
+
+  local status, result = pcall(MarkFoldable)
+
+  if not status then
+    hasErrored = true
+  end
+  return result
 end

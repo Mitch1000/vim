@@ -52,39 +52,42 @@ cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 
 cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css || TSBufDisable highlight]])
 
+MarkFoldable = require('components.mark_foldable')
+
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
-cmd([[autocmd BufRead,BufNewFile, * execute "lua MF()"]])
-cmd([[autocmd CursorMoved,CursorMovedI * execute "lua MF()"]])
+cmd([[autocmd BufRead,BufNewFile, * execute "lua require('components.mark_foldable')()"]])
+cmd([[autocmd CursorMoved,CursorMovedI * execute "lua require('components.mark_foldable')()"]])
+
+local MarkFoldable =  require('components.mark_foldable')
 function OpenFold()
-  MF()
+  MarkFoldable()
   vim.cmd([[foldopen]])
 
   -- os.execute("sleep " .. tonumber(1))
   print("open")
-  MF()
+  MarkFoldable()
 end
 
 function OpenFold()
-  MF()
+  MarkFoldable()
   vim.cmd([[foldopen]])
 
   -- os.execute("sleep " .. tonumber(1))
   print("open")
-  MF()
+  MarkFoldable()
 end
 
 function CloseFold()
-  MF()
+  MarkFoldable()
   vim.cmd([[foldclose]])
-  MF()
+  MarkFoldable()
 end
 
 function CloseFold()
-  MF()
+  MarkFoldable()
   vim.cmd([[foldclose]])
-  MF()
+  MarkFoldable()
 end
 
 vim.cmd([[nnoremap zo <cmd>execute "lua OpenFold()"<CR>]])
 vim.cmd([[nnoremap zc <cmd>execute "lua CloseFold()"<CR>]])
--- vim.keymap.set("n", "zo", [[za && execute "lua MF(' ')]], {silent = true, remap = true})
