@@ -1,7 +1,15 @@
+local vim = vim
+
+GetHighlightColor = require("helpers.get_highlight_color")
+-- 
+local background = GetHighlightColor('Normal', 'guibg')
+
+if (string.len(background) <= 0) then
+  background = 'NONE'
+end
 
 local function InsertMarker(lineNumber, char, col, position, ns_id)
-
-  vim.cmd([[hi AccordianMarker guifg=#5f5f5f guibg=#222222]])
+  vim.cmd([[hi AccordianMarker guifg=#5f5f5f guibg=]] .. background)
 
   local api = vim.api
   local bnr = vim.fn.bufnr('%')
