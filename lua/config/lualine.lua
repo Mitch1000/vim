@@ -1,3 +1,4 @@
+local vim = vim
 local function color(name)
   return vim.api.nvim_command_output([[ echo backpack#GetColors()[']] .. name .. "']" .. "[0]")
 end
@@ -59,10 +60,17 @@ local theme = {
   }
 }
 
+local function GetTheme()
+  if (vim.g.colorscheme == 'backpack') then
+    return theme
+  end
+  return 'auto'
+end
+
 return {
   options = {
      icons_enabled = true,
-     theme = theme,
+     theme = GetTheme(),
      component_separators = { left = '', right = ''},
      -- section_separators = { left = '', right = ''},
      section_separators = { left = '', right = ''},
