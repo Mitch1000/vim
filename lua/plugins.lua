@@ -56,9 +56,11 @@ return {
   {
     'mitch1000/backpack',
     config = function ()
-      vim.g.italicize_comments = 1
-      vim.g.backpack_italic = 1
-      vim.g.backpack_contrast_dark = "medium" -- soft hard medium
+      vim.g.italicize_comments = true
+      vim.g.backpack_italic = true
+      vim.g.backpack_transparent = true
+      vim.g.backpack_contrast_dark = "medium" -- soft medium hard harder
+      vim.g.backpack_contrast_light = "medium" -- soft medium hard harder
     end
   },
 
