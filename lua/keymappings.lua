@@ -1,3 +1,4 @@
+local vim = vim
 local keyset = vim.keymap.set
 -- Use Tab for trigger completion with characters ahead and navigate
 -- NOTE: There's always a completion item selected by default, you may want to enable
@@ -10,12 +11,16 @@ keyset('n', '<C-t>', function () require'fzy'.History() end)
 keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
 -- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
 -- keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
+--
+local coc_exists = pcall(vim.fn['coc#pum#visible'])
 
-keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
--- Make <CR> to accept selected completion item or notify coc.nvim to format
--- <C-g>u breaks current undo, please make your own choice
-keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+if coc_exists then
+  keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+  keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+  -- Make <CR> to accept selected completion item or notify coc.nvim to format
+  -- <C-g>u breaks current undo, please make your own choice
+  keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+end
 
 -- Use <c-j> to trigger snippets
 keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
