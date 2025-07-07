@@ -1,6 +1,8 @@
 local vim = vim
+local palette = require('backpack.colors').setup({ theme = 'dark' }).palette
+
 local function color(name)
-  return vim.api.nvim_command_output([[ echo backpack#GetColors()[']] .. name .. "']" .. "[0]")
+  return palette[name]
 end
 
 local colors = {

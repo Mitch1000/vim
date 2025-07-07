@@ -54,13 +54,11 @@ return {
     end
   },
   {
-    'mitch1000/backpack',
+    'mitch1000/backpack.nvim',
     config = function ()
-      vim.g.italicize_comments = true
-      vim.g.backpack_italic = true
-      vim.g.backpack_transparent = true
-      vim.g.backpack_contrast_dark = "medium" -- soft medium hard harder
-      vim.g.backpack_contrast_light = "medium" -- soft medium hard harder
+      require('backpack').setup({
+        transparent = true
+      })
     end
   },
 
@@ -97,9 +95,6 @@ return {
 
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = {
-      "mitch1000/backpack",
-    },
     config = function()
     local configobject = require("config.lualine")
     require('lualine').setup(configobject)
@@ -110,7 +105,6 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
-      "mitch1000/backpack",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
     },
