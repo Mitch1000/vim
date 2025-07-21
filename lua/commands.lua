@@ -11,7 +11,7 @@ cmd("syntax on")
 cmd([[filetype plugin indent on]])
 
 local colorscheme = vim.g.my_color_scheme or ""
-cmd('colorscheme ' .. colorscheme)
+pcall(cmd, 'colorscheme ' .. colorscheme)
 
 cmd([[command! -nargs=1 -complete=file S lua require'fzy'.Search(<f-args>)]])
 -- For Console logs

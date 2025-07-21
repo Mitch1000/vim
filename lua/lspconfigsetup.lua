@@ -1,5 +1,8 @@
  -- Language Server Config Setups
-local lspconfig = require('lspconfig')
+local status, lspconfig = pcall(require, 'lspconfig')
+if not status then
+   return
+end
 
 lspconfig.volar.setup({
    init_options = {
