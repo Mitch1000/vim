@@ -55,10 +55,17 @@ cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 MarkFoldable = require('components.mark_foldable')
 
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
-cmd([[autocmd BufRead,BufNewFile, * execute "lua require('components.mark_foldable')()"]])
-cmd([[autocmd CursorMoved,CursorMovedI * execute "lua require('components.mark_foldable')()"]])
+cmd([[autocmd BufRead,BufNewFile, * execute "lua MarkFoldable()"]])
+cmd([[autocmd CursorMoved,CursorMovedI * execute "lua MarkFoldable()"]])
 
-local MarkFoldable =  require('components.mark_foldable')
+local HandleTabIcons = require('components.handle_tab_icons')
+function TabIcons()
+  HandleTabIcons()
+end
+cmd([[autocmd BufWinEnter * execute "lua TabIcons()"]])
+
+
+local MarkFoldable = require('components.mark_foldable')
 function OpenFold()
   MarkFoldable()
   vim.cmd([[foldopen]])
