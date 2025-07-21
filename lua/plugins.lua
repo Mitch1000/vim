@@ -73,9 +73,7 @@ return {
   -- },
   { 'nvim-treesitter/nvim-treesitter',
     config = function()
-
-      local configObj = require("config.treesitterConf")
-      require("nvim-treesitter.configs").setup(configObj)
+      require("config.treesitterConf")
     end
   },
   {
