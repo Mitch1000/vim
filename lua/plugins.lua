@@ -48,16 +48,18 @@ return {
   {
     'romgrk/barbar.nvim',
     config = function ()
-      local barbarConf = require("config.barbarConf")
 
-      require('barbar').setup(barbarConf)
+      local barbarConf = require("config.barbarConf")
+      Barbar = require('barbar')
+      Barbar.setup(barbarConf)
     end
   },
   {
     'mitch1000/backpack.nvim',
     config = function ()
       require('backpack').setup({
-        transparent = true
+        transparent = true,
+        tabSigns = true
       })
     end
   },
@@ -71,6 +73,7 @@ return {
   -- },
   { 'nvim-treesitter/nvim-treesitter',
     config = function()
+
       local configObj = require("config.treesitterConf")
       require("nvim-treesitter.configs").setup(configObj)
     end
