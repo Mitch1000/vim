@@ -19,6 +19,7 @@ lspconfig.sqls.setup{}
 lspconfig.ts_ls.setup{}
 lspconfig.rubocop.setup{}
 lspconfig.volar.setup{}
+lspconfig.ccls.setup{}
 
 lspconfig.ltex.setup({
   -- on_attach = on_attach,
