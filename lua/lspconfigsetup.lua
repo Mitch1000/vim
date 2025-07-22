@@ -12,9 +12,13 @@ lspconfig.volar.setup({
    },
 })
 
-lspconfig.pyright.setup{}
 lspconfig.java_language_server.setup{}
+lspconfig.pyright.setup{}
 lspconfig.html.setup{}
+lspconfig.sqls.setup{}
+lspconfig.ts_ls.setup{}
+lspconfig.rubocop.setup{}
+lspconfig.volar.setup{}
 
 lspconfig.ltex.setup({
   -- on_attach = on_attach,
