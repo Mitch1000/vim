@@ -46,10 +46,10 @@ return function()
       },
       separator = {left = getIcon(), right = '█' },
  		  alternate = {
-        separator = { left = '?', right = '?' },
+        separator = { left = '', right = '' },
       },
  		  visible = {
-        separator = { left = '$', right = '$' },
+        separator = { left = '', right = '' },
       },
  		  inactive = {
         separator = { left = '', right = getInactive() },
@@ -62,7 +62,14 @@ return function()
     },
   }
   local barbar_config = require('config.barbarConf')
-  for k,v in pairs(updated_config) do barbar_config[k] = v end
+
+  for k,v in pairs(updated_config) do
+    if type(v) ~= "table" then
+      barbar_config[k] = v
+    end
+  end
+
+  for key,val in pairs(updated_config.icons) do barbar_config.icons[key] = val end
 
   Barbar.setup(barbar_config)
 end
