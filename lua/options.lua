@@ -26,7 +26,7 @@ vim.o.smarttab = true
 vim.o.statusline = "%#warningmsg# %*"
 vim.o.hidden = true
 vim.o.guicursor = "i:block"
-vim.o.showtabline = 2
+vim.o.showtabline = 0
 vim.o.cursorline = true
 
 -- -------------------------------------------------------------------
