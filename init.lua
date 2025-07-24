@@ -1,6 +1,6 @@
 vim.cmd([[ set number ]])
 
-vim.g.my_color_scheme = 'habamax'
+vim.g.my_color_scheme = 'backpack'
 
 require("globals")
 require("components")
