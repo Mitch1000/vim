@@ -15,7 +15,7 @@ return function(color_scheme_opt)
     local GetHighlightColor = require('helpers.get_highlight_color')
     local bg_color = GetHighlightColor("Normal", "guibg")
     if string.find(bg_color, "#") == nil then
-      bg_color = GetHighlightColor("TelescopeBorder", "guibg")
+      status, bg_color = pcall(GetHighlightColor, "TelescopeBorder", "guibg")
     end
     os.execute([[printf '\e]11;]] .. bg_color .. [[\a']])
   end
