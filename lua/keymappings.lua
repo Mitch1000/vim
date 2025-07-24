@@ -9,9 +9,11 @@ local opts = {silent = true, noremap = true, expr = true, replace_keycodes = fal
 
 --keyset('n', '<C-t>', function () require'fzy'.History() end)
 --keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
-local builtin = require('telescope.builtin')
-keyset('n', '<C-e>', builtin.find_files, { desc = 'Telescope find files' })
-keyset('n', '<C-t>', builtin.buffers, { desc = 'Telescope find buffers' })
+local telescope_exists, builtin = pcall(require, 'telescope.builtin')
+if telescope_exists then
+  keyset('n', '<C-e>', builtin.find_files, { desc = 'Telescope find files' })
+  keyset('n', '<C-t>', builtin.buffers, { desc = 'Telescope find buffers' })
+end
 -- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
 -- keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
 --
