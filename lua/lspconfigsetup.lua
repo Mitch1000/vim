@@ -20,10 +20,14 @@ lspconfig.ts_ls.setup{}
 lspconfig.rubocop.setup{}
 lspconfig.volar.setup{}
 lspconfig.ccls.setup{}
+lspconfig.rust_analyzer.setup{}
+lspconfig.ts_query_ls.setup{}
+lspconfig.tailwindcss.setup{}
 
-lspconfig.ltex.setup({
-  -- on_attach = on_attach,
-  cmd = { "ltex-ls" },
-  filetypes = { "markdown", "text" },
-  flags = { debounce_text_changes = 300 },
-})
+
+-- lspconfig.ltex.setup({
+--   -- on_attach = on_attach,
+--   cmd = { "ltex-ls" },
+--   filetypes = { "markdown", "text" },
+--   flags = { debounce_text_changes = 300 },
+-- })
