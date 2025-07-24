@@ -7,8 +7,11 @@ local keyset = vim.keymap.set
 -- other plugins before putting this into your config
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
 
-keyset('n', '<C-t>', function () require'fzy'.History() end)
-keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
+--keyset('n', '<C-t>', function () require'fzy'.History() end)
+--keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
+local builtin = require('telescope.builtin')
+keyset('n', '<C-e>', builtin.find_files, { desc = 'Telescope find files' })
+keyset('n', '<C-t>', builtin.buffers, { desc = 'Telescope find buffers' })
 -- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
 -- keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
 --
@@ -173,3 +176,4 @@ map('n', 'gc', '<plug>NERDCommenterToggle', { noremap = true })
 -- Define custom commands
 -- Remove extra spaces at end of the lines
 map('i', 'CONS', '<Esc>:lua PrintJavascriptConsoleLogs()<CR>', { noremap = true, silent = true })
+
