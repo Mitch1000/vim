@@ -2,7 +2,6 @@ local vim = vim
 
 vim.opt.statuscolumn = " %s%{v:lnum}"
 -- vim.g.my_color_scheme = 'backpack'
-vim.g.my_color_scheme = 'backpack'
 vim.o.background = 'dark'
 vim.g.signify_sign_add = '┃'
 vim.g.signify_sign_change = '┃'
