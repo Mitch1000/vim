@@ -60,7 +60,9 @@ cmd([[autocmd CursorMoved,CursorMovedI * execute "lua MarkFoldable()"]])
 
 local HandleTabIcons = require('components.handle_tab_icons')
 function TabIcons()
-  HandleTabIcons()
+  if vim.g.my_color_scheme == "backpack" then
+    HandleTabIcons()
+  end
 end
 cmd([[autocmd BufWinEnter * execute "lua TabIcons()"]])
 
