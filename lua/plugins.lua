@@ -15,11 +15,16 @@ return {
   { 'pangloss/vim-javascript' },
   { 'darfink/vim-plist' },
   { 'Raimondi/delimitMate' },
-  { 'joshdick/onedark.vim' },
+  { 'ful1e5/onedark.nvim' },
+  { 'ellisonleao/gruvbox.nvim' },
   { 'lunacookies/vim-colors-xcode' },
   { 'kevinhwang91/promise-async' },
   { 'preservim/nerdcommenter' },
   { 'Yggdroot/indentLine' },
+  { 'rktjmp/lush.nvim' },
+  { 'Mofiqul/vscode.nvim' },
+  { 'cocopon/iceberg.vim' },
+  { 'binhtran432k/dracula.nvim' },
 
   -- Color Schemes
   { 'Shatur/neovim-ayu' },
@@ -30,14 +35,29 @@ return {
   { 'jacoborus/tender.vim' },
   { 'tomasiser/vim-code-dark' },
   { 'everviolet/nvim' },
-  { 'rktjmp/lush.nvim' },
   { 'ntk148v/habamax.nvim' },
   { 'ayu-theme/ayu-vim' },
   { 'w0ng/vim-hybrid' },
   { 'shaunsingh/nord.nvim' },
   { 'rose-pine/neovim' },
   { 'ficcdaf/ashen.nvim' },
+  { 'EdenEast/nightfox.nvim' },
   { 'sainnhe/everforest' },
+  {
+    'mitch1000/backpack.nvim',
+    config = function ()
+      --local get_background_command = [[ghostty +show-config | awk -F'= ' '/^background/ {print $2}' | grep "\#"]]
+      --local bg_color = vim.fn.system(get_background_command)
+      --local bg = string.gsub(bg_color, "%s+", "")
+
+      require('backpack').setup({
+        transparent = true,
+        tabSigns = true,
+        colors = { palette = { background = "#1e1e1e" }}
+      })
+    end
+  },
+
 
   {
     "loctvl842/monokai-pro.nvim",
@@ -47,23 +67,26 @@ return {
   },
   {
     'romgrk/barbar.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
     config = function ()
+      --
+      -- vim.cmd([[hi! link BufferCurrent Normal]])
+      -- vim.cmd([[hi! link BufferCurrentSign Normal]])
+      -- vim.cmd([[hi! link BufferCurrentTarget Normal]])
+      -- vim.cmd([[hi! link BufferCurrentMod Normal]])
+      -- vim.cmd([[hi! link BufferCurrentIcon Normal]])
+      --
+      if vim.g.my_color_scheme == "backpack" then
+        local barbarConf = require("config.barbarConf")
+        Barbar = require('barbar')
 
-      local barbarConf = require("config.barbarConf")
-      Barbar = require('barbar')
-      Barbar.setup(barbarConf)
+        Barbar.setup(barbarConf)
+      end 
     end
   },
-  {
-    'mitch1000/backpack.nvim',
-    config = function ()
-      require('backpack').setup({
-        transparent = true,
-        tabSigns = true
-      })
-    end
-  },
-
   -- Plugins with configuration
   --
   -- { 'andymass/vim-matchup',
@@ -93,7 +116,10 @@ return {
     dependencies = { 'nvimdev/guard-collection' },
     event = "BufReadPre",
   },
-
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
   {
     'nvim-lualine/lualine.nvim',
     config = function()
