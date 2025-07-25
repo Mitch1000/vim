@@ -49,11 +49,8 @@ cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 
 cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css || TSBufDisable highlight]])
 
-MarkFoldable = require('components.mark_foldable')
 
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
-cmd([[autocmd BufRead,BufNewFile, * execute "lua MarkFoldable()"]])
-cmd([[autocmd CursorMoved,CursorMovedI * execute "lua MarkFoldable()"]])
 
 local HandleTabIcons = require('components.handle_tab_icons')
 function TabIcons()
@@ -63,40 +60,8 @@ function TabIcons()
 end
 cmd([[autocmd BufWinEnter * execute "lua TabIcons()"]])
 
-
-local MarkFoldable = require('components.mark_foldable')
-function OpenFold()
-  MarkFoldable()
-  vim.cmd([[foldopen]])
-
-  -- os.execute("sleep " .. tonumber(1))
-  print("open")
-  MarkFoldable()
-end
-
-function OpenFold()
-  MarkFoldable()
-  vim.cmd([[foldopen]])
-
-  -- os.execute("sleep " .. tonumber(1))
-  print("open")
-  MarkFoldable()
-end
-
-function CloseFold()
-  MarkFoldable()
-  vim.cmd([[foldclose]])
-  MarkFoldable()
-end
-
-function CloseFold()
-  MarkFoldable()
-  vim.cmd([[foldclose]])
-  MarkFoldable()
-end
-
-vim.cmd([[nnoremap zo <cmd>execute "lua OpenFold()"<CR>]])
-vim.cmd([[nnoremap zc <cmd>execute "lua CloseFold()"<CR>]])
+vim.cmd([[nmap zo <cmd>execute "foldopen"<CR>]])
+vim.cmd([[nmap zc <cmd>execute "foldclose"<CR>]])
 
 SetColorScheme = require('helpers.set_color_scheme')
 SetColorScheme(vim.g.my_color_scheme)
