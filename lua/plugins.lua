@@ -43,6 +43,7 @@ return {
   { 'ficcdaf/ashen.nvim' },
   { 'EdenEast/nightfox.nvim' },
   { 'sainnhe/everforest' },
+
   {
     'mitch1000/backpack.nvim',
     config = function ()
@@ -65,6 +66,8 @@ return {
       require("monokai-pro").setup()
     end
   },
+
+  --------- Plugins ---------------------------------------------------------------------------------
   {
     'romgrk/barbar.nvim',
     dependencies = {
@@ -88,17 +91,14 @@ return {
     end
   },
   -- Plugins with configuration
-  --
-  -- { 'andymass/vim-matchup',
-  --   config = function()
-  --     vim.g.matchup_matchparen_offscreen = { method = "popup" }
-  --   end
-  -- },
   { 'nvim-treesitter/nvim-treesitter',
     config = function()
       require("config.treesitterConf")
     end
   },
+
+  { 'mitch1000/anchorage.nvim' },
+
   {
     'nvim-tree/nvim-web-devicons',
     config = function()
@@ -267,11 +267,4 @@ return {
       })
     end
   },
-  -- {
-  --     "lukas-reineke/indent-blankline.nvim",
-  --     main = "ibl",
-  --     ---@module "ibl"
-  --     ---@type ibl.config
-  --     opts = {},
-  -- }
 }
