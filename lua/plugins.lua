@@ -47,18 +47,15 @@ return {
   {
     'mitch1000/backpack.nvim',
     config = function ()
-      --local get_background_command = [[ghostty +show-config | awk -F'= ' '/^background/ {print $2}' | grep "\#"]]
-      --local bg_color = vim.fn.system(get_background_command)
-      --local bg = string.gsub(bg_color, "%s+", "")
-
       require('backpack').setup({
         transparent = true,
         tabSigns = true,
-        colors = { palette = { background = "#1e1e1e" }}
+        colors = { palette = { background = "#1e1e1e" }},
+        -- colors = { palette = { background = "#ffffff" }},
+        theme = "dark",
       })
     end
   },
-
 
   {
     "loctvl842/monokai-pro.nvim",
