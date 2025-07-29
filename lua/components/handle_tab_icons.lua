@@ -1,11 +1,6 @@
 local vim = vim
 return function()
   local bufinfo = vim.fn.getbufinfo({buflisted = 1})
-  --if vim.fn.len(bufinfo) >= 3 then
-  --  vim.cmd([[BarbarDisable]])
-  --  vim.cmd([[set showtabline=0]])
-  --  return
-  --end
 
   if Barbar == nil then return end
 
@@ -22,16 +17,13 @@ return function()
 
     if vim.fn.len(bufinfo) < 3 then
       vim.cmd([[hi StatusLineNC guifg=none guibg=none]])
-      return
     else
       vim.cmd([[hi StatusLineNC guifg=none guibg=#121212]])
-      -- vim.cmd([[BarbarDisable]])
-      -- vim.cmd([[set showtabline=0]])
     end
 
-    --if vim.fn.len(bufinfo) < 3 and vim.fn.bufnr('%') == 1 then
-    --  return ''
-    --end
+    if vim.fn.len(bufinfo) < 3 and vim.fn.bufnr('%') == 1 then
+      return ''
+    end
 
 
     return ''
@@ -52,6 +44,7 @@ return function()
         separator = { left = '', right = '' },
       },
  		  inactive = {
+        --separator = {left = '', right = '' },
         separator = { left = '', right = getInactive() },
         -- separator = { left = '', right = '' },
         -- separator = { left = '', right = '' },
