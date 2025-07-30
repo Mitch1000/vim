@@ -27,6 +27,7 @@ return {
   { 'binhtran432k/dracula.nvim' },
 
   -- Color Schemes
+  { 'rebelot/kanagawa.nvim' },
   { 'Shatur/neovim-ayu' },
   { 'Everblush/nvim', name = 'everblush' },
   { 'Abstract-IDE/Abstract-cs' },
