@@ -95,8 +95,6 @@ return {
     end
   },
 
-  { 'mitch1000/anchorage.nvim' },
-
   {
     'nvim-tree/nvim-web-devicons',
     config = function()
@@ -173,7 +171,6 @@ return {
       -- CoC specific initialization if needed
     end
   },
-
   {
     'sainnhe/sonokai',
     lazy = false,
@@ -184,84 +181,19 @@ return {
       vim.g.sonokai_enable_italic = true
     end
   },
-
   {
     'kevinhwang91/nvim-ufo',
-    dependencies = { 'kevinhwang91/promise-async' },
+    dependencies = {
+      'kevinhwang91/promise-async',
+      'mitch1000/markfoldable.nvim'
+    },
     config = function ()
-        local function dump(o)
-           if type(o) == 'table' then
-              local s = '{ '
-              for k,v in pairs(o) do
-                 if type(k) ~= 'number' then k = '"'..k..'"' end
-                 s = s .. '['..k..'] = ' .. dump(v) .. ','
-              end
-              return s .. '} '
-           else
-              return tostring(o)
-           end
-        end
-
-      local handler = function(virtText, lnum, endLnum, width, truncate)
-          -- local InsertMarker = require("helpers.insert_marker")
-          -- local marker = " "
-          -- local lineNumber = vim.fn.line('.')
-          -- print(lineNumber)
-          -- local indent = vim.fn.indent(lineNumber)
-          -- local tabstop = vim.o.tabstop
-
-          -- InsertMarker(lineNumber - 1, marker, 0, 'inline')
-          -- InsertMarker(lineNumber - 1, "  ", 0, 'inline')
-          -- local folded_lines = vim.g.folded_lines
-
-          -- table.insert(folded_lines, vim.fn.line("."))
-
-            -- print("close", vim.g.folded_lines[0])
-            -- vim.g.folded_lines = folded_lines
-
-          -- MF()
-          local newVirtText = {}
-          local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-          local sufWidth = vim.fn.strdisplaywidth(suffix)
-          local targetWidth = width - sufWidth
-          local curWidth = 0
-          for _, chunk in ipairs(virtText) do
-              local chunkText = chunk[1]
-              local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-              if targetWidth > curWidth + chunkWidth then
-                  table.insert(newVirtText, chunk)
-              else
-                  chunkText = truncate(chunkText, targetWidth - curWidth)
-                  local hlGroup = chunk[2]
-                  table.insert(newVirtText, {chunkText, hlGroup})
-                  chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                  -- str width returned from truncate() may less than 2nd argument, need padding
-                  if curWidth + chunkWidth < targetWidth then
-                      suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-                  end
-                  break
-              end
-              curWidth = curWidth + chunkWidth
-          end
-
-            newVirtText[1][1] = "  " .. newVirtText[1][1]
-          table.insert(newVirtText, {suffix, 'MoreMsg'})
-          return newVirtText
-      end
       vim.o.foldcolumn = '0' -- '0' is not bad
       vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-      -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
       require('ufo').setup({
-        fold_virt_text_handler = handler,
-        provider_selector = function()
-            return {'treesitter', 'indent'}
-        end,
-        -- fold_virt_text_handler = handler,
+        fold_virt_text_handler = require('markfoldable.ufo_handler'),
       })
     end
   },
