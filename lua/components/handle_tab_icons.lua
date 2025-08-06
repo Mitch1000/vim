@@ -18,7 +18,7 @@ return function()
     if vim.fn.len(bufinfo) < 3 then
       vim.cmd([[hi StatusLineNC guifg=none guibg=none]])
     else
-      vim.cmd([[hi StatusLineNC guifg=none guibg=#121212]])
+      vim.cmd([[hi StatusLineNC guifg=none guibg=#181818]])
     end
 
     if vim.fn.len(bufinfo) < 3 and vim.fn.bufnr('%') == 1 then
