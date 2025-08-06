@@ -3,7 +3,7 @@ if (not status) then return end
 
 ts.setup({
   highlight = {
-    enable = false,
+    enable = true,
     additional_vim_regex_highlighting = false,
   },
   indent = { enable = true },
