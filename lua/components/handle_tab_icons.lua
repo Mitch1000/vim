@@ -1,6 +1,9 @@
 local vim = vim
+local get_highlight_color = require('helpers/get_highlight_color')
 return function()
   local bufinfo = vim.fn.getbufinfo({buflisted = 1})
+  local initial_status_line_color_fg = get_highlight_color("StatusLine", "guifg")
+  local initial_status_line_color_bg = get_highlight_color("StatusLine", "guibg")
 
   if Barbar == nil then return end
 
@@ -18,7 +21,7 @@ return function()
     if vim.fn.len(bufinfo) < 3 then
       vim.cmd([[hi StatusLineNC guifg=none guibg=none]])
     else
-      vim.cmd([[hi StatusLineNC guifg=none guibg=#181818]])
+      vim.cmd([[hi StatusLineNC guifg=]] .. initial_status_line_color_fg  .. [[ guibg=]] .. initial_status_line_color_bg)
     end
 
     if vim.fn.len(bufinfo) < 3 and vim.fn.bufnr('%') == 1 then
