@@ -56,14 +56,6 @@ function GitBlame()
 end
 vim.cmd("let g:syntastic_java_checkers = []")
 
--- Reload LightLine
-function ReloadLightLine()
-
-  -- local source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/autoload/lightline/colorscheme/" .. vim.g.my_color_scheme .. ".vim"
-  -- local colors_source_file = "~/.vim/bundle/" .. vim.g.my_color_scheme .. "/colors/" .. vim.g.my_color_scheme .. ".vim"
-  vim.cmd("execute 'source ' .. '~/.config/nvim/bundle/' .. g:my_color_scheme .. '/autoload/lightline/colorscheme/' .. g:my_color_scheme .. '.vim' | call lightline#colorscheme() | call lightline#update()")
-end
-
 function WaitThenOpenFile(open_clipboard)
   local file_to_open = ""
   if open_clipboard then

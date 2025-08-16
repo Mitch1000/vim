@@ -28,7 +28,7 @@ cmd([[command! AP call CocAction('diagnosticPrevious')]])
 -- Redraw the vim screen
 cmd([[command! RF syntax sync fromstart]])
 -- Reload vimrc and lightline theme
-cmd([[command! RL source $MYVIMRC | lua ReloadLightLine()]])
+cmd([[command! RL source $MYVIMRC]])
 
 -- Convert from snake_case to camelCase
 cmd([[command! -range CC <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
