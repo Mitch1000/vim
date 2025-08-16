@@ -14,12 +14,6 @@ vim.diagnostic.config({
   severity_sort = false,
 })
 
-local sign_define = vim.fn.sign_define
-sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
-sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
-sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
-sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
-
 -- For window borders
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(

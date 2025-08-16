@@ -25,7 +25,8 @@ vim.o.shiftwidth = 2
 vim.o.smarttab = true
 vim.o.statusline = "%#warningmsg# %*"
 vim.o.hidden = true
-vim.o.guicursor = "i:block"
+--vim.o.guicursor = "i:block"
+-- vim.cmd([[set guicursor=]])
 vim.o.showtabline = 0
 vim.o.cursorline = true
 
@@ -41,3 +42,20 @@ vim.opt.writebackup = false
 -- Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
 -- delays and poor user experience
 vim.opt.updatetime = 300
+
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.INFO] = "",
+			[vim.diagnostic.severity.HINT] = "",
+		},
+		linehl = {
+			[vim.diagnostic.severity.ERROR] = "Error",
+			[vim.diagnostic.severity.WARN] = "Warn",
+			[vim.diagnostic.severity.INFO] = "Info",
+			[vim.diagnostic.severity.HINT] = "Hint",
+		},
+	},
+})
