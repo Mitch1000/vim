@@ -1,11 +1,32 @@
 local vim = vim
+local default_config = {}
+local config = {}
+--- update global configuration with user settings
+if not error then
+    Current = vim.tbl_deep_extend(
+      "force", default_config, config or {})
+end
 
 return {
-  'folke/neodev.nvim',
-  'neoclide/vim-jsx-improve',
-  'folke/which-key.nvim',
+  {
+    'mitch1000/backpack.nvim',
+    config = function ()
+      require('backpack').setup({
+        transparent = true,
+        tabSigns = true,
+        theme = "dark",
+        contrast = "medium", -- medium, high, extreme
+      })
+    end
+  },
+
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
 
+  'folke/neodev.nvim',
+
+
+  'neoclide/vim-jsx-improve',
+  'folke/which-key.nvim',
   -- General plugins
   { 'neovim/nvim-lspconfig' },
   { 'vim-ruby/vim-ruby' },
@@ -46,19 +67,6 @@ return {
   { 'sainnhe/everforest' },
 
   {
-    'mitch1000/backpack.nvim',
-    config = function ()
-      require('backpack').setup({
-        transparent = true,
-        tabSigns = true,
-        colors = { palette = { background = "#1e1e1e" }},
-        -- colors = { palette = { background = "#ffffff" }},
-        theme = "dark",
-      })
-    end
-  },
-
-  {
     "loctvl842/monokai-pro.nvim",
     config = function()
       require("monokai-pro").setup()
@@ -85,7 +93,7 @@ return {
         Barbar = require('barbar')
 
         Barbar.setup(barbarConf)
-      end 
+      end
     end
   },
   -- Plugins with configuration
@@ -162,14 +170,50 @@ return {
   },
 
   -- CoC needs special handling in Lazy
+  --{
+  --  'neoclide/coc.nvim',
+  --  branch = 'release',
+  --  build = 'yarn install --frozen-lockfile',
+  --  init = function()
+  --    require('config.cocconfig')
+  --    -- CoC specific initialization if needed
+  --  end
+  --},
   {
-    'neoclide/coc.nvim',
-    branch = 'release',
-    build = 'yarn install --frozen-lockfile',
-    init = function()
-      require('config.cocconfig')
-      -- CoC specific initialization if needed
-    end
+      "mason-org/mason.nvim",
+      opts = {
+          ui = {
+              icons = {
+                  package_installed = "✓",
+                  package_pending = "➜",
+                  package_uninstalled = "✗"
+              }
+          }
+      },
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    opts = {
+      ensure_installed = {
+        "basedpyright",
+        "ruff",
+        "cmake-language-server",
+        "basedpyright",
+        "eslint-lsp",
+        "html-lsp",
+        "htmlhint",
+        "jsonlint",
+        "lua-language-server",
+        "typescript-language-server",
+        "vetur-vls",
+        "rubocop",
+        "clangd",
+      },
+     },
+     config = function()
+       require('mason-lspconfig').setup({})
+       require("lspconfigsetup")
+     end
   },
   {
     'sainnhe/sonokai',
@@ -185,7 +229,13 @@ return {
     'kevinhwang91/nvim-ufo',
     dependencies = {
       'kevinhwang91/promise-async',
-      'mitch1000/markfoldable.nvim'
+      {
+        'mitch1000/markfoldable.nvim',
+        config = function ()
+          require('markfoldable').setup({
+          })
+        end
+      }
     },
     config = function ()
       vim.o.foldcolumn = '0' -- '0' is not bad
