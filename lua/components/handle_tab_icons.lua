@@ -19,7 +19,6 @@ return function()
 
   local function init()
     has_init = true
-    print(initial_buffer_color_bg)
     vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. initial_buffer_color_bg)
   end
 
@@ -51,7 +50,6 @@ return function()
       vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. initial_buffer_color_bg)
     else
       vim.cmd([[hi TabLine guifg=]] .. initial_status_line_color_fg  .. [[ guibg=]] .. initial_status_line_color_bg)
-      print(solid_buffer_color_bg)
       vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. solid_buffer_color_bg)
     end
   end
