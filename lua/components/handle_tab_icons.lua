@@ -1,12 +1,33 @@
 local vim = vim
 local get_highlight_color = require('helpers/get_highlight_color')
+
+local has_init = false
+
 return function()
-  local bufinfo = vim.fn.getbufinfo({buflisted = 1})
+
   local initial_status_line_color_fg = get_highlight_color("StatusLine", "guifg")
   local initial_status_line_color_bg = get_highlight_color("StatusLine", "guibg")
+  local initial_buffer_color_fg = get_highlight_color("BufferCurrent", "guifg")
+  local buffer_color_bg = get_highlight_color("Normal", "guibg")
+  local initial_buffer_color_bg = string.len(buffer_color_bg) > 0 and buffer_color_bg or "none"
+  local solid_buffer_color_bg = get_highlight_color("NotifyBackground", "guibg")
+  local bufinfo = vim.fn.getbufinfo({buflisted = 1})
+
+  if not has_init then
+    vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. solid_buffer_color_bg)
+  end
+
+  local function init()
+    has_init = true
+    print(initial_buffer_color_bg)
+    vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. initial_buffer_color_bg)
+  end
+
+  if not has_init then vim.schedule(init) end
 
   if Barbar == nil then return end
 
+  bufinfo = vim.fn.getbufinfo({buflisted = 1})
   local function getIcon()
     if vim.fn.bufnr('%') == 1 then
       return ''
@@ -16,20 +37,23 @@ return function()
 
 
   local function getInactive()
-    bufinfo = vim.fn.getbufinfo({buflisted = 1})
-
-    if vim.fn.len(bufinfo) < 3 then
-      vim.cmd([[hi StatusLineNC guifg=none guibg=none]])
-    else
-      vim.cmd([[hi StatusLineNC guifg=]] .. initial_status_line_color_fg  .. [[ guibg=]] .. initial_status_line_color_bg)
-    end
-
     if vim.fn.len(bufinfo) < 3 and vim.fn.bufnr('%') == 1 then
       return ''
     end
 
-
     return ''
+  end
+
+  if has_init then
+    if vim.fn.len(bufinfo) < 3 then
+      -- vim.cmd([[hi StatusLineNC guifg=none guibg=none]])
+      vim.cmd([[hi TabLine guifg=none guibg=none]])
+      vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. initial_buffer_color_bg)
+    else
+      vim.cmd([[hi TabLine guifg=]] .. initial_status_line_color_fg  .. [[ guibg=]] .. initial_status_line_color_bg)
+      print(solid_buffer_color_bg)
+      vim.cmd([[hi BufferCurrent guifg=]] .. initial_buffer_color_fg .. [[ guibg=]] .. solid_buffer_color_bg)
+    end
   end
 
   local updated_config =  {
