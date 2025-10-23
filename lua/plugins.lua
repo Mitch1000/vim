@@ -44,6 +44,7 @@ return {
   { 'ficcdaf/ashen.nvim' },
   { 'EdenEast/nightfox.nvim' },
   { 'sainnhe/everforest' },
+  { 'sainnhe/everforest' },
 
   {
     'mitch1000/backpack.nvim',
