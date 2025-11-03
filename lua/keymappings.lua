@@ -13,6 +13,7 @@ local telescope_exists, builtin = pcall(require, 'telescope.builtin')
 if telescope_exists then
   keyset('n', '<C-e>', builtin.find_files, { desc = 'Telescope find files' })
   keyset('n', '<C-t>', builtin.buffers, { desc = 'Telescope find buffers' })
+  keyset('n', '<C-j>', builtin.oldfiles, { desc = 'Telescope find histoary' })
 end
 -- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
 -- keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
