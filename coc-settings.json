@@ -5,10 +5,6 @@
   "prettier.eslintIntegration": true,  
   "javascript.showDeprecated": false,
   "javascript.suggestionActions.enabled": false,
-  "[vue]": {
-      "diagnostic.enable": true,
-      "coc.preferences.formatOnSave": false 
-    },
   "border": true,
   "rounded": true,
   "diagnostic.floatConfig.border": true,
