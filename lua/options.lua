@@ -4,6 +4,8 @@ if vim.fn.has('termguicolors') == 1 then
 end
 
 vim.o.backspace = '2'      -- more powerful backspacing
+vim.o.background = 'dark'      -- more powerful backspacing
+
 -- ------ SETTERS ------
 vim.g.indentLine_char = '|'
 vim.g.markdown_folding = 1

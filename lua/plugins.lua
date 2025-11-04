@@ -52,9 +52,10 @@ return {
       require('backpack').setup({
         transparent = true,
         tabSigns = true,
-        colors = { palette = { background = "#1e1e1e" }},
+        contrast = 'high'
+        -- colors = { palette = { background = "#1e1e1e" }},
         -- colors = { palette = { background = "#ffffff" }},
-        theme = "dark",
+        -- theme = "dark",
       })
     end
   },
