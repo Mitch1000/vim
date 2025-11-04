@@ -42,12 +42,12 @@ keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
 keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
 
 -- GoTo code navigation
--- keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
+keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
 -- Source - https://stackoverflow.com/questions/73858788/neovim-goto-definition
 -- Posted by Brotify Force
 -- Retrieved 2025-11-04, License - CC-BY-SA 4.0
 keyset("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
-keyset("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+--keyset("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
