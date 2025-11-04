@@ -11,7 +11,10 @@ local opts = {silent = true, noremap = true, expr = true, replace_keycodes = fal
 --keyset('n', '<C-e>', function () require'fzy'.Oldfiles() end)
 local telescope_exists, builtin = pcall(require, 'telescope.builtin')
 if telescope_exists then
-  keyset('n', '<C-e>', builtin.find_files, { desc = 'Telescope find files' })
+  local function find_files()
+    builtin.find_files({ cwd = vim.cmd([[pwd]]) })
+  end
+  keyset('n', '<C-e>', find_files, { desc = 'Telescope find files' })
   keyset('n', '<C-t>', builtin.buffers, { desc = 'Telescope find buffers' })
   keyset('n', '<C-j>', builtin.oldfiles, { desc = 'Telescope find histoary' })
 end
@@ -39,7 +42,12 @@ keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
 keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
 
 -- GoTo code navigation
-keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
+-- keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
+-- Source - https://stackoverflow.com/questions/73858788/neovim-goto-definition
+-- Posted by Brotify Force
+-- Retrieved 2025-11-04, License - CC-BY-SA 4.0
+keyset("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+keyset("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 keyset("n", "gr", "<Plug>(coc-references)", {silent = true})

@@ -29,9 +29,9 @@ vim.o.smarttab = false
 vim.o.statusline = "%#warningmsg# %*"
 vim.o.hidden = true
 --vim.o.guicursor = "i:block"
--- vim.cmd([[set guicursor=]])
 vim.o.showtabline = 0
 vim.o.cursorline = true
+vim.cmd([[set noautochdir]])
 
 -- -------------------------------------------------------------------
 -- --------------------COC VIM ---------------------------------------
