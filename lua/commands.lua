@@ -35,15 +35,12 @@ cmd([[command! -range CC <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 
 
-cmd([[autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css || TSBufDisable highlight]])
-
-
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
 
-local HandleTabIcons = require('components.handle_tab_icons')
+local HandleTabs = require('components.handle_tab_icons')
 function TabIcons()
   if vim.g.my_color_scheme == "backpack" then
-    HandleTabIcons()
+    HandleTabs()
   end
 end
 cmd([[autocmd BufWinEnter * execute "lua TabIcons()"]])
