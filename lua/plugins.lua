@@ -1,12 +1,10 @@
 local vim = vim
 
 return {
-  'folke/neodev.nvim',
+  -- General plugins
   'neoclide/vim-jsx-improve',
   'folke/which-key.nvim',
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
-
-  -- General plugins
   { 'neovim/nvim-lspconfig' },
   { 'vim-ruby/vim-ruby' },
   { 'tpope/vim-rails' },
