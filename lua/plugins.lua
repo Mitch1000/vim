@@ -12,7 +12,7 @@ return {
   { 'wellle/context.vim' },
   { 'pangloss/vim-javascript' },
   { 'darfink/vim-plist' },
-  { 'Raimondi/delimitMate' },
+  -- { 'Raimondi/delimitMate' },
   { 'ful1e5/onedark.nvim' },
   { 'ellisonleao/gruvbox.nvim' },
   { 'lunacookies/vim-colors-xcode' },
