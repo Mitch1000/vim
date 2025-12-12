@@ -161,7 +161,7 @@ map('t', '<C-e>', 'E <Cmd>lua WaitThenOpenFile(true) <CR>', { noremap = true })
 
 map('i', '<C-r>', "<Cmd> lua SetPaste() <CR>", { noremap = true, silent = true })
 
-map('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
+--map('n', '<Esc>', '<Cmd>noh |  echon "" | lua CloseWindow() <CR>', { noremap = true })
 
 map('n', 'ff', [[:lua require"fzy".FindFile()<CR>]], { noremap = true, silent = true })
 

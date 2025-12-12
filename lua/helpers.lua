@@ -37,7 +37,7 @@ function PrintJavascriptConsoleLogs()
   local variables_for_logging = vim.split(vim.fn.getreg('a'), " ,, ")
   for _, variable in ipairs(variables_for_logging) do
     if string.len(variable) > 0 then
-      vim.cmd("execute \"normal! ccconsole.log('" .. variable .. "\\', " .. variable .. ");\\n\"")
+      vim.cmd("execute \"normal! ccconsole.log('" .. variable .. "\\', " .. variable .. ")\\n\"")
     end
   end
   vim.fn.setreg("a", '')
