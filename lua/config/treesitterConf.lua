@@ -17,6 +17,7 @@ ts.setup({
       "graphql",
       "javascript",
       "typescript",
+      "vue",
       "ruby",
       "python",
   },
