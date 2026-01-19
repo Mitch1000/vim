@@ -148,7 +148,7 @@ return {
           ["u"] = "navigate_up",
         }
       },
-      bind_to_cwd = true,
+      bind_to_cwd = false,
       hijack_netrw_behavior = "disabled",
       filtered_items = {
         visible = true,
