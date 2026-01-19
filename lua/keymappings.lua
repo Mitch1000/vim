@@ -16,7 +16,15 @@ if telescope_exists then
   end
   keyset('n', '<C-e>', find_files, { desc = 'Telescope find files' })
   keyset('n', '<C-t>', builtin.buffers, { desc = 'Telescope find buffers' })
-  keyset('n', '<C-j>', builtin.oldfiles, { desc = 'Telescope find histoary' })
+  keyset('n', '<C-j>', builtin.oldfiles, { desc = 'Telescope find history' })
+  keyset('n', '<C-a>', builtin.oldfiles, { desc = 'Telescope find text' })
+  function FindText()
+      builtin.live_grep({
+          -- Optional: Add custom settings here, e.g., to search specific paths
+          -- cwd = "~/Dropbox/notes/MyNotes/",
+      })
+  end
+  keyset("n", "<C-a>", FindText, { noremap = true, silent = true, desc = "Search files for text (live_grep)" })
 end
 -- keyset('n', '<C-s>', function () require'fzy'.Buffers() end)
 -- keyset('n', '<C-r>', function () require'fzy'.FindFile() end)
