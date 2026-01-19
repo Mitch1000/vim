@@ -50,3 +50,11 @@ vim.cmd([[nmap zc <cmd>execute "foldclose"<CR>]])
 
 SetColorScheme = require('helpers.set_color_scheme')
 SetColorScheme(vim.g.my_color_scheme)
+
+function CopyFilePathToClipboard()
+  vim.fn.setreg('+', vim.fn.expand('%:p'))
+  vim.notify("Copied file path: " .. vim.fn.expand('%:p'), vim.log.levels.INFO)
+end
+
+-- Copy absolute file path to clipboard
+cmd([[command! CF :lua CopyFilePathToClipboard()]])
