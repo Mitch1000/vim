@@ -4,10 +4,33 @@ return {
   -- General plugins
   'neoclide/vim-jsx-improve',
   'folke/which-key.nvim',
+  {
+      'dense-analysis/ale',
+--      ft = { "haml", "ruby", "coffee" },
+      ft = { "haml", "coffee" },
+      config = function()
+          -- Configuration goes here.
+          local g = vim.g
+          g.ale_ruby_rubocop_auto_correct_all = 1
+          g.ale_ruby_rubocop_executable = 'bundle'
+          g.ale_ruby_rubocop_options = '--config /Users/mog/projects/Nimonik/.rubocop.yml'
+          g.ale_linters = {
+              ruby = {'rubocop', 'ruby'},
+              lua = {'lua_language_server'},
+              coffeescript = {'coffeelint'}
+          }
+      end
+  },
   { 'folke/neoconf.nvim', cmd = 'Neoconf' },
   { 'neovim/nvim-lspconfig' },
+  { 'preservim/nerdtree' },
+  { 'briancollins/vim-jst' },
+  { 'neovim/nvim-lspconfig' },
+  { 'kchmck/vim-coffee-script' },
+  -- { 'phil294/coffeesense' },
   { 'vim-ruby/vim-ruby' },
   { 'tpope/vim-rails' },
+  { 'tpope/vim-haml' },
   { 'tpope/vim-fugitive' },
   { 'wellle/context.vim' },
   { 'pangloss/vim-javascript' },
@@ -140,33 +163,41 @@ return {
       "MunifTanjim/nui.nvim",
     },
 
-    transparent = false,
-    filesystem = {
-      window = {
-        mappings = {
-          ["/"] = "noop",
-          ["u"] = "navigate_up",
-        }
-      },
-      bind_to_cwd = false,
-      hijack_netrw_behavior = "disabled",
-      filtered_items = {
-        visible = true,
-        hide_dotfiles = false,
-        hide_gitignored = true,
-     },
-    },
-    default_component_configs = {
-       name = {
-          use_git_status_colors = false
-       },
-       git_status = {
-         symbols = {
-         -- Status type
-         untracked = "-",
-       }
-     },
-    },
+    config = function ()
+      require('neo-tree').setup({
+        transparent = false,
+        follow_current_file = {
+          enabled = false, -- This will find and focus the file in the active buffer every time
+          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        },
+        filesystem = {
+          window = {
+            mappings = {
+              ["/"] = "noop",
+              ["u"] = "navigate_up",
+            }
+          },
+          bind_to_cwd = false,
+          hijack_netrw_behavior = "disabled",
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = true,
+         },
+        },
+        default_component_configs = {
+           name = {
+              use_git_status_colors = false
+           },
+           git_status = {
+             symbols = {
+             -- Status type
+             untracked = "-",
+           }
+         },
+        },
+      })
+    end
   },
 
   -- CoC needs special handling in Lazy
@@ -193,16 +224,16 @@ return {
     'kevinhwang91/nvim-ufo',
     dependencies = {
       'kevinhwang91/promise-async',
-      'mitch1000/markfoldable.nvim'
+      --'mitch1000/markfoldable.nvim'
     },
     config = function ()
-      vim.o.foldcolumn = '0' -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-      require('ufo').setup({
-        fold_virt_text_handler = require('markfoldable.ufo_handler'),
-      })
+--      vim.o.foldcolumn = '0' -- '0' is not bad
+--      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+--      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+--      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+--      require('ufo').setup({
+--        fold_virt_text_handler = require('markfoldable.ufo_handler'),
+--      })
     end
   },
 }

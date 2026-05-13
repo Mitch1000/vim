@@ -37,6 +37,8 @@ cmd([[command! -range CamelCase <line1>,<line2>s/\(_\)\(.\)/\u\2/g]])
 
 cmd([[autocmd BufRead,BufNewFile * execute "lua BufferOrderByBufferNumberSafe()"]])
 
+cmd([[autocmd BufRead,BufNewFile *.jst.eco set filetype=js]])
+
 local HandleTabs = require('components.handle_tab_icons')
 function TabIcons()
   if vim.g.my_color_scheme == "backpack" then
@@ -52,9 +54,49 @@ SetColorScheme = require('helpers.set_color_scheme')
 SetColorScheme(vim.g.my_color_scheme)
 
 function CopyFilePathToClipboard()
+  vim.fn.setreg('+', vim.fn.expand('%:f'))
+  vim.notify("Copied file path: " .. vim.fn.expand('%:f'), vim.log.levels.INFO)
+end
+function CopyFullFilePathToClipboard()
   vim.fn.setreg('+', vim.fn.expand('%:p'))
   vim.notify("Copied file path: " .. vim.fn.expand('%:p'), vim.log.levels.INFO)
 end
+function CopyFileTailToClipboard()
+  vim.fn.setreg('+', vim.fn.expand('%:t'))
+  vim.notify("Copied file path: " .. vim.fn.expand('%:t'), vim.log.levels.INFO)
+end
+
+-- vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+--   pattern = "*.haml",
+--   callback = function()
+--     vim.opt.filetype = "ruby"
+--   end,
+-- })
 
 -- Copy absolute file path to clipboard
 cmd([[command! CF :lua CopyFilePathToClipboard()]])
+cmd([[command! CT :lua CopyFileTailToClipboard()]])
+cmd([[command! CFF :lua CopyFullFilePathToClipboard()]])
+
+function quit_netrw()
+  for i = 1, vim.fn.bufnr('$') do
+    if vim.fn.buflisted(i) == 1 then
+      if vim.api.nvim_buf_get_option(i, 'filetype') == 'netrw' then
+        vim.cmd('bwipeout ' .. i)
+      end
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  group = vim.api.nvim_create_augroup('MyAutoCmd', { clear = false }),
+  pattern = '*',
+  callback = quit_netrw,
+})
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "ruby" },
+--   callback = function()
+--     vim.b.coc_enabled = 0
+--   end,
+-- })

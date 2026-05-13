@@ -32,6 +32,7 @@ vim.o.hidden = true
 vim.o.showtabline = 0
 vim.o.cursorline = true
 vim.cmd([[set noautochdir]])
+vim.o.autochdir = false
 
 -- -------------------------------------------------------------------
 -- --------------------COC VIM ---------------------------------------

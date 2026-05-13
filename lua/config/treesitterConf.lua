@@ -14,6 +14,8 @@ ts.setup({
       "lua",
       "bash",
       "scss",
+      "markdown",
+      "markdown_inline",
       "graphql",
       "javascript",
       "typescript",

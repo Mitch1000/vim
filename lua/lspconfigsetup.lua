@@ -1,6 +1,7 @@
  -- Language Server Config Setups
 local vim = vim
 local lspconfig = vim.lsp.config
+local nvim_lsp = require 'lspconfig'
 
 local vue_language_server_path = "/Users/mog/.nvm/versions/node/v22.17.0/bin/vue-language-server"
 local ts_language_server_path = "/Users/mog/.nvm/versions/node/v22.17.0/bin/typescript-language-server"
@@ -32,8 +33,13 @@ lspconfig.vue_ls = {
    --  tsdk = ts_lib_path,
    --},
   },
- }
-            
+}
+
+lspconfig.rubocop = {
+--  cmd = { "bundle", "exec", "rubocop", "--lsp" },
+--  root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git", "."),
+}
+
 vim.lsp.enable('ts_ls')
 vim.lsp.enable('vue_ls')
 
@@ -45,10 +51,11 @@ local language_servers = {
   "rubocop",
   "ccls",
   "rust_analyzer",
+  "solargraph",
   "ts_query_ls",
   "tailwindcss",
   "cssls",
-  "eslint"
+  "eslint",
 }
 
 for _index, value in ipairs(language_servers) do
