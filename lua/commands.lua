@@ -95,15 +95,13 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "ruby" },
+  pattern = '*',
   callback = function()
-    vim.o.colorcolumn = "121"
+    local excluded_fts = { 'ruby' }
+    if vim.tbl_contains(excluded_fts, vim.bo.filetype) then
+      vim.o.colorcolumn = "121"
+      return
+    end
+    vim.o.colorcolumn = ""
   end,
 })
-
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "ruby" },
---   callback = function()
---     vim.b.coc_enabled = 0
---   end,
--- })

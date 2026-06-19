@@ -46,7 +46,9 @@ return {
   { 'Mofiqul/vscode.nvim' },
   { 'cocopon/iceberg.vim' },
   { 'binhtran432k/dracula.nvim' },
-  { "lukas-reineke/virt-column.nvim", opts = {} },
+  { "lukas-reineke/virt-column.nvim",
+    opts = { highlight = 'VirtualColumn', filetypes = {'ruby'} }
+  },
 
   -- Color Schemes
   { 'rebelot/kanagawa.nvim' },
