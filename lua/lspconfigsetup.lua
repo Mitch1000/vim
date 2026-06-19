@@ -3,9 +3,9 @@ local vim = vim
 local lspconfig = vim.lsp.config
 local nvim_lsp = require 'lspconfig'
 
-local vue_language_server_path = "/Users/mog/.nvm/versions/node/v22.17.0/bin/vue-language-server"
-local ts_language_server_path = "/Users/mog/.nvm/versions/node/v22.17.0/bin/typescript-language-server"
-local ts_lib_path = "/Users/mog/.nvm/versions/node/v22.17.0/lib/node_modules/typescript-language-server/lib"
+local vue_language_server_path = "~/.nvm/versions/node/v22.17.0/bin/vue-language-server"
+local ts_language_server_path = "~/.nvm/versions/node/v22.17.0/bin/typescript-language-server"
+local ts_lib_path = "~/.nvm/versions/node/v22.17.0/lib/node_modules/typescript-language-server/lib"
 
 lspconfig.ts_ls = {
   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },

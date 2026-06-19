@@ -94,6 +94,13 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
   callback = quit_netrw,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "ruby" },
+  callback = function()
+    vim.o.colorcolumn = "121"
+  end,
+})
+
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = { "ruby" },
 --   callback = function()

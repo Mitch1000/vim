@@ -13,7 +13,7 @@ return {
           local g = vim.g
           g.ale_ruby_rubocop_auto_correct_all = 1
           g.ale_ruby_rubocop_executable = 'bundle'
-          g.ale_ruby_rubocop_options = '--config /Users/mog/projects/Nimonik/.rubocop.yml'
+          g.ale_ruby_rubocop_options = '--config ~/projects/Nimonik/.rubocop.yml'
           g.ale_linters = {
               ruby = {'rubocop', 'ruby'},
               lua = {'lua_language_server'},
@@ -46,6 +46,7 @@ return {
   { 'Mofiqul/vscode.nvim' },
   { 'cocopon/iceberg.vim' },
   { 'binhtran432k/dracula.nvim' },
+  { "lukas-reineke/virt-column.nvim", opts = {} },
 
   -- Color Schemes
   { 'rebelot/kanagawa.nvim' },
@@ -65,7 +66,7 @@ return {
   { 'ficcdaf/ashen.nvim' },
   { 'EdenEast/nightfox.nvim' },
   { 'sainnhe/everforest' },
-  { 'sainnhe/everforest' },
+  { 'projekt0n/github-nvim-theme' },
 
   {
     'mitch1000/backpack.nvim',
@@ -76,7 +77,6 @@ return {
         contrast = 'high'
         -- colors = { palette = { background = "#1e1e1e" }},
         -- colors = { palette = { background = "#ffffff" }},
-        -- theme = "dark",
       })
     end
   },
